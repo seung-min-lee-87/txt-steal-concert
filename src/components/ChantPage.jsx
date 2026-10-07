@@ -13,6 +13,7 @@ import Badges from './Badges'
 import AlbumChip from './AlbumChip'
 import CueText, { hasPart } from './CueText'
 import { loadSongState } from './PracticePage'
+import { stagesOf, stageLabel } from '../data/stages'
 import SyncCalibrator, { calibrate } from './SyncCalibrator'
 
 const FILTERS = [
@@ -103,6 +104,7 @@ function ChantList({ go }) {
                         <Badges song={song} compact />
                         <span>📣 {fanLines}곳</span>
                         {VIDEOS[song.id] && <span>▶ {VIDEOS[song.id].kind}</span>}
+                        {stagesOf(song.id).length > 0 && <span>📺 음방 응원</span>}
                         {st.cues.some((c) => c.t != null) && <span className="synced">⏱ 싱크됨</span>}
                       </span>
                     </span>
@@ -124,8 +126,15 @@ function ChantList({ go }) {
 function ChantDetail({ song, go }) {
   const [state, setState] = useState(() => loadSongState(song.id))
   const video = VIDEOS[song.id]
-  const [which, setWhich] = useState('main') // main: 연습용(음원 길이) 영상, mv: 공식 MV
-  const vid = which === 'mv' && video?.mv ? video.mv : parseYouTubeId(state.youtube)
+  // 고를 수 있는 영상: 연습용(음원 길이) 영상, 공식 MV, 음악방송 무대(팬 응원 소리)
+  const options = [
+    ...(state.youtube ? [{ key: 'main', label: video?.kind || '영상', id: parseYouTubeId(state.youtube) }] : []),
+    ...(video?.mv ? [{ key: 'mv', label: '공식 MV', id: video.mv }] : []),
+    ...stagesOf(song.id).map((s) => ({ key: s.id, label: '📣 ' + stageLabel(s), id: s.id, stage: s })),
+  ]
+  const [which, setWhich] = useState('main')
+  const picked = options.find((o) => o.key === which) || options[0]
+  const vid = picked?.id || null
   const source = useMemo(() => (vid ? { type: 'youtube', id: vid } : null), [vid])
   const sp = useSongPlayer(song.id, source)
   const player = sp.player
@@ -186,16 +195,19 @@ function ChantDetail({ song, go }) {
         <Badges song={song} />
 
         <div className="chant-player">
-          {video?.mv && (
-            <div className="seg video-seg">
-              <button className={which === 'main' ? 'on' : ''} onClick={() => setWhich('main')}>
-                {video.kind}
-              </button>
-              <button className={which === 'mv' ? 'on' : ''} onClick={() => setWhich('mv')}>
-                공식 MV
-              </button>
+          {options.length > 1 && (
+            <div
+              className={'seg video-seg' + (options.length > 3 ? ' two-rows' : '')}
+              style={{ gridTemplateColumns: `repeat(${options.length > 3 ? 2 : options.length}, 1fr)` }}
+            >
+              {options.map((o) => (
+                <button key={o.key} className={picked === o ? 'on' : ''} onClick={() => setWhich(o.key)}>
+                  {o.label}
+                </button>
+              ))}
             </div>
           )}
+          {picked?.stage && <p className="stage-note">📺 {picked.stage.show} 실제 무대예요. 팬들 응원 소리를 들으며 따라 해보세요!</p>}
           {source ? (
             <VideoSlot sp={sp} source={source} />
           ) : (

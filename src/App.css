@@ -534,3 +534,6 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .news .news-text { margin: 12px 0 0; font-size: 13px; }
 .song-row.no-link { cursor: default; }
 .song-row.no-link:hover { border-color: var(--card-line); background: var(--card); }
+.video-seg button { font-size: 13px; padding: 8px 4px; }
+.stage-note { margin: -2px 0 8px; font-size: 13px; color: var(--muted); }
+.video-seg.two-rows { border-radius: 20px; }

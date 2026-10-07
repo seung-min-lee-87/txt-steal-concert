@@ -4,6 +4,7 @@
 // 내가 편집·싱크한 내용은 기기에 따로 저장되어 이 기본값보다 우선한다.
 import CHANTS from './chants.json'
 import { VIDEOS } from './videos'
+import { findStage } from './stages'
 
 export const CHANT_SOURCE = CHANTS.source
 export const TIMING_SOURCE = CHANTS.timingSource
@@ -28,6 +29,8 @@ export function videoOffset(songId, state, vid) {
   const mine = state.offsets?.[vid]
   if (mine != null) return { offset: mine, sure: true }
   if (vid && vid === VIDEOS[songId]?.id) return guessOffset(songId)
+  const st = findStage(songId, vid)
+  if (st?.offset != null) return { offset: st.offset, sure: true }
   return { offset: 0, sure: false }
 }
 
