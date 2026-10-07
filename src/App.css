@@ -450,3 +450,25 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .album-head { margin: 22px 0 8px; }
 .row-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
 .chant-album { margin: 2px 0 8px; }
+
+/* 투어 배너 (공식 포스터의 로고·색) */
+.tour-banner {
+  --tour-bg: rgba(0, 0, 0, .25); --tour-accent: var(--sky);
+  display: flex; align-items: center; gap: 14px; margin: 4px 0 14px; padding: 16px;
+  border-radius: 16px; border: 1px solid var(--card-line);
+  background: linear-gradient(135deg, var(--tour-bg), rgba(0, 0, 0, .35));
+}
+.tour-banner.themed {
+  border-color: color-mix(in srgb, var(--tour-accent) 45%, transparent);
+  background:
+    radial-gradient(120% 140% at 85% 0%, color-mix(in srgb, var(--tour-accent) 35%, transparent), transparent 60%),
+    var(--tour-bg);
+}
+.tour-banner-text { flex: 1; min-width: 0; }
+.tour-banner-years { margin: 0 0 6px; font-family: var(--font-label); font-size: 13px; letter-spacing: .12em; color: var(--tour-accent); font-weight: 600; }
+.tour-banner-logo { display: block; width: 100%; max-width: 340px; height: auto; }
+.tour-banner-name { margin: 0; font-family: var(--font-label); font-weight: 700; font-size: 30px; letter-spacing: .04em; line-height: 1.1; color: var(--ivory); }
+.tour-banner-full { margin: 8px 0 0; font-size: 11.5px; color: var(--muted); }
+.tour-banner-poster { flex: none; width: 84px; padding: 0; border: 0; border-radius: 8px; overflow: hidden; background: none; box-shadow: 0 6px 18px rgba(0,0,0,.4); }
+.tour-banner-poster img { display: block; width: 100%; height: auto; }
+@media (min-width: 760px) { .tour-banner-poster { width: 110px; } }

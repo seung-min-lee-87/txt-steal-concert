@@ -23,6 +23,7 @@ export default function SetlistPage({ go, hasCheer }) {
   const [tab, setTab] = useState(TOURS[0].key)
   const [showId, setShowId] = useState(null)
   const [filter, setFilter] = useState('all')
+  const [zoom, setZoom] = useState(null)
 
   // 한 투어 안에서는 날짜순 (보통 서울 → 일본)
   const shows = SETLISTS.filter((s) => s.tourKey === tab).sort((a, b) => a.date.localeCompare(b.date))
@@ -51,6 +52,7 @@ export default function SetlistPage({ go, hasCheer }) {
             role="tab"
             aria-selected={tab === t.key}
             className={'tab' + (tab === t.key ? ' on' : '')}
+            style={tab === t.key && t.theme ? { background: t.theme.accent, borderColor: t.theme.accent, color: t.theme.bg } : undefined}
             onClick={() => pickTour(t.key)}
           >
             <span className="tab-year">{t.years}</span> {t.name}
@@ -65,6 +67,13 @@ export default function SetlistPage({ go, hasCheer }) {
           📚 곡 모아보기
         </button>
       </div>
+
+      {tour && <TourBanner tour={tour} onPoster={setZoom} />}
+      {zoom && (
+        <button className="lightbox" onClick={() => setZoom(null)} aria-label="닫기">
+          <img src={zoom} alt={`${tour?.name} 포스터`} />
+        </button>
+      )}
 
       {current && (
         <div className="setlist">
@@ -166,5 +175,31 @@ function SongRow({ song, go, num, jpVer, by, hasCheer, full = false }) {
       </span>
       <span className="go">›</span>
     </button>
+  )
+}
+
+// 투어 배너: 공식 포스터의 로고·색. 포스터가 없는 투어는 글자 로고로 보여준다.
+function TourBanner({ tour, onPoster }) {
+  const th = tour.theme
+  const style = th
+    ? { '--tour-bg': th.bg, '--tour-accent': th.accent }
+    : undefined
+  return (
+    <section className={'tour-banner' + (th ? ' themed' : '')} style={style}>
+      <div className="tour-banner-text">
+        <p className="tour-banner-years">{tour.years}</p>
+        {th?.logo ? (
+          <img className="tour-banner-logo" src={th.logo} alt={tour.full} />
+        ) : (
+          <p className="tour-banner-name">{tour.name}</p>
+        )}
+        {!th?.logo && <p className="tour-banner-full">{tour.full}</p>}
+      </div>
+      {th?.poster && (
+        <button className="tour-banner-poster" onClick={() => onPoster(th.poster)} aria-label="포스터 크게 보기">
+          <img src={th.poster} alt={`${tour.name} 포스터`} loading="lazy" />
+        </button>
+      )}
+    </section>
   )
 }
