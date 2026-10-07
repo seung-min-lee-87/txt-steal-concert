@@ -20,6 +20,7 @@ export default function SetlistPage({ go, hasCheer }) {
 
   return (
     <div className="page">
+      <p className="kicker">Setlist</p>
       <h1 className="page-title">세트리스트</h1>
       <p className="hint">
         이번 투어는 아직 시작 전이라, 지난 투어 「ACT : TOMORROW」의 서울·도쿄 공연을 모아뒀어요. 곡을 누르면

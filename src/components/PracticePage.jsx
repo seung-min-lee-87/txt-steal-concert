@@ -27,6 +27,7 @@ function SongPicker({ go, hasCheer }) {
   rest.sort((a, b) => order(a) - order(b))
   return (
     <div className="page">
+      <p className="kicker">Fanchant Practice</p>
       <h1 className="page-title">응원법 연습</h1>
       <div className="card howto">
         <h3>처음이라면 이렇게 해보세요</h3>
@@ -39,11 +40,11 @@ function SongPicker({ go, hasCheer }) {
       </div>
       {ready.length > 0 && (
         <>
-          <h2 className="section-title">📣 응원법 준비된 곡</h2>
+          <h2 className="section-title">📣 응원법 준비된 곡 <span className="en">Ready</span></h2>
           <SongList songs={ready} go={go} hasCheer={hasCheer} />
         </>
       )}
-      <h2 className="section-title">전체 곡</h2>
+      <h2 className="section-title">전체 곡 <span className="en">All Songs</span></h2>
       <SongList songs={rest} go={go} hasCheer={hasCheer} />
     </div>
   )

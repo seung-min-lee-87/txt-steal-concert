@@ -2,6 +2,11 @@ import { useState } from 'react'
 import { ALBUM_NEWS, SHOWS, TOUR } from '../data/tour'
 import { loadJSON, saveJSON } from '../lib/storage'
 
+const POSTERS = [
+  { src: '/images/poster-seoul.webp', alt: '서울 공연 포스터' },
+  { src: '/images/poster-schedule.webp', alt: '전체 투어 일정 포스터' },
+]
+
 const DAY = 24 * 60 * 60 * 1000
 const WEEK = ['일', '월', '화', '수', '목', '금', '토']
 
@@ -23,6 +28,7 @@ function prettyDate(date) {
 
 export default function TourPage({ go }) {
   const [going, setGoing] = useState(() => loadJSON('going', {}))
+  const [zoom, setZoom] = useState(null)
 
   function toggle(date) {
     const next = { ...going, [date]: !going[date] }
@@ -38,33 +44,38 @@ export default function TourPage({ go }) {
   return (
     <div className="page">
       <section className="hero">
-        <div className="wind" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
-        <p className="hero-kicker">TOMORROW X TOGETHER WORLD TOUR</p>
-        <h1 className="hero-title">{TOUR.name}</h1>
-        <p className="hero-sub">{TOUR.meaning}</p>
-        {upcoming && (
-          <div className="countdown">
-            <span className="dday">{dDay(upcoming.date)}</span>
-            <span>
-              {mine.length ? '내 다음 공연' : '다음 공연'} · {upcoming.show.city} {prettyDate(upcoming.date)}
-            </span>
+        <picture>
+          <source media="(max-width: 700px)" srcSet="/images/banner-sm.webp" />
+          <img className="hero-banner" src="/images/banner.webp" alt="TOMORROW X TOGETHER WORLD TOUR STEAL THE WIND" />
+        </picture>
+        <div className="hero-body">
+          <p className="kicker">Tomorrow X Together World Tour</p>
+          <p className="hero-sub">
+            <em>Steal the Wind</em> · {TOUR.meaning}
+          </p>
+          {upcoming && (
+            <div className="countdown">
+              <span className="dday">{dDay(upcoming.date)}</span>
+              <span className="countdown-text">
+                <b>
+                  {upcoming.show.city} · {prettyDate(upcoming.date)}
+                </b>
+                {mine.length ? '내가 가는 다음 공연' : '다음 공연'} · {upcoming.show.venue}
+              </span>
+            </div>
+          )}
+          <div className="hero-actions">
+            <button className="btn primary" onClick={() => go('#/practice')}>
+              📣 응원법 연습하기
+            </button>
+            <button className="btn ghost" onClick={() => go('#/setlist')}>
+              🎵 지난 세트리스트
+            </button>
           </div>
-        )}
-        <div className="hero-actions">
-          <button className="btn primary" onClick={() => go('#/practice')}>
-            📣 응원법 연습하러 가기
-          </button>
-          <button className="btn ghost" onClick={() => go('#/setlist')}>
-            🎵 지난 세트리스트 보기
-          </button>
         </div>
       </section>
 
-      <h2 className="section-title">공연 일정 · 서울 & 일본</h2>
+      <h2 className="section-title">공연 일정 <span className="en">Seoul &amp; Japan</span></h2>
       <p className="hint">내가 가는 날을 눌러 표시해두면 위 카운트다운이 그 날짜로 바뀌어요.</p>
       <div className="show-grid">
         {SHOWS.map((show) => (
@@ -94,7 +105,21 @@ export default function TourPage({ go }) {
         ))}
       </div>
 
-      <h2 className="section-title">새 앨범 체크</h2>
+      <h2 className="section-title">공식 포스터 <span className="en">Key Visual</span></h2>
+      <div className="posters">
+        {POSTERS.map((p) => (
+          <button key={p.src} className="poster" onClick={() => setZoom(p)} aria-label={`${p.alt} 크게 보기`}>
+            <img src={p.src} alt={p.alt} loading="lazy" />
+          </button>
+        ))}
+      </div>
+      {zoom && (
+        <button className="lightbox" onClick={() => setZoom(null)} aria-label="닫기">
+          <img src={zoom.src} alt={zoom.alt} />
+        </button>
+      )}
+
+      <h2 className="section-title">새 앨범 체크 <span className="en">New Music</span></h2>
       <div className="news-list">
         {ALBUM_NEWS.map((a) => (
           <article key={a.title} className="card news">
@@ -107,7 +132,7 @@ export default function TourPage({ go }) {
         ))}
       </div>
 
-      <h2 className="section-title">참고 링크</h2>
+      <h2 className="section-title">참고 링크 <span className="en">Links</span></h2>
       <div className="links">
         <a className="card link" href="https://ibighit.com/en/txt/tour/" target="_blank" rel="noreferrer">
           🖼️ 공식 투어 페이지 (포스터·공지)

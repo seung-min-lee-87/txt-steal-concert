@@ -39,8 +39,8 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <a className="brand" href="#/tour">
-          <span className="brand-mark">TXT</span> STEAL THE WIND
+        <a className="brand" href="#/tour" aria-label="STEAL THE WIND 홈">
+          <img src="/images/logo-cream.webp" alt="STEAL THE WIND" width="770" height="306" />
         </a>
         <nav className="topnav">
           {NAV.map((n) => (
@@ -58,6 +58,10 @@ export default function App() {
         )}
         {route.page !== 'setlist' && route.page !== 'practice' && <TourPage go={go} />}
       </main>
+
+      <footer className="footer">
+        개인이 만든 비공식 팬 페이지예요. 아티스트·소속사와 관계없으며, 이미지 저작권은 BIGHIT MUSIC에 있어요.
+      </footer>
 
       <nav className="bottomnav">
         {NAV.map((n) => (
