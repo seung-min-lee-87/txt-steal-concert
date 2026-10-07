@@ -95,7 +95,7 @@ export default function TourPage({ go }) {
               📣 응원법 보러 가기
             </button>
             <button className="btn ghost" onClick={() => go('#/setlist')}>
-              🎵 지난 세트리스트
+              📝 지난 세트리스트
             </button>
           </div>
         </div>
