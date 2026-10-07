@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import TourPage from './components/TourPage'
 import SetlistPage from './components/SetlistPage'
 import PracticePage, { loadSongState } from './components/PracticePage'
+import ChantPage from './components/ChantPage'
 import './App.css'
 
 // 주소 끝(#/tour, #/setlist, #/practice/곡id)으로 화면을 나눈다.
@@ -13,7 +14,8 @@ function readRoute() {
 const NAV = [
   { page: 'tour', icon: '🌬️', label: '투어' },
   { page: 'setlist', icon: '🎵', label: '세트리스트' },
-  { page: 'practice', icon: '📣', label: '응원법 연습' },
+  { page: 'chant', icon: '📣', label: '응원법' },
+  { page: 'practice', icon: '🎧', label: '연습' },
 ]
 
 export default function App() {
@@ -56,11 +58,12 @@ export default function App() {
         {route.page === 'practice' && (
           <PracticePage songId={route.id} go={go} hasCheer={hasCheer} onSaved={onSaved} />
         )}
-        {route.page !== 'setlist' && route.page !== 'practice' && <TourPage go={go} />}
+        {route.page === 'chant' && <ChantPage songId={route.id} go={go} />}
+        {!['setlist', 'practice', 'chant'].includes(route.page) && <TourPage go={go} />}
       </main>
 
       <footer className="footer">
-        개인이 만든 비공식 팬 페이지예요. 아티스트·소속사와 관계없으며, 이미지 저작권은 BIGHIT MUSIC에 있어요.
+        개인이 만든 비영리 비공식 팬 페이지예요. 아티스트·소속사와 관계없으며, 이미지·영상·가사의 저작권은 BIGHIT MUSIC에 있어요. 응원법 정리는 나무위키 문서(CC BY-NC-SA 2.0 KR)를 바탕으로 했어요.
       </footer>
 
       <nav className="bottomnav">

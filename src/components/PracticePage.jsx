@@ -14,7 +14,14 @@ const RATES = [0.5, 0.75, 1, 1.25]
 
 export function loadSongState(id) {
   const base = { youtube: '', cues: [], offset: 0, source: 'youtube', ...(DEFAULT_CHEERS[id] || {}) }
-  return { ...base, ...loadJSON('song:' + id, {}) }
+  const mine = loadJSON('song:' + id, {})
+  // 내 기기에 저장된 값이 우선. 단, 비어 있으면 사이트 기본값을 쓴다.
+  return {
+    ...base,
+    ...mine,
+    youtube: mine.youtube || base.youtube,
+    cues: mine.cues?.length ? mine.cues : base.cues,
+  }
 }
 
 export default function PracticePage({ songId, go, hasCheer, onSaved }) {
@@ -32,11 +39,10 @@ function SongPicker({ go, hasCheer, onSaved }) {
       <p className="kicker">Fanchant Practice</p>
       <h1 className="page-title">응원법 연습</h1>
       <div className="card howto">
-        <h3>처음이라면 이렇게 해보세요</h3>
+        <h3>연습 모드 사용법</h3>
         <ol>
-          <li>연습할 곡을 고르고, 유튜브 주소를 붙여넣거나 내 음악 파일을 골라요.</li>
-          <li>「편집」 탭에 나무위키 응원법을 복사해 붙여넣어요. 팬이 외치는 줄은 앞에 <b>!</b>를 붙이거나 📣 버튼으로 표시해요. 아래 「응원법 묶음 불러오기」를 쓰면 한 번에 들어가요.</li>
-          <li>「싱크 맞추기」를 누르고, 노래를 들으면서 줄이 바뀔 때마다 큰 버튼을 톡 눌러요.</li>
+          <li>연습할 곡을 골라요. 공식 응원법과 유튜브 영상이 미리 들어 있어요. (원하면 다른 영상이나 내 음악 파일로 바꿀 수 있어요)</li>
+                    <li>「싱크 맞추기」를 누르고, 노래를 들으면서 줄이 바뀔 때마다 큰 버튼을 톡 눌러요.</li>
           <li>「연습」 탭에서 노래방처럼 따라 외치기! 외워졌다면 🙈 가리기 모드로 시험해봐요.</li>
         </ol>
       </div>

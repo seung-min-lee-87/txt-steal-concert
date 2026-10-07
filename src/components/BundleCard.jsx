@@ -62,14 +62,14 @@ export default function BundleCard({ onSaved }) {
 
   return (
     <div className="card bundle">
-      <h3>📦 응원법 묶음 불러오기 · 백업</h3>
+      <h3>💾 내 싱크 백업 · 불러오기</h3>
       <p className="hint small">
-        여러 곡의 응원법이 담긴 파일을 한 번에 넣어요. 싱크까지 맞춘 뒤 「전체 백업」으로 저장하면 다른 기기에서 그대로
-        불러올 수 있어요.
+        내가 싱크·수정한 응원법은 이 기기에만 저장돼요. 「전체 백업」으로 저장한 파일을 다른 기기에서 불러오면 그대로
+        옮겨져요.
       </p>
       <div className="sync-actions">
         <button className="btn small primary" onClick={() => fileRef.current?.click()}>
-          묶음 파일 불러오기
+          백업 불러오기
         </button>
         <button className="btn small ghost" onClick={exportAll}>
           전체 백업

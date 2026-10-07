@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { parseCueText, cuesToText, formatTime } from '../lib/cues'
+import { DEFAULT_CHEERS } from '../data/cheers'
 
 // 사람이 버튼을 누를 때 생기는 반응 지연 보정 (초)
 const REACTION = 0.15
@@ -263,6 +264,20 @@ export default function CueEditor({ song, state, update, player, t }) {
                 + 줄 추가
               </button>
             </div>
+          )}
+
+          {DEFAULT_CHEERS[song.id]?.cues && (
+            <button
+              className="btn small ghost"
+              onClick={() => {
+                if (!window.confirm('내가 고친 내용과 싱크를 지우고 사이트 기본 응원법으로 되돌릴까요?')) return
+                update({ cues: DEFAULT_CHEERS[song.id].cues, offset: 0 })
+                setDraft(cuesToText(DEFAULT_CHEERS[song.id].cues))
+                flash('기본 응원법으로 되돌렸어요')
+              }}
+            >
+              ↺ 기본 응원법으로 되돌리기
+            </button>
           )}
 
           <div className="card share">

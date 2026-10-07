@@ -65,8 +65,8 @@ export default function TourPage({ go }) {
             </div>
           )}
           <div className="hero-actions">
-            <button className="btn primary" onClick={() => go('#/practice')}>
-              📣 응원법 연습하기
+            <button className="btn primary" onClick={() => go('#/chant')}>
+              📣 응원법 보러 가기
             </button>
             <button className="btn ghost" onClick={() => go('#/setlist')}>
               🎵 지난 세트리스트

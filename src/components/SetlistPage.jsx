@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { SETLISTS, APPEARANCES } from '../data/setlists'
 import { SONGS, SONG_MAP } from '../data/songs'
 import Badges, { Legend } from './Badges'
+import { CHANT_ORDER } from '../data/cheers'
+
+const songLink = (id) => (CHANT_ORDER.includes(id) ? `#/chant/${id}` : `#/practice/${id}`)
 
 const FILTERS = [
   { id: 'all', label: '전체' },
@@ -24,7 +27,7 @@ export default function SetlistPage({ go, hasCheer }) {
       <h1 className="page-title">세트리스트</h1>
       <p className="hint">
         이번 투어는 아직 시작 전이라, 지난 투어 「ACT : TOMORROW」의 서울·도쿄 공연을 모아뒀어요. 곡을 누르면
-        바로 연습 화면으로 가요.
+        응원법(없으면 연습 화면)으로 가요.
       </p>
       <Legend />
 
@@ -67,7 +70,7 @@ export default function SetlistPage({ go, hasCheer }) {
                     const num = g.name.startsWith('앙코르') ? `E${i + 1}` : n
                     return (
                       <li key={g.name + i}>
-                        <button className="song-row" onClick={() => go(`#/practice/${song.id}`)}>
+                        <button className="song-row" onClick={() => go(songLink(song.id))}>
                           <span className="num">{num}</span>
                           <span className="song-main">
                             <span className="song-title">
@@ -112,7 +115,7 @@ export default function SetlistPage({ go, hasCheer }) {
               return true
             }).map((song) => (
               <li key={song.id}>
-                <button className="song-row" onClick={() => go(`#/practice/${song.id}`)}>
+                <button className="song-row" onClick={() => go(songLink(song.id))}>
                   <span className="song-main">
                     <span className="song-title">{song.title}</span>
                     {song.album && <span className="album">{song.album}</span>}

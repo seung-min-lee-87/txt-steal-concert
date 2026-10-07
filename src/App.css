@@ -370,3 +370,39 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 
 .bundle { margin-top: 12px; }
 .bundle-msg { margin: 10px 0 0; color: var(--sky); font-weight: 700; font-size: 14px; }
+
+/* 응원법 가이드 */
+.chant-tools { display: flex; flex-direction: column; gap: 10px; margin: 8px 0 4px; }
+.search {
+  width: 100%; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--card-line); background: rgba(0,0,0,.25);
+}
+.chant-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 12px; color: var(--muted); }
+.chant-meta .synced { color: var(--sky); font-weight: 700; }
+.source { margin-top: 28px; }
+.text-link { border: 0; background: none; color: var(--sky); padding: 6px 0; font-weight: 600; font-size: 14px; }
+.chant-detail .page-title { margin-top: 4px; line-height: 1.3; }
+.chant-album { margin: 0 0 8px; color: var(--muted); font-family: var(--font-label); font-size: 14px; letter-spacing: .04em; }
+.chant-player { margin: 14px 0 12px; }
+.chant-player .yt-frame { margin-top: 0; }
+.chant-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chant-links a.btn { text-decoration: none; color: var(--text); }
+.legend-card ul { list-style: none; margin: 4px 0 12px; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 14px; color: var(--muted); }
+.legend-card .lg { display: inline-block; min-width: 128px; color: var(--text); }
+.legend-card .lg.fan { color: var(--sky); font-weight: 800; }
+.chant-lines { list-style: none; margin: 16px 0 0; padding: 0; }
+.chant-line button {
+  display: block; width: 100%; text-align: left; border: 0; background: none; padding: 7px 12px; border-radius: 10px;
+  font-size: 17px; line-height: 1.5; color: var(--text); cursor: default;
+}
+.chant-line button:not(:disabled) { cursor: pointer; }
+.chant-line button:disabled { opacity: 1; }
+.chant-line.fan button { color: var(--sky); font-weight: 800; }
+.chant-line.past button { opacity: .45; }
+.chant-line.active button { background: var(--card-strong); box-shadow: inset 3px 0 0 var(--ivory); }
+.chant-line.fan.active button { background: var(--sky-soft); box-shadow: inset 3px 0 0 var(--sky); }
+.prev-next { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; padding-top: 12px; border-top: 1px solid var(--card-line); }
+@media (min-width: 900px) {
+  .chant-detail { display: grid; grid-template-columns: minmax(360px, 440px) 1fr; column-gap: 32px; align-items: start; }
+  .chant-side { position: sticky; top: 76px; max-height: calc(100vh - 90px); overflow-y: auto; scrollbar-width: thin; }
+  .chant-main .chant-lines { margin-top: 36px; }
+}
