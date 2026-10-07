@@ -37,7 +37,7 @@ export const TOURS = [
     name: 'ACT : SWEET MIRAGE',
     full: 'TOMORROW X TOGETHER WORLD TOUR <ACT : SWEET MIRAGE>',
     years: '2023',
-    theme: { bg: '#a95d65', accent: '#f8eee2', ink: '#fff3e6', tabInk: '#8e4650', glow: '#d58a8e', logo: '/images/tours/act-sweet-mirage-logo-v2.webp', poster: '/images/tours/act-sweet-mirage-poster.webp' },
+    theme: { bg: '#a95d65', accent: '#f8eee2', ink: '#fff3e6', tabInk: '#8e4650', glow: '#d58a8e', logo: '/images/tours/act-sweet-mirage-logo-v3.webp', poster: '/images/tours/act-sweet-mirage-poster.webp' },
   },
   {
     key: 'act-love-sick',
