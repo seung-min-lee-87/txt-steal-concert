@@ -520,3 +520,10 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .video-wait-label small { font-weight: 500; font-size: 12px; opacity: .85; }
 .transport.is-hidden { display: none; }
 .gp-video.page { display: none; }
+
+/* 새 앨범 카드 */
+.news.has-logo { background: linear-gradient(160deg, #1b1b1b, #0e0e0e); border-color: rgba(255,255,255,.12); }
+.news-logo { display: block; width: 100%; max-width: 360px; height: auto; margin: 10px 0 8px; }
+.news-dday { margin-left: 8px; padding: 1px 8px; border-radius: 999px; background: var(--ivory); color: #111; font-weight: 700; }
+.news-links { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+.btn.presave { background: #1ed760; color: #06210f; border: 0; text-decoration: none; font-weight: 700; }

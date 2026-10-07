@@ -51,12 +51,9 @@ export const ALBUM_NEWS = [
     title: 'PERFECT STORM',
     kind: '미니 9집',
     date: '2026-11-16',
+    upcoming: true,
+    logo: '/images/perfect-storm-logo.webp',
     text: '서울 공연 다음 날 발매. 6곡 수록 예정.',
-  },
-  {
-    title: '7TH YEAR: When the Wind Briefly Stilled in the Thorns',
-    kind: '미니 8집',
-    date: '2026-04-13',
-    text: '타이틀곡 「하루에 하루만 더 (Stick With You)」. 이번 투어에서 처음 라이브로 부를 가능성이 높음.',
+    links: [{ label: 'Spotify 프리세이브', url: 'https://open.spotify.com/prerelease/44rCERevbz2R43ePnAggT7' }],
   },
 ]

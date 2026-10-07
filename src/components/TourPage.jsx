@@ -122,12 +122,23 @@ export default function TourPage({ go }) {
       <h2 className="section-title">새 앨범 체크 <span className="en">New Music</span></h2>
       <div className="news-list">
         {ALBUM_NEWS.map((a) => (
-          <article key={a.title} className="card news">
+          <article key={a.title} className={'card news' + (a.logo ? ' has-logo' : '')}>
             <p className="news-kind">
-              {a.kind} · {prettyDate(a.date)}
+              {a.kind} · {a.upcoming ? '발매 예정 ' : ''}
+              {prettyDate(a.date)}
+              {a.upcoming && a.date >= today && <span className="news-dday">{dDay(a.date)}</span>}
             </p>
-            <h3>{a.title}</h3>
+            {a.logo ? <img className="news-logo" src={a.logo} alt={a.title} /> : <h3>{a.title}</h3>}
             <p>{a.text}</p>
+            {a.links && (
+              <div className="news-links">
+                {a.links.map((l) => (
+                  <a key={l.url} className="btn small presave" href={l.url} target="_blank" rel="noreferrer">
+                    🎧 {l.label} ↗
+                  </a>
+                ))}
+              </div>
+            )}
           </article>
         ))}
       </div>
