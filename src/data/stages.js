@@ -7,7 +7,7 @@ export const STAGES = {
   'crown': [{ id: 'KjFowwKfVuI', show: '뮤직뱅크', date: '2019-03-29' }, { id: '9nwyKQVUwD0', show: '엠카운트다운', date: '2019-03-21' }],
   'cat-dog': [{ id: 'IzWug96-zNE', show: '뮤직뱅크', date: '2019-05-03' }, { id: 'dWHAiC9G1eE', show: '엠카운트다운', date: '2019-05-02' }],
   'new-rules': [{ id: 'HMG67w8yQ_c', show: '뮤직뱅크', date: '2019-12-20' }],
-  'run-away': [{ id: 'ZGuYGJ7Liss', show: '뮤직뱅크', date: '2019-11-15' }, { id: 'y_VESOhq3tY', show: '엠카운트다운', date: '2019-11-07' }],
+  'run-away': [{ id: 'ZGuYGJ7Liss', show: '뮤직뱅크', date: '2019-11-15' }],
   'angel-or-devil': [{ id: '3_FAG693htE', show: '뮤직뱅크', date: '2019-11-29' }, { id: 'L487HniOBbU', show: '엠카운트다운', date: '2019-10-24' }],
   'loser-lover': [{ id: 'YfLjfvLC0Po', show: '전국반짝투어', date: '2025-08-12' }],
   'opening-sequence': [{ id: 'CZmUIA6r5tQ', show: '뮤직뱅크', date: '2022-05-20' }],
