@@ -8,8 +8,8 @@ export const SETLISTS = [
   {
     id: 'seoul-2025',
     region: 'KR',
-    label: '서울 2025',
-    tour: 'ACT : TOMORROW',
+    label: '2025 ACT : TOMORROW 서울',
+    tour: 'TOMORROW X TOGETHER WORLD TOUR <ACT : TOMORROW>',
     date: '2025-08-22',
     venue: '고척스카이돔',
     groups: [
@@ -42,8 +42,8 @@ export const SETLISTS = [
   {
     id: 'tokyo-2026',
     region: 'JP',
-    label: '도쿄돔 2026',
-    tour: 'ACT : TOMORROW in JAPAN',
+    label: '2026 ACT : TOMORROW 도쿄',
+    tour: 'TOMORROW X TOGETHER WORLD TOUR <ACT : TOMORROW> IN JAPAN',
     date: '2026-01-21',
     venue: 'Tokyo Dome',
     groups: [

@@ -204,7 +204,7 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--muted); margin: 8px 0 16px; }
 
 /* 탭 */
-.tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin: 8px 0 12px; scrollbar-width: none; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 4px; margin: 8px 0 12px; }
 .tab {
   flex: 0 0 auto; border: 1px solid var(--card-line); background: transparent; color: var(--muted);
   padding: 9px 15px; border-radius: 999px; font-weight: 600; font-size: 14px;
