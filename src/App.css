@@ -28,7 +28,7 @@
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; background: var(--forest-deep); }
+html { -webkit-text-size-adjust: 100%; background: var(--forest-deep); overflow-x: clip; }
 body {
   margin: 0;
   min-height: 100vh;
@@ -63,9 +63,9 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
   background: linear-gradient(180deg, rgba(0, 24, 6, 0.96), rgba(0, 24, 6, 0.8));
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(242, 238, 226, 0.06);
-  /* 배경을 화면 양 끝까지 늘리기 */
-  box-shadow: 0 0 0 100vmax rgba(0, 24, 6, 0.9);
-  clip-path: inset(0 -100vmax);
+  /* 배경을 화면 양 끝까지 늘리고, 내용은 가운데 1088px 폭에 맞춤 */
+  width: 100vw; margin-left: calc(50% - 50vw);
+  padding-left: max(16px, calc(50vw - 544px)); padding-right: max(16px, calc(50vw - 544px));
 }
 .brand { display: flex; align-items: center; }
 .brand img { height: 34px; width: auto; display: block; }
