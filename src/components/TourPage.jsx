@@ -119,7 +119,7 @@ export default function TourPage({ go }) {
         </button>
       )}
 
-      <h2 className="section-title">새 앨범 체크 <span className="en">New Music</span></h2>
+      <h2 className="section-title">새 앨범 체크 <span className="en">New Album</span></h2>
       <div className="news-list">
         {ALBUM_NEWS.map((a) => (
           <article key={a.title} className={'card news' + (a.logo ? ' has-logo' : '')}>
