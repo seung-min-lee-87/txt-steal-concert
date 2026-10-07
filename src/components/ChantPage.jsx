@@ -65,7 +65,7 @@ function ChantList({ go }) {
       <p className="kicker">Fanchant Guide</p>
       <h1 className="page-title">응원법</h1>
       <p className="hint">
-        공식 응원법 {CHANT_ORDER.length}곡. 곡을 누르면 공식 영상과 함께 응원법을 보면서 따라 할 수 있어요.
+        공식 응원법 {CHANT_ORDER.length}곡. 곡을 누르면 공식 영상과 함께 응원법을 보면서 따라 할 수 있습니다.
       </p>
       <div className="chant-tools">
         <input
@@ -84,7 +84,7 @@ function ChantList({ go }) {
           ))}
         </div>
       </div>
-      {groups.length === 0 && <p className="hint">조건에 맞는 곡이 없어요.</p>}
+      {groups.length === 0 && <p className="hint">조건에 맞는 곡이 없습니다.</p>}
       {groups.map((g) => (
         <section key={g.album} className="set-group">
           <h3 className="album-head">
@@ -211,7 +211,7 @@ function ChantDetail({ song, go }) {
           {source ? (
             <VideoSlot sp={sp} source={source} />
           ) : (
-            <div className="card empty">이 곡은 아직 영상이 없어요.</div>
+            <div className="card empty">이 곡은 아직 영상이 없습니다.</div>
           )}
           <div className="chant-links">
             {vid && (
