@@ -53,7 +53,6 @@ export const ALBUM_NEWS = [
     date: '2026-11-16',
     upcoming: true,
     logo: '/images/perfect-storm-logo.webp',
-    text: '서울 공연 다음 날 발매. 6곡 수록 예정.',
-    links: [{ label: 'Spotify 프리세이브', url: 'https://open.spotify.com/prerelease/44rCERevbz2R43ePnAggT7' }],
+    links: [{ label: 'Spotify Pre-save', url: 'https://open.spotify.com/prerelease/44rCERevbz2R43ePnAggT7' }],
   },
 ]
