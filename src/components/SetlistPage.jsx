@@ -38,7 +38,7 @@ export default function SetlistPage({ go, hasCheer }) {
       <p className="kicker">Setlist</p>
       <h1 className="page-title">세트리스트</h1>
       <p className="hint">
-        이번 투어는 아직 시작 전이라, 지난 투어들의 서울·일본 공연을 모아뒀어요. 곡을 누르면 응원법(없으면 연습
+        이번 투어는 아직 시작 전이라, 지난 콘서트들의 서울·일본 공연을 모아뒀어요. 곡을 누르면 응원법(없으면 연습
         화면)으로 가요.
       </p>
       <Legend />
@@ -81,6 +81,13 @@ export default function SetlistPage({ go, hasCheer }) {
           <p className="setlist-meta">
             {current.tour || tour?.full} · {current.venue} · {current.date.replaceAll('-', '.')}
           </p>
+          {current.notes && (
+            <ul className="setlist-notes">
+              {current.notes.map((n) => (
+                <li key={n}>{n}</li>
+              ))}
+            </ul>
+          )}
           {(() => {
             let n = 0
             return current.groups.map((g) => (
@@ -93,7 +100,7 @@ export default function SetlistPage({ go, hasCheer }) {
                     if (!encore) n += 1
                     return (
                       <li key={g.name + i}>
-                        <SongRow song={song} go={go} num={encore ? `E${i + 1}` : n} jpVer={it.jpVer} hasCheer={hasCheer} />
+                        <SongRow song={song} go={go} num={encore ? `E${i + 1}` : n} jpVer={it.jpVer} by={it.by} hasCheer={hasCheer} />
                       </li>
                     )
                   })}
@@ -101,7 +108,9 @@ export default function SetlistPage({ go, hasCheer }) {
               </section>
             ))
           })()}
-          <p className="hint small">출처: setlist.fm·공연 후기 기사 · 앙코르는 공연 날마다 달라요. 틀린 부분이 있으면 알려주세요.</p>
+          <p className="hint small">
+            출처: {current.source || 'setlist.fm·공연 후기 기사'} · 앙코르는 공연 날마다 달라요. 틀린 부분이 있으면 알려주세요.
+          </p>
         </div>
       )}
 
@@ -139,7 +148,7 @@ export default function SetlistPage({ go, hasCheer }) {
   )
 }
 
-function SongRow({ song, go, num, jpVer, hasCheer, full = false }) {
+function SongRow({ song, go, num, jpVer, by, hasCheer, full = false }) {
   return (
     <button className="song-row" onClick={() => go(songLink(song.id))}>
       {num != null && <span className="num">{num}</span>}
@@ -147,6 +156,7 @@ function SongRow({ song, go, num, jpVer, hasCheer, full = false }) {
         <span className="song-title">
           {full ? song.title : song.short || song.title}
           {jpVer && <span className="ver"> (Japanese ver.)</span>}
+          {by && <span className="by"> ({by})</span>}
         </span>
         {full && song.album && <span className="album">{song.album}</span>}
         <Badges song={song} jpVer={jpVer} hasCheer={hasCheer(song.id)} compact={!full} />

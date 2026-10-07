@@ -1,12 +1,15 @@
-// 지난 투어 세트리스트 (서울·일본 공연만)
+// 지난 콘서트 세트리스트 (서울·일본 공연만)
 // 출처: setlist.fm 및 공연 후기 기사 (검색으로 확인). 앙코르·일부 곡은 공연 날마다 다르다.
 // 항목: { song: 곡 id, jpVer: 일본어 버전 여부 }
 // tour: 공식 투어명 / name: 짧은 이름 / year: 연도
 
 const s = (song, jpVer = false) => ({ song, jpVer })
+// by: 원곡 멤버가 아닌 다른 멤버가 부른 경우 그 멤버
+const by = (song, member) => ({ song, jpVer: false, by: member })
 const list = (...ids) => ids.map((id) => s(id))
 
 export const TOURS = [
+  { key: 'moa-con', name: 'MOA CON', full: '2026 TXT MOA CON', years: '2026' },
   { key: 'act-tomorrow', name: 'ACT : TOMORROW', full: 'TOMORROW X TOGETHER WORLD TOUR <ACT : TOMORROW>', years: '2025–2026' },
   { key: 'act-promise', name: 'ACT : PROMISE', full: 'TOMORROW X TOGETHER WORLD TOUR <ACT : PROMISE>', years: '2024' },
   { key: 'act-sweet-mirage', name: 'ACT : SWEET MIRAGE', full: 'TOMORROW X TOGETHER WORLD TOUR <ACT : SWEET MIRAGE>', years: '2023' },
@@ -15,6 +18,34 @@ export const TOURS = [
 ]
 
 export const SETLISTS = [
+  {
+    id: 'seoul-2026-moacon',
+    tourKey: 'moa-con',
+    city: '서울',
+    region: 'KR',
+    label: '2026 MOA CON 서울',
+    tour: '2026 TXT MOA CON',
+    date: '2026-02-27',
+    venue: 'KSPO DOME',
+    source: '나무위키 「2026 TXT MOA CON」 (CC BY-NC-SA 2.0 KR)',
+    notes: [
+      '공연 기간 2026.2.27–3.1 서울 KSPO DOME, 이후 일본 나고야·후나바시·후쿠오카·고베 (5–6월)',
+      '전곡 밴드 라이브',
+      '솔로 무대는 멤버끼리 솔로곡을 바꿔 불렀어요 (곡 옆 괄호가 부른 멤버)',
+      '커버 무대와 앵콜은 날마다 달랐어요',
+    ],
+    groups: [
+      { name: '본 공연', items: list('beautiful-strangers', 'good-boy-gone-bad', 'run-away', '0x1-lovesong', 'loser-lover') },
+      {
+        name: '솔로 무대',
+        items: [
+          by('bird-of-night', '휴닝카이'), by('sunday-driver', '범규'), by('dance-with-you', '연준'),
+          by('ghost-girl', '태현'), by('take-my-half', '수빈'), s('yj-coma'), s('talk-to-you'), s('panic'),
+        ],
+      },
+      { name: '후반부', items: list('geunari-omyeon', 'new-rules', 'angel-or-devil', 'upside-down-kiss', 'cwjltma', 'dear-sputnik', 'see-you-there-tomorrow') },
+    ],
+  },
   {
     id: 'seoul-2025',
     tourKey: 'act-tomorrow',

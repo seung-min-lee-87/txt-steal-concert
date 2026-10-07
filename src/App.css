@@ -434,3 +434,6 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 
 /* 투어 탭의 연도 */
 .tab-year { font-family: var(--font-label); font-size: 12px; opacity: .7; margin-right: 2px; }
+
+.setlist-notes { margin: 0 0 8px; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.by { color: var(--sky); font-weight: 600; font-size: 13px; }
