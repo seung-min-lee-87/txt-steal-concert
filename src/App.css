@@ -472,3 +472,4 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .tour-banner-poster { flex: none; width: 84px; padding: 0; border: 0; border-radius: 8px; overflow: hidden; background: none; box-shadow: 0 6px 18px rgba(0,0,0,.4); }
 .tour-banner-poster img { display: block; width: 100%; height: auto; }
 @media (min-width: 760px) { .tour-banner-poster { width: 110px; } }
+.sung-over { opacity: .55; text-decoration-thickness: 1.5px; margin-right: 2px; }

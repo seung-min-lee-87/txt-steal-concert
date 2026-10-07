@@ -45,7 +45,7 @@ export const SONGS = [
   { id: 'cat-dog', title: 'Cat & Dog', album: '꿈의 장: STAR' },
   { id: 'sweat', title: 'Sweat' },
   { id: 'kitto-zutto', title: 'きっとずっと (Kitto Zutto)', short: 'Kitto Zutto', jp: true },
-  { id: 'cant-stop', title: 'Can\'t Stop' },
+  { id: 'cant-stop', title: "Can't Stop", album: 'Starkissed (일본 정규 3집)', jp: true, title_: true },
   { id: 'hitori-no-yoru', title: 'ひとりの夜 (Hitori no Yoru)', short: 'Hitori no Yoru', jp: true },
   { id: 'new-rules', title: 'New Rules', album: '꿈의 장: MAGIC' },
   { id: 'everlasting-shine', title: 'Everlasting Shine', jp: true },

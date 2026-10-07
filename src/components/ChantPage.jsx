@@ -112,7 +112,7 @@ function ChantList({ go }) {
         </section>
       ))}
       <p className="hint small source">
-        응원법 출처: {CHANT_SOURCE} · 연준 솔로곡과 「그날이 오면」은 위버스 공식 응원법 공지
+        응원법 출처: {CHANT_SOURCE} · 연준 솔로곡·「그날이 오면」·일본곡은 공식 응원법 공지
       </p>
     </div>
   )
@@ -224,6 +224,12 @@ function ChantDetail({ song, go }) {
             </li>
             <li>
               <span className="lg member">흰 글씨</span> 멤버 파트 (듣기)
+            </li>
+            <li>
+              <span className="lg">
+                <s className="sung-over">취소선</s>
+              </span>{' '}
+              멤버 가사 위로 팬이 대신 외쳐요
             </li>
           </ul>
           {synced && vid && (

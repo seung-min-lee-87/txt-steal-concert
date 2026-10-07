@@ -18,6 +18,7 @@ export const ALBUM_COLORS = {
   '별의 장: TOGETHER': '#1447ff',
   '7TH YEAR': '#ab1461',
   'Setsuna Hanabi (일본 싱글 5집)': '#24306b',
+  'Starkissed (일본 정규 3집)': '#7b5cc4',
   "YEONJUN's Mixtape: GGUM (2024)": '#ff6fa8',
   'NO LABELS: PART 01': '#3b3b3b',
   'NO LABELS: PART 02': '#f2c94c',
