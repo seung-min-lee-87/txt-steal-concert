@@ -58,4 +58,5 @@ export const VIDEOS = {
   'yj-ice-cream': { id: 'Cu1JJrvKkv4', kind: '퍼포먼스 영상', dur: 133, mv: 'ihvuwqlGHXs' }, // 'Ice Cream' Performance Video
   'yj-fxxking-star': { id: 'wNBzt5O1iyw', kind: 'MV', dur: 184 }, // YEONJUN (연준) 'Fxxking Star' Official MV
   'geunari-omyeon': { id: 'FtEgUrOTkXM', kind: 'MV', dur: 246 }, // [언젠가는 슬기로울 전공의생활 OST Part 9] 투모로우바이투게더 - 그날이 오면 MV
+  'setsuna-hanabi': { id: 'ZwjVeGh14ys', kind: '안무 연습 영상', dur: 178, mv: 'Tg076GY2a-Q' }, // ‘セツナハナビ (Setsuna Hanabi)’ Dance Practice (Fix ver.)
 }

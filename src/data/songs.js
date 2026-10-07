@@ -103,6 +103,11 @@ export const SONGS = [
   { id: 'yj-ice-cream', title: 'Ice Cream', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02', title_: true },
   { id: 'yj-fxxking-star', title: 'Fxxking Star', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02' },
 
+  // 일본 싱글 5집 Setsuna Hanabi (2026.08.19) — 이번 일본 공연 예상 신곡
+  { id: 'setsuna-hanabi', title: 'セツナハナビ (Setsuna Hanabi)', short: 'Setsuna Hanabi', album: 'Setsuna Hanabi (일본 싱글 5집)', jp: true, title_: true, isNew: true },
+  { id: 'jp-silence', title: 'Silence', album: 'Setsuna Hanabi (일본 싱글 5집)', jp: true, isNew: true },
+  { id: 'nice-to-meet-ya', title: 'Nice to Meet Ya', album: 'Setsuna Hanabi (일본 싱글 5집)', jp: true, isNew: true },
+
   // 7TH YEAR (2026.04) — 이번 투어 예상 신곡
   { id: 'just-one-more-day', title: '하루에 하루만 더 (Stick With You)', short: '하루에 하루만 더', album: '7TH YEAR', title_: true, isNew: true },
   { id: 'bed-of-thorns', title: 'Bed of Thorns', album: '7TH YEAR', isNew: true },
