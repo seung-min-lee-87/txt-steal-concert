@@ -7,6 +7,7 @@ import { usePlayer, parseYouTubeId } from '../lib/usePlayer'
 import { activeIndex, formatTime } from '../lib/cues'
 import { loadJSON, saveJSON } from '../lib/storage'
 import Badges from './Badges'
+import AlbumChip from './AlbumChip'
 import CueText, { hasPart } from './CueText'
 import { loadSongState } from './PracticePage'
 import SyncCalibrator, { calibrate } from './SyncCalibrator'
@@ -82,7 +83,10 @@ function ChantList({ go }) {
       {groups.length === 0 && <p className="hint">조건에 맞는 곡이 없어요.</p>}
       {groups.map((g) => (
         <section key={g.album} className="set-group">
-          <h3>{g.album}</h3>
+          <h3 className="album-head">
+            <AlbumChip album={g.album === '기타' ? null : g.album} />
+            {g.album === '기타' && g.album}
+          </h3>
           <ul className="song-list">
             {g.songs.map((song) => {
               const st = loadSongState(song.id)
@@ -170,7 +174,9 @@ function ChantDetail({ song, go }) {
         </button>
         <p className="kicker">Fanchant Guide</p>
         <h1 className="page-title">{song.title}</h1>
-        <p className="chant-album">{song.album}</p>
+        <p className="chant-album">
+          <AlbumChip album={song.album} />
+        </p>
         <Badges song={song} />
 
         <div className="chant-player">

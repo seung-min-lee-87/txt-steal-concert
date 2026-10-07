@@ -8,7 +8,7 @@
 // 세트리스트 등장 여부(🔁)는 setlists.js를 보고 자동으로 계산한다.
 
 export const SONGS = [
-  { id: 'loser-lover', title: 'LO$ER=LO♡ER', album: 'The Chaos Chapter: FIGHT OR ESCAPE', title_: true },
+  { id: 'loser-lover', title: 'LO$ER=LO♡ER', album: '혼돈의 장: FIGHT OR ESCAPE', title_: true },
   { id: 'wishlist', title: 'Wishlist', album: 'minisode1 : Blue Hour' },
   { id: 'blue-hour', title: '5시 53분의 하늘에서 발견한 너와 나 (Blue Hour)', short: 'Blue Hour', album: 'minisode1 : Blue Hour', title_: true },
   { id: 'blue-orangeade', title: 'Blue Orangeade', album: '꿈의 장: STAR' },

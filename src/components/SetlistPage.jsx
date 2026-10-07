@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { SETLISTS, APPEARANCES, TOURS } from '../data/setlists'
 import { SONGS, SONG_MAP } from '../data/songs'
 import Badges, { Legend } from './Badges'
+import AlbumChip from './AlbumChip'
 import { CHANT_ORDER } from '../data/cheers'
 
 const songLink = (id) => (CHANT_ORDER.includes(id) ? `#/chant/${id}` : `#/practice/${id}`)
@@ -158,8 +159,10 @@ function SongRow({ song, go, num, jpVer, by, hasCheer, full = false }) {
           {jpVer && <span className="ver"> (Japanese ver.)</span>}
           {by && <span className="by"> ({by})</span>}
         </span>
-        {full && song.album && <span className="album">{song.album}</span>}
-        <Badges song={song} jpVer={jpVer} hasCheer={hasCheer(song.id)} compact={!full} />
+        <span className="row-meta">
+          <AlbumChip album={song.album} small />
+          <Badges song={song} jpVer={jpVer} hasCheer={hasCheer(song.id)} compact={!full} />
+        </span>
       </span>
       <span className="go">›</span>
     </button>
