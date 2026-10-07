@@ -4,7 +4,7 @@
 export const TOUR = {
   name: 'STEAL THE WIND',
   fullName: 'TOMORROW X TOGETHER WORLD TOUR <STEAL THE WIND>',
-  meaning: '"바람을 훔치다"',
+  meaning: '흐름을 내 것으로 만들다',
 }
 
 // 공연장(venue)은 공식 발표된 곳만 적었다. 비어 있으면 아직 미발표.
