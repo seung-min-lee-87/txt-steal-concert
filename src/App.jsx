@@ -4,6 +4,7 @@ import SetlistPage from './components/SetlistPage'
 import PracticePage, { loadSongState } from './components/PracticePage'
 import ChantPage from './components/ChantPage'
 import { PlayerProvider } from './lib/PlayerContext'
+import { FEATURES } from './config'
 import './App.css'
 
 // 주소 끝(#/tour, #/setlist, #/practice/곡id)으로 화면을 나눈다.
@@ -16,8 +17,8 @@ const NAV = [
   { page: 'tour', icon: '🌬️', label: '투어' },
   { page: 'setlist', icon: '🎵', label: '세트리스트' },
   { page: 'chant', icon: '📣', label: '응원법' },
-  { page: 'practice', icon: '🎧', label: '연습' },
-]
+  { page: 'practice', icon: '🎧', label: '연습', hidden: !FEATURES.practice },
+].filter((n) => !n.hidden)
 
 export default function App() {
   const [route, setRoute] = useState(readRoute)

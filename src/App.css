@@ -532,3 +532,5 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .news-links { display: flex; flex-wrap: wrap; gap: 6px; }
 .btn.presave { background: #1ed760; color: #06210f; border: 0; text-decoration: none; font-weight: 700; }
 .news .news-text { margin: 12px 0 0; font-size: 13px; }
+.song-row.no-link { cursor: default; }
+.song-row.no-link:hover { border-color: var(--card-line); background: var(--card); }

@@ -4,8 +4,10 @@ import { SONGS, SONG_MAP } from '../data/songs'
 import Badges, { Legend } from './Badges'
 import AlbumChip from './AlbumChip'
 import { CHANT_ORDER } from '../data/cheers'
+import { FEATURES } from '../config'
 
-const songLink = (id) => (CHANT_ORDER.includes(id) ? `#/chant/${id}` : `#/practice/${id}`)
+// 응원법이 있으면 응원법 화면, 없으면 연습 화면 (연습 모드를 숨겼으면 누를 수 없음)
+const songLink = (id) => (CHANT_ORDER.includes(id) ? `#/chant/${id}` : FEATURES.practice ? `#/practice/${id}` : null)
 
 const FILTERS = [
   { id: 'all', label: '전체' },
@@ -40,8 +42,9 @@ export default function SetlistPage({ go, hasCheer }) {
       <p className="kicker">Setlist</p>
       <h1 className="page-title">세트리스트</h1>
       <p className="hint">
-        이번 투어는 아직 시작 전이라, 지난 콘서트들의 서울·일본 공연을 모아뒀어요. 곡을 누르면 응원법(없으면 연습
-        화면)으로 가요.
+        이번 투어는 아직 시작 전이라, 지난 콘서트들의 서울·일본 공연을 모아뒀어요. {FEATURES.practice
+          ? '곡을 누르면 응원법(없으면 연습 화면)으로 가요.'
+          : '응원법이 있는 곡(📣)을 누르면 응원법 화면으로 가요.'}
       </p>
       <Legend />
 
@@ -159,8 +162,10 @@ export default function SetlistPage({ go, hasCheer }) {
 }
 
 function SongRow({ song, go, num, jpVer, by, hasCheer, full = false }) {
+  const link = songLink(song.id)
+  const Row = link ? 'button' : 'div'
   return (
-    <button className="song-row" onClick={() => go(songLink(song.id))}>
+    <Row className={'song-row' + (link ? '' : ' no-link')} onClick={link ? () => go(link) : undefined}>
       {num != null && <span className="num">{num}</span>}
       <span className="song-main">
         <span className="song-title">
@@ -173,8 +178,8 @@ function SongRow({ song, go, num, jpVer, by, hasCheer, full = false }) {
           <Badges song={song} jpVer={jpVer} hasCheer={hasCheer(song.id)} compact={!full} />
         </span>
       </span>
-      <span className="go">›</span>
-    </button>
+      {link && <span className="go">›</span>}
+    </Row>
   )
 }
 

@@ -6,6 +6,7 @@ import { VIDEOS } from '../data/videos'
 import { parseYouTubeId } from '../lib/usePlayer'
 import { useSongPlayer } from '../lib/PlayerContext'
 import VideoSlot from './VideoSlot'
+import { FEATURES } from '../config'
 import { activeIndex, formatTime } from '../lib/cues'
 import { loadJSON, saveJSON } from '../lib/storage'
 import Badges from './Badges'
@@ -198,7 +199,7 @@ function ChantDetail({ song, go }) {
           {source ? (
             <VideoSlot sp={sp} source={source} />
           ) : (
-            <div className="card empty">이 곡은 아직 영상이 없어요. 연습 모드에서 유튜브 주소를 넣을 수 있어요.</div>
+            <div className="card empty">이 곡은 아직 영상이 없어요.</div>
           )}
           <div className="chant-links">
             {vid && (
@@ -209,9 +210,11 @@ function ChantDetail({ song, go }) {
             <a className="btn small" href={melonUrl(song)} target="_blank" rel="noreferrer">
               🍈 멜론 ↗
             </a>
-            <button className="btn small primary" onClick={() => go(`#/practice/${song.id}`)}>
-              📣 연습 모드
-            </button>
+            {FEATURES.practice && (
+              <button className="btn small primary" onClick={() => go(`#/practice/${song.id}`)}>
+                📣 연습 모드
+              </button>
+            )}
           </div>
         </div>
 
