@@ -16,19 +16,9 @@ const FILTERS = [
   { id: 'cheer', label: '📣 준비됨' },
 ]
 
-const MEMBERS = ['수빈', '연준', '범규', '태현', '휴닝카이']
-
-// 솔로곡이 실린 앨범 (발매 순)
-const SOLO_ALBUM_ORDER = [
-  "YEONJUN's Mixtape: GGUM (2024)",
-  "BEOMGYU's Mixtape: Panic (2025)",
-  '별의 장: TOGETHER',
-  'NO LABELS: PART 01',
-  'NO LABELS: PART 02',
-]
 
 export default function SetlistPage({ go, hasCheer }) {
-  // tab: 투어 key | 'all'(곡 모아보기) | 'solo'(멤버 솔로)
+  // tab: 투어 key | 'all'(곡 모아보기)
   const [tab, setTab] = useState(TOURS[0].key)
   const [showId, setShowId] = useState(null)
   const [filter, setFilter] = useState('all')
@@ -65,14 +55,6 @@ export default function SetlistPage({ go, hasCheer }) {
             <span className="tab-year">{t.years}</span> {t.name}
           </button>
         ))}
-        <button
-          role="tab"
-          aria-selected={tab === 'solo'}
-          className={'tab' + (tab === 'solo' ? ' on' : '')}
-          onClick={() => pickTour('solo')}
-        >
-          🎤 멤버 솔로
-        </button>
         <button
           role="tab"
           aria-selected={tab === 'all'}
@@ -120,38 +102,6 @@ export default function SetlistPage({ go, hasCheer }) {
             ))
           })()}
           <p className="hint small">출처: setlist.fm·공연 후기 기사 · 앙코르는 공연 날마다 달라요. 틀린 부분이 있으면 알려주세요.</p>
-        </div>
-      )}
-
-      {tab === 'solo' && (
-        <div className="setlist">
-          <p className="hint">멤버별 솔로곡이에요. 개인 앨범·믹스테이프와 그룹 앨범에 실린 솔로곡을 함께 모았어요.</p>
-          {MEMBERS.map((m) => {
-            const songs = SONGS.filter((s) => s.solo === m)
-            if (!songs.length) return null
-            // 앨범별로 묶어서 발매 순서대로, 앨범 안에서는 타이틀곡 먼저
-            const albums = SOLO_ALBUM_ORDER.map((album) => ({
-              album,
-              songs: songs.filter((s) => s.album === album).sort((x, y) => (y.title_ ? 1 : 0) - (x.title_ ? 1 : 0)),
-            })).filter((a) => a.songs.length)
-            return (
-              <section key={m} className="member-block">
-                <h2 className="section-title">{m}</h2>
-                {albums.map((a) => (
-                  <div key={a.album} className="set-group">
-                    <h3>{a.album}</h3>
-                    <ul className="song-list">
-                      {a.songs.map((song) => (
-                        <li key={song.id}>
-                          <SongRow song={song} go={go} hasCheer={hasCheer} />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </section>
-            )
-          })}
         </div>
       )}
 

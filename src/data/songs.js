@@ -91,20 +91,11 @@ export const SONGS = [
   { id: 'hydrangea-love', title: 'Hydrangea Love', jp: true },
   { id: 'ito', title: 'Ito', jp: true },
 
-  // 멤버 솔로 (개인 앨범·믹스테이프)
+  // 연준 솔로 (응원법이 있는 곡만)
   { id: 'ggum', title: 'GGUM', solo: '연준', soloAlbum: true, album: "YEONJUN's Mixtape: GGUM (2024)", title_: true },
-  { id: 'yj-forever', title: 'Forever', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 01' },
-  { id: 'yj-let-me-tell-you', title: 'Let Me Tell You (feat. Daniela of KATSEYE)', short: 'Let Me Tell You', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 01' },
-  { id: 'yj-do-it', title: 'Do It', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 01' },
-  { id: 'yj-nothin-bout-me', title: "Nothin' 'Bout Me", solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 01' },
   { id: 'yj-coma', title: 'Coma', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 01' },
   { id: 'yj-ice-cream', title: 'Ice Cream', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02', title_: true },
-  { id: 'yj-vanilla', title: 'Vanilla', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02' },
-  { id: 'yj-baby-wassup', title: 'Baby Wassup?', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02' },
-  { id: 'yj-no-more-disco', title: 'No More Disco', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02' },
   { id: 'yj-fxxking-star', title: 'Fxxking Star', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02' },
-  { id: 'yj-long-way-long-ride', title: 'Long Way Long Ride', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02' },
-  { id: 'panic', title: 'Panic', solo: '범규', soloAlbum: true, album: "BEOMGYU's Mixtape: Panic (2025)", title_: true },
 
   // 7TH YEAR (2026.04) — 이번 투어 예상 신곡
   { id: 'just-one-more-day', title: '하루에 하루만 더 (Stick With You)', short: '하루에 하루만 더', album: '7TH YEAR', title_: true, isNew: true },
