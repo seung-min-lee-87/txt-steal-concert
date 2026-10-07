@@ -65,13 +65,6 @@ export const SETLISTS = [
     tour: '2026 TXT MOA CON',
     date: '2026-02-27',
     venue: 'KSPO DOME',
-    source: '나무위키 「2026 TXT MOA CON」 (CC BY-NC-SA 2.0 KR)',
-    notes: [
-      '공연 기간 2026.2.27–3.1 서울 KSPO DOME, 이후 일본 나고야·후나바시·후쿠오카·고베 (5–6월)',
-      '전곡 밴드 라이브',
-      '솔로 무대는 멤버끼리 솔로곡을 바꿔 불렀어요 (곡 옆 괄호가 부른 멤버)',
-      '커버 무대와 앵콜은 날마다 달랐어요',
-    ],
     groups: [
       { name: '본 공연', items: list('beautiful-strangers', 'good-boy-gone-bad', 'run-away', '0x1-lovesong', 'loser-lover') },
       {
