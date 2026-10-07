@@ -33,7 +33,7 @@ export function videoOffset(songId, state, vid) {
 
 export function chantMeta(id) {
   const s = CHANTS.songs[id]
-  return s ? { anchor: s.anchor ?? 0, duration: s.duration } : null
+  return s ? { anchor: s.anchor ?? 0, duration: s.duration, source: s.source || CHANTS.source } : null
 }
 
 export const DEFAULT_CHEERS = {}

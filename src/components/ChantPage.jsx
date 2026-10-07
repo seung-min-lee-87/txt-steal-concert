@@ -107,7 +107,9 @@ function ChantList({ go }) {
           </ul>
         </section>
       ))}
-      <p className="hint small source">응원법 출처: {CHANT_SOURCE}</p>
+      <p className="hint small source">
+        응원법 출처: {CHANT_SOURCE} · 연준 솔로곡은 위버스 공식 공지 「연준 응원법 안내」
+      </p>
     </div>
   )
 }
@@ -275,7 +277,7 @@ function ChantDetail({ song, go }) {
           )}
         </nav>
         <p className="hint small source">
-          응원법 출처: {CHANT_SOURCE}
+          응원법 출처: {meta?.source || CHANT_SOURCE}
           <br />
           {TIMING_SOURCE}
         </p>

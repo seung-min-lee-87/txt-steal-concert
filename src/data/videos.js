@@ -20,7 +20,6 @@ export const VIDEOS = {
   'sunday-driver': { id: 'o9thOizwRW4', kind: 'MV', dur: 187 }, // 수빈 (SOOBIN) 'Sunday Driver' Official MV
   'dance-with-you': { id: 'zOaZ_MoV18U', kind: 'MV', dur: 164 }, // 휴닝카이 (HUENINGKAI) 'Dance With You' Official MV
   'ghost-girl': { id: 'tA48jeiyRaw', kind: 'MV', dur: 199 }, // 연준 (YEONJUN) ‘Ghost Girl’ Official MV
-  'talk-to-you': { id: 'NIGA89HGTBU', kind: '퍼포먼스 영상', dur: 181 }, // 'Talk to You' Performance Video | NO LABELS: PART 01 | 연준 (YEONJUN)
   'take-my-half': { id: 'VNWX3qWBd-A', kind: 'MV', dur: 194 }, // 범규 (BEOMGYU) 'Take My Half' Official MV
   'where-do-you-go': { id: '4-U5xMpVeBw', kind: 'MV', dur: 204 }, // TXT (투모로우바이투게더) 'Where Do You Go?' Official MV
   'deja-vu': { id: 'DiHUEWBRQEI', kind: 'MV', dur: 241 }, // TXT (투모로우바이투게더) 'Deja Vu' Official MV
@@ -53,4 +52,9 @@ export const VIDEOS = {
   'new-rules': { id: 'YVAEyZ35_ew', kind: '안무 연습 영상', dur: 173 }, // TXT (투모로우바이투게더) ‘New Rules’ Dance Practice
   'drama': { id: '9bGCUD2-0J4', kind: '안무 연습 영상', dur: 217 }, // TXT (투모로우바이투게더) ‘Drama’ Dance Practice
   'no-rules': { id: 'lDRkALaSjzU', kind: '안무 연습 영상', dur: 195 }, // TXT (투모로우바이투게더) ‘No Rules’ Dance Practice
+  'ggum': { id: '1T9tLMh99Wo', kind: 'MV', dur: 164 }, // 연준 (YEONJUN) ‘GGUM’ Official MV
+  'talk-to-you': { id: 'NIGA89HGTBU', kind: '퍼포먼스 영상', dur: 181 }, // 'Talk to You' Performance Video | NO LABELS: PART 01
+  'yj-coma': { id: 'bwuOE9YdG9M', kind: '퍼포먼스 영상', dur: 161 }, // 'Coma' Performance Video | NO LABELS: PART 01
+  'yj-ice-cream': { id: 'Cu1JJrvKkv4', kind: '퍼포먼스 영상', dur: 133, mv: 'ihvuwqlGHXs' }, // 'Ice Cream' Performance Video
+  'yj-fxxking-star': { id: 'wNBzt5O1iyw', kind: 'MV', dur: 184 }, // YEONJUN (연준) 'Fxxking Star' Official MV
 }
