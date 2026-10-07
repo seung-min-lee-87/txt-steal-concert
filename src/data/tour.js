@@ -4,7 +4,7 @@
 export const TOUR = {
   name: 'STEAL THE WIND',
   fullName: 'TOMORROW X TOGETHER WORLD TOUR <STEAL THE WIND>',
-  meaning: '"바람을 훔치다" — 흐름을 내 것으로 만든다는 뜻',
+  meaning: '"바람을 훔치다"',
 }
 
 export const SHOWS = [
