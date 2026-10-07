@@ -66,10 +66,7 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        <p className="footer-notice">
-          ⚠️ 세트리스트·응원법·한국어 발음·싱크 정보가 틀릴 수 있어요. 틀린 부분을 발견하면 알려주세요!
-        </p>
-        개인이 만든 비영리 비공식 팬 페이지예요. 아티스트·소속사와 관계없으며, 이미지·영상·가사의 저작권은 BIGHIT MUSIC에 있어요. 응원법 정리는 나무위키 문서(CC BY-NC-SA 2.0 KR)를 바탕으로 했어요.
+        이 사이트는 투바투 늦덕이 콘서트 대비 응원 연습을 위해 임의로 만든 비영리 비공식 팬 페이지입니다. 이미지·영상·가사의 저작권은 BIGHIT MUSIC에 있으며, 응원법은 공식사이트, weverse, 나무위키 문서 등을 참고했습니다.
       </footer>
 
       <nav className="bottomnav">

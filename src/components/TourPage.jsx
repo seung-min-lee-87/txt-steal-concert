@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { ALBUM_NEWS, SHOWS, TOUR } from '../data/tour'
+import { useEffect, useRef, useState } from 'react'
+import { ALBUM_NEWS, FLAGS, SHOWS, TOUR } from '../data/tour'
 import { loadJSON, saveJSON } from '../lib/storage'
 
 const POSTERS = [
@@ -21,6 +21,21 @@ function dDay(date) {
   return diff > 0 ? `D-${diff}` : `D+${-diff}`
 }
 
+const AREAS = [
+  { id: 'Korea', label: '한국' },
+  { id: 'Japan', label: '일본' },
+  { id: 'Asia', label: '아시아' },
+  { id: 'North America', label: '북미' },
+  { id: 'Europe', label: '유럽' },
+]
+
+// '2026-11-21' ~ '2026-11-22' → '11.21–22', 하루면 '3.13'
+function shortRange(dates) {
+  const [a, b] = [dates[0], dates[dates.length - 1]].map((d) => d.slice(5).split('-').map(Number))
+  if (dates.length === 1) return `${a[0]}.${a[1]}`
+  return a[0] === b[0] ? `${a[0]}.${a[1]}–${b[1]}` : `${a[0]}.${a[1]}–${b[0]}.${b[1]}`
+}
+
 function prettyDate(date) {
   const d = new Date(date + 'T00:00:00')
   return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} (${WEEK[d.getDay()]})`
@@ -40,6 +55,17 @@ export default function TourPage({ go }) {
   const allDates = SHOWS.flatMap((s) => s.dates.map((d) => ({ date: d, show: s })))
   const mine = allDates.filter((x) => going[x.date])
   const upcoming = (mine.length ? mine : allDates).find((x) => x.date >= today)
+
+  // 위에는 가까운 3개 도시만 크게, 나머지는 작은 배너로
+  const next = SHOWS.filter((s) => s.dates[s.dates.length - 1] >= today)
+  const featured = (next.length ? next : SHOWS).slice(0, 3)
+  const others = SHOWS.filter((s) => !featured.includes(s))
+  const [picked, setPicked] = useState(null)
+  const pickedShow = others.find((s) => s.id === picked)
+  const pickedRef = useRef(null)
+  useEffect(() => {
+    if (picked) pickedRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  }, [picked])
 
   return (
     <div className="page">
@@ -75,35 +101,50 @@ export default function TourPage({ go }) {
         </div>
       </section>
 
-      <h2 className="section-title">공연 일정 <span className="en">Seoul &amp; Japan</span></h2>
+      <h2 className="section-title">공연 일정 <span className="en">World Tour</span></h2>
       <p className="hint">내가 가는 날을 눌러 표시해두면 위 카운트다운이 그 날짜로 바뀌어요.</p>
       <div className="show-grid">
-        {SHOWS.map((show) => (
-          <article key={show.id} className={'card show ' + show.region.toLowerCase()}>
-            <div className="show-head">
-              <span className="flag">{show.region === 'KR' ? '🇰🇷' : '🇯🇵'}</span>
-              <div>
-                <h3>{show.city}</h3>
-                <p className="venue">{show.venue}</p>
-              </div>
-            </div>
-            <div className="dates">
-              {show.dates.map((d) => (
-                <button
-                  key={d}
-                  className={'date-chip' + (going[d] ? ' on' : '') + (d < today ? ' past' : '')}
-                  onClick={() => toggle(d)}
-                  aria-pressed={!!going[d]}
-                >
-                  <span>{prettyDate(d)}</span>
-                  <span className="chip-d">{going[d] ? '✔ 가요' : dDay(d)}</span>
-                </button>
-              ))}
-            </div>
-            {show.note && <p className="show-note">{show.note}</p>}
-          </article>
+        {featured.map((show) => (
+          <ShowCard key={show.id} show={show} going={going} toggle={toggle} today={today} />
         ))}
       </div>
+
+      <h3 className="sub-title">다른 도시 <span className="en">More Cities</span></h3>
+      <div className="city-areas">
+        {AREAS.map((area) => {
+          const list = others.filter((s) => s.area === area.id)
+          if (!list.length) return null
+          return (
+            <div key={area.id} className="city-area">
+              <span className="city-area-label">{area.label}</span>
+              <div className="city-chips">
+                {list.map((show) => (
+                  <button
+                    key={show.id}
+                    className={
+                      'city-chip' +
+                      (picked === show.id ? ' on' : '') +
+                      (show.dates.some((d) => going[d]) ? ' going' : '') +
+                      (show.dates[show.dates.length - 1] < today ? ' past' : '')
+                    }
+                    onClick={() => setPicked(picked === show.id ? null : show.id)}
+                    aria-expanded={picked === show.id}
+                  >
+                    <span aria-hidden="true">{FLAGS[show.region]}</span> {show.city}
+                    <span className="city-chip-date">{shortRange(show.dates)}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+      {pickedShow && (
+        <div className="show-grid picked-show" ref={pickedRef}>
+          <ShowCard show={pickedShow} going={going} toggle={toggle} today={today} />
+        </div>
+      )}
+      <p className="hint">AND MORE — 추가 공연은 발표되는 대로 넣을게요.</p>
 
       <h2 className="section-title">공식 포스터 <span className="en">Key Visual</span></h2>
       <div className="posters">
@@ -149,20 +190,34 @@ export default function TourPage({ go }) {
         ))}
       </div>
 
-      <h2 className="section-title">참고 링크 <span className="en">Links</span></h2>
-      <div className="links">
-        <a className="card link" href="https://ibighit.com/en/txt/tour/" target="_blank" rel="noreferrer">
-          🖼️ 공식 투어 페이지 (포스터·공지)
-        </a>
-        <a
-          className="card link"
-          href="https://namu.wiki/w/%ED%88%AC%EB%AA%A8%EB%A1%9C%EC%9A%B0%EB%B0%94%EC%9D%B4%ED%88%AC%EA%B2%8C%EB%8D%94/%EC%9D%91%EC%9B%90%EB%B2%95"
-          target="_blank"
-          rel="noreferrer"
-        >
-          📖 나무위키 응원법 모음
-        </a>
-      </div>
     </div>
+  )
+}
+
+function ShowCard({ show, going, toggle, today }) {
+  return (
+    <article className={'card show ' + show.region.toLowerCase()}>
+      <div className="show-head">
+        <span className="flag">{FLAGS[show.region]}</span>
+        <div>
+          <h3>{show.city}</h3>
+          <p className="venue">{show.venue || '공연장 발표 전'}</p>
+        </div>
+      </div>
+      <div className="dates">
+        {show.dates.map((d) => (
+          <button
+            key={d}
+            className={'date-chip' + (going[d] ? ' on' : '') + (d < today ? ' past' : '')}
+            onClick={() => toggle(d)}
+            aria-pressed={!!going[d]}
+          >
+            <span>{prettyDate(d)}</span>
+            <span className="chip-d">{going[d] ? '✔ 가요' : dDay(d)}</span>
+          </button>
+        ))}
+      </div>
+      {show.note && <p className="show-note">{show.note}</p>}
+    </article>
   )
 }
