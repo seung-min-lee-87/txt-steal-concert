@@ -479,3 +479,5 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .chant-line.fan .pron, .cue.fan .pron { color: rgba(125,188,255,.75); }
 .pron .fan-part { font-weight: 700; }
 .now-text .pron { font-size: .55em; margin-top: 6px; }
+
+.footer-notice { margin: 0 0 8px; color: var(--ivory); font-size: 13px; font-weight: 600; }
