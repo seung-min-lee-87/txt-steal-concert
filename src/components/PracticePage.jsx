@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { SONGS, SONG_MAP } from '../data/songs'
 import { APPEARANCES } from '../data/setlists'
-import { DEFAULT_CHEERS } from '../data/cheers'
+import { DEFAULT_CHEERS, videoOffset } from '../data/cheers'
 import { loadJSON, saveJSON, putAudio, getAudio, deleteAudio } from '../lib/storage'
 import { usePlayer, parseYouTubeId } from '../lib/usePlayer'
 import { activeIndex, nextTime, formatTime } from '../lib/cues'
@@ -9,6 +9,8 @@ import Badges from './Badges'
 import CueEditor from './CueEditor'
 import CueText, { hasPart } from './CueText'
 import BundleCard from './BundleCard'
+import SyncCalibrator from './SyncCalibrator'
+import { chantMeta } from '../data/cheers'
 
 const RATES = [0.5, 0.75, 1, 1.25]
 
@@ -20,7 +22,11 @@ export function loadSongState(id) {
     ...base,
     ...mine,
     youtube: mine.youtube || base.youtube,
-    cues: mine.cues?.length ? mine.cues : base.cues,
+    // 내 응원법이 있어도 싱크(시간)가 하나도 없고 기본값엔 있으면, 시간이 있는 기본값을 쓴다
+    cues:
+      mine.cues?.length && (mine.cues.some((c) => c.t != null) || !base.cues.some((c) => c.t != null))
+        ? mine.cues
+        : base.cues,
   }
 }
 
@@ -86,6 +92,7 @@ function Practice({ song, go, onSaved }) {
   const [loopIdx, setLoopIdx] = useState(null)
   const [hide, setHide] = useState(false)
   const [peek, setPeek] = useState({})
+  const [calibrating, setCalibrating] = useState(false)
   const listRef = useRef(null)
 
   const update = useCallback(
@@ -120,7 +127,15 @@ function Practice({ song, go, onSaved }) {
 
   const player = usePlayer(source)
   const { time, playing, duration, play, pause, seek, setRate, getTime } = player
-  const offset = state.offset || 0
+  // 유튜브는 영상별 보정값, 내 음악 파일은 state.offset
+  const offset = source?.type === 'youtube' ? videoOffset(song.id, state, ytId).offset : state.offset || 0
+  const setOffset = useCallback(
+    (n) =>
+      source?.type === 'youtube'
+        ? update({ offsets: { ...state.offsets, [ytId]: n }, offset: n })
+        : update({ offset: n }),
+    [source?.type, ytId, state.offsets, update],
+  )
   const t = time + offset
   const cues = state.cues
   const active = activeIndex(cues, t)
@@ -360,6 +375,22 @@ function Practice({ song, go, onSaved }) {
                 </div>
               ) : (
                 <>
+                  {source?.type === 'youtube' && timed && (calibrating || !videoOffset(song.id, state, ytId).sure) && (
+                    <div className="card">
+                      <SyncCalibrator
+                        anchor={
+                          (chantMeta(song.id) && cues[chantMeta(song.id).anchor]?.t != null && cues[chantMeta(song.id).anchor]) ||
+                          cues.find((c) => c.t != null && !c.fan)
+                        }
+                        player={player}
+                        offset={offset}
+                        sure={videoOffset(song.id, state, ytId).sure}
+                        setOffset={setOffset}
+                        calibrating
+                        setCalibrating={setCalibrating}
+                      />
+                    </div>
+                  )}
                   <div className={'now card' + (cur?.fan ? ' fan' : cur && hasPart(cur.text) ? ' part' : '')}>
                     <p className="now-label">
                       {!timed
@@ -430,7 +461,7 @@ function Practice({ song, go, onSaved }) {
           )}
 
           {mode === 'edit' && (
-            <CueEditor song={song} state={state} update={update} player={player} t={t} />
+            <CueEditor song={song} state={state} update={update} player={player} t={t} offset={offset} setOffset={setOffset} />
           )}
         </div>
       </div>

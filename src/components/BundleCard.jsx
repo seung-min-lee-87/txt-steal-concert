@@ -38,6 +38,7 @@ export default function BundleCard({ onSaved }) {
         cues: v.cues,
         ...(v.youtube && !mine.youtube ? { youtube: v.youtube } : {}),
         ...(v.offset != null ? { offset: v.offset } : {}),
+        ...(v.offsets ? { offsets: { ...mine.offsets, ...v.offsets } } : {}),
       })
       count++
     }
@@ -49,7 +50,7 @@ export default function BundleCard({ onSaved }) {
     const songs = {}
     for (const s of SONGS) {
       const v = loadJSON('song:' + s.id, null)
-      if (v?.cues?.length) songs[s.id] = { cues: v.cues, youtube: v.youtube || '', offset: v.offset || 0 }
+      if (v?.cues?.length || v?.offsets) songs[s.id] = { cues: v.cues || [], youtube: v.youtube || '', offset: v.offset || 0, offsets: v.offsets || {} }
     }
     const blob = new Blob([JSON.stringify({ format: 'stw-cheers', songs }, null, 1)], { type: 'application/json' })
     const a = document.createElement('a')

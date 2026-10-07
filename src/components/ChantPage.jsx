@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { SONG_MAP } from '../data/songs'
 import { APPEARANCES } from '../data/setlists'
-import { CHANT_ORDER, CHANT_SOURCE } from '../data/cheers'
+import { CHANT_ORDER, CHANT_SOURCE, TIMING_SOURCE, chantMeta, videoOffset } from '../data/cheers'
 import { VIDEOS } from '../data/videos'
 import { usePlayer, parseYouTubeId } from '../lib/usePlayer'
-import { activeIndex } from '../lib/cues'
+import { activeIndex, formatTime } from '../lib/cues'
 import { loadJSON, saveJSON } from '../lib/storage'
 import Badges from './Badges'
 import CueText, { hasPart } from './CueText'
 import { loadSongState } from './PracticePage'
+import SyncCalibrator, { calibrate } from './SyncCalibrator'
 
 const FILTERS = [
   { id: 'all', label: '전체' },
@@ -112,31 +113,47 @@ function ChantList({ go }) {
 }
 
 function ChantDetail({ song, go }) {
-  const state = loadSongState(song.id)
-  const cues = state.cues
-  const offset = state.offset || 0
-  const synced = cues.some((c) => c.t != null)
-  const ytId = parseYouTubeId(state.youtube)
-  const source = useMemo(() => (ytId ? { type: 'youtube', id: ytId } : null), [ytId])
+  const [state, setState] = useState(() => loadSongState(song.id))
+  const video = VIDEOS[song.id]
+  const [which, setWhich] = useState('main') // main: 연습용(음원 길이) 영상, mv: 공식 MV
+  const vid = which === 'mv' && video?.mv ? video.mv : parseYouTubeId(state.youtube)
+  const source = useMemo(() => (vid ? { type: 'youtube', id: vid } : null), [vid])
   const player = usePlayer(source)
+  const cues = state.cues
+  const synced = cues.some((c) => c.t != null)
+  const { offset, sure } = videoOffset(song.id, state, vid)
+  const [calibrating, setCalibrating] = useState(false)
   const [follow, setFollow] = useState(() => loadJSON('chant-follow', true))
   const listRef = useRef(null)
   const t = player.time + offset
-  const active = synced ? activeIndex(cues, t) : -1
+  const active = synced && (sure || !calibrating) ? activeIndex(cues, t) : -1
+
+  // 한 번에 맞추기 기준 줄: 첫 번째 가사 줄
+  const meta = chantMeta(song.id)
+  const anchor =
+    (meta && cues[meta.anchor]?.t != null && !cues[meta.anchor].fan && cues[meta.anchor]) ||
+    cues.find((c) => c.t != null && !c.fan)
+
+  function setOffset(n) {
+    const next = { ...loadJSON('song:' + song.id, {}), offsets: { ...state.offsets, [vid]: n } }
+    // 연습 모드가 같은 영상을 쓰고 있으면 그쪽 보정값도 같이 맞춘다
+    if (vid === parseYouTubeId(state.youtube)) next.offset = n
+    saveJSON('song:' + song.id, next)
+    setState(loadSongState(song.id))
+  }
 
   const idx = CHANT_ORDER.indexOf(song.id)
   const prev = SONG_MAP[CHANT_ORDER[idx - 1]]
   const next = SONG_MAP[CHANT_ORDER[idx + 1]]
 
   useEffect(() => {
-    if (!follow || active < 0) return
-    const box = listRef.current
-    const el = box?.querySelector(`[data-idx="${active}"]`)
+    if (!follow || active < 0 || !player.playing) return
+    const el = listRef.current?.querySelector(`[data-idx="${active}"]`)
     if (!el) return
     const r = el.getBoundingClientRect()
-    // 화면 가운데 근처에 오도록 페이지를 부드럽게 스크롤
-    window.scrollBy({ top: r.top - window.innerHeight * 0.45, behavior: 'smooth' })
-  }, [active, follow])
+    // 화면 가운데 근처에 오도록 부드럽게 스크롤 (데스크톱은 응원법 칸만 스크롤)
+    window.scrollBy({ top: r.top - window.innerHeight * 0.42, behavior: 'smooth' })
+  }, [active, follow, player.playing])
 
   function toggleFollow() {
     setFollow(!follow)
@@ -146,100 +163,154 @@ function ChantDetail({ song, go }) {
   return (
     <div className="page chant-detail">
       <div className="chant-side">
-      <button className="text-link" onClick={() => go('#/chant')}>
-        ← 응원법 전체
-      </button>
-      <p className="kicker">Fanchant Guide</p>
-      <h1 className="page-title">{song.title}</h1>
-      <p className="chant-album">
-        {song.album}
-        {VIDEOS[song.id] && ` · 영상: ${VIDEOS[song.id].kind}`}
-      </p>
-      <Badges song={song} />
+        <button className="text-link" onClick={() => go('#/chant')}>
+          ← 응원법 전체
+        </button>
+        <p className="kicker">Fanchant Guide</p>
+        <h1 className="page-title">{song.title}</h1>
+        <p className="chant-album">{song.album}</p>
+        <Badges song={song} />
 
-      <div className="chant-player">
-        {source ? (
-          <div className="yt-frame" ref={player.ytHostRef} />
-        ) : (
-          <div className="card empty">이 곡은 아직 영상이 없어요. 연습 모드에서 유튜브 주소를 넣을 수 있어요.</div>
-        )}
-        <div className="chant-links">
-          {ytId && (
-            <a className="btn small" href={`https://www.youtube.com/watch?v=${ytId}`} target="_blank" rel="noreferrer">
-              ▶ 유튜브에서 보기 ↗
-            </a>
+        <div className="chant-player">
+          {video?.mv && (
+            <div className="seg video-seg">
+              <button className={which === 'main' ? 'on' : ''} onClick={() => setWhich('main')}>
+                {video.kind}
+              </button>
+              <button className={which === 'mv' ? 'on' : ''} onClick={() => setWhich('mv')}>
+                공식 MV
+              </button>
+            </div>
           )}
-          <a className="btn small" href={melonUrl(song)} target="_blank" rel="noreferrer">
-            🍈 멜론에서 듣기 ↗
-          </a>
-          <button className="btn small primary" onClick={() => go(`#/practice/${song.id}`)}>
-            📣 연습 모드
-          </button>
+          {source ? (
+            <div className="yt-frame" ref={player.ytHostRef} />
+          ) : (
+            <div className="card empty">이 곡은 아직 영상이 없어요. 연습 모드에서 유튜브 주소를 넣을 수 있어요.</div>
+          )}
+          <div className="chant-links">
+            {vid && (
+              <a className="btn small" href={`https://www.youtube.com/watch?v=${vid}`} target="_blank" rel="noreferrer">
+                ▶ 유튜브 ↗
+              </a>
+            )}
+            <a className="btn small" href={melonUrl(song)} target="_blank" rel="noreferrer">
+              🍈 멜론 ↗
+            </a>
+            <button className="btn small primary" onClick={() => go(`#/practice/${song.id}`)}>
+              📣 연습 모드
+            </button>
+          </div>
+        </div>
+
+        <div className="card legend-card">
+          <h3>보는 법</h3>
+          <ul>
+            <li>
+              <span className="lg fan">파란 굵은 줄</span> 다 같이 외쳐요
+            </li>
+            <li>
+              <span className="lg">
+                줄 안의 <mark className="fan-part">파란 글자</mark>
+              </span>{' '}
+              그 부분만 외쳐요
+            </li>
+            <li>
+              <span className="lg member">흰 글씨</span> 멤버 파트 (듣기)
+            </li>
+          </ul>
+          {synced && vid && (
+            <SyncCalibrator
+              anchor={anchor}
+              player={player}
+              offset={offset}
+              sure={sure}
+              setOffset={setOffset}
+              calibrating={calibrating || !sure}
+              setCalibrating={setCalibrating}
+            />
+          )}
+          {synced && (
+            <button className={'chip follow' + (follow ? ' on' : '')} onClick={toggleFollow}>
+              {follow ? '자동 따라가기 켜짐' : '자동 따라가기 꺼짐'}
+            </button>
+          )}
         </div>
       </div>
 
-      <div className="card legend-card">
-        <h3>보는 법</h3>
-        <ul>
-          <li>
-            <span className="lg fan">파란 굵은 줄</span> 다 같이 외쳐요
-          </li>
-          <li>
-            <span className="lg">줄 안의 <mark className="fan-part">파란 글자</mark></span> 그 부분만 외쳐요
-          </li>
-          <li>
-            <span className="lg member">흰 글씨</span> 멤버 파트 (듣기)
-          </li>
-        </ul>
-        {synced ? (
-          <button className={'chip' + (follow ? ' on' : '')} onClick={toggleFollow}>
-            {follow ? '자동 따라가기 켜짐' : '자동 따라가기 꺼짐'}
-          </button>
-        ) : (
-          <p className="hint small">
-            ⏱ 아직 싱크 전이라 직접 스크롤하며 따라가요. 「연습 모드」에서 싱크를 맞추면 영상에 맞춰 자동으로 따라가요.
-          </p>
-        )}
-      </div>
+      <div className="chant-main">
+        <ol className="chant-lines" ref={listRef}>
+          {cues.map((c, i) => (
+            <li
+              key={i}
+              data-idx={i}
+              className={
+                'chant-line' + (c.fan ? ' fan' : '') + (i === active ? ' active' : '') + (active >= 0 && i < active ? ' past' : '')
+              }
+            >
+              <button
+                disabled={c.t == null || !player.ready}
+                onClick={() => {
+                  player.seek(Math.max(0, c.t - offset - 0.3))
+                  player.play()
+                }}
+              >
+                <CueText text={c.text} />
+              </button>
+            </li>
+          ))}
+        </ol>
+
+        <nav className="prev-next">
+          {prev ? (
+            <button className="text-link" onClick={() => go(`#/chant/${prev.id}`)}>
+              ← {prev.short || prev.title}
+            </button>
+          ) : (
+            <span />
+          )}
+          {next && (
+            <button className="text-link" onClick={() => go(`#/chant/${next.id}`)}>
+              {next.short || next.title} →
+            </button>
+          )}
+        </nav>
+        <p className="hint small source">
+          응원법 출처: {CHANT_SOURCE}
+          <br />
+          {TIMING_SOURCE}
+        </p>
       </div>
 
-      <div className="chant-main">
-      <ol className="chant-lines" ref={listRef}>
-        {cues.map((c, i) => (
-          <li
-            key={i}
-            data-idx={i}
-            className={'chant-line' + (c.fan ? ' fan' : '') + (i === active ? ' active' : '') + (synced && i < active ? ' past' : '')}
+      {player.ready && (
+        <div className="mini-player">
+          <button className="icon-btn" onClick={() => player.seek(player.getTime() - 5)} aria-label="5초 뒤로">
+            ↺5
+          </button>
+          <button
+            className="icon-btn big"
+            onClick={() => (player.playing ? player.pause() : player.play())}
+            aria-label={player.playing ? '일시정지' : '재생'}
           >
+            {player.playing ? '⏸' : '▶'}
+          </button>
+          <button className="icon-btn" onClick={() => player.seek(player.getTime() + 5)} aria-label="5초 앞으로">
+            5↻
+          </button>
+          <span className="mini-time">{formatTime(player.time)}</span>
+          {synced && (calibrating || !sure) && (
             <button
-              disabled={c.t == null || !player.ready}
+              className="btn primary mini-now"
+              disabled={!player.playing}
               onClick={() => {
-                player.seek(Math.max(0, c.t - offset - 0.3))
-                player.play()
+                calibrate(anchor, player, setOffset)
+                setCalibrating(false)
               }}
             >
-              <CueText text={c.text} />
+              지금!
             </button>
-          </li>
-        ))}
-      </ol>
-
-      <nav className="prev-next">
-        {prev ? (
-          <button className="text-link" onClick={() => go(`#/chant/${prev.id}`)}>
-            ← {prev.short || prev.title}
-          </button>
-        ) : (
-          <span />
-        )}
-        {next && (
-          <button className="text-link" onClick={() => go(`#/chant/${next.id}`)}>
-            {next.short || next.title} →
-          </button>
-        )}
-      </nav>
-      <p className="hint small source">응원법 출처: {CHANT_SOURCE}</p>
-      </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }

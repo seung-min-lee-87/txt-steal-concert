@@ -5,7 +5,7 @@ import { DEFAULT_CHEERS } from '../data/cheers'
 // 사람이 버튼을 누를 때 생기는 반응 지연 보정 (초)
 const REACTION = 0.15
 
-export default function CueEditor({ song, state, update, player, t }) {
+export default function CueEditor({ song, state, update, player, t, offset, setOffset }) {
   const cues = state.cues
   const [draft, setDraft] = useState(() => cuesToText(cues))
   const [syncIdx, setSyncIdx] = useState(null)
@@ -13,7 +13,6 @@ export default function CueEditor({ song, state, update, player, t }) {
   const fileRef = useRef(null)
   const tapRef = useRef(null)
   const draftRef = useRef(null)
-  const offset = state.offset || 0
 
   const setCues = (next) => update({ cues: next })
 
@@ -112,7 +111,8 @@ export default function CueEditor({ song, state, update, player, t }) {
     try {
       const data = JSON.parse(await file.text())
       if (!Array.isArray(data.cues)) throw new Error()
-      update({ cues: data.cues, youtube: data.youtube ?? state.youtube, offset: data.offset ?? offset })
+      update({ cues: data.cues, youtube: data.youtube ?? state.youtube })
+      if (data.offset != null) setOffset(data.offset)
       setDraft(cuesToText(data.cues))
       flash('불러왔어요')
     } catch {
@@ -204,18 +204,18 @@ export default function CueEditor({ song, state, update, player, t }) {
             <div className="card lines">
               <div className="lines-head">
                 <h3>줄별로 고치기</h3>
-                <label className="offset">
+                <div className="offset">
                   전체 싱크 보정 {offset > 0 ? '+' : ''}
                   {offset.toFixed(1)}초
-                  <input
-                    type="range"
-                    min="-2"
-                    max="2"
-                    step="0.1"
-                    value={offset}
-                    onChange={(e) => update({ offset: Number(e.target.value) })}
-                  />
-                </label>
+                  <span className="sync-actions">
+                    {[-1, -0.1, 0.1, 1].map((d) => (
+                      <button key={d} className="btn small ghost" onClick={() => setOffset(Math.round((offset + d) * 10) / 10)}>
+                        {d > 0 ? '+' : ''}
+                        {d}
+                      </button>
+                    ))}
+                  </span>
+                </div>
               </div>
               <p className="hint small">글자가 늦게 나오면 보정값을 + 쪽으로, 빨리 나오면 - 쪽으로 옮겨요.</p>
               <ul>
@@ -271,7 +271,7 @@ export default function CueEditor({ song, state, update, player, t }) {
               className="btn small ghost"
               onClick={() => {
                 if (!window.confirm('내가 고친 내용과 싱크를 지우고 사이트 기본 응원법으로 되돌릴까요?')) return
-                update({ cues: DEFAULT_CHEERS[song.id].cues, offset: 0 })
+                update({ cues: DEFAULT_CHEERS[song.id].cues, offsets: {}, offset: 0 })
                 setDraft(cuesToText(DEFAULT_CHEERS[song.id].cues))
                 flash('기본 응원법으로 되돌렸어요')
               }}
