@@ -1,6 +1,6 @@
 // 곡 사전
 // - title: true  → 타이틀곡
-// - solo: '멤버' → 솔로곡
+// - solo: '멤버' → 솔로곡 (soloAlbum: 멤버 개인 앨범에 실린 곡)
 // - jp: true     → 일본 오리지널 곡
 // - isNew: true  → 아직 콘서트에서 안 부른 신곡 (7TH YEAR 등)
 // - album        → 확실한 것만 적었다. 모르면 비워둔다.
@@ -21,12 +21,12 @@ export const SONGS = [
   { id: 'farewell-neverland', title: '네버랜드를 떠나며 (Farewell, Neverland)', short: 'Farewell, Neverland', album: '꿈의 장: ETERNITY' },
   { id: 'skipping-stones', title: '물수제비 (Skipping Stones)', short: 'Skipping Stones', album: '이름의 장: FREEFALL' },
   { id: '0x1-lovesong', title: '0X1=LOVESONG (I Know I Love You)', short: '0X1=LOVESONG', album: '혼돈의 장: FREEZE', title_: true },
-  { id: 'bird-of-night', title: 'Bird of Night', solo: '태현' },
-  { id: 'sunday-driver', title: 'Sunday Driver', solo: '수빈' },
-  { id: 'dance-with-you', title: 'Dance With You', solo: '휴닝카이' },
-  { id: 'ghost-girl', title: 'Ghost Girl', solo: '연준' },
-  { id: 'talk-to-you', title: 'Talk to You', solo: '연준' },
-  { id: 'take-my-half', title: 'Take My Half', solo: '범규' },
+  { id: 'bird-of-night', title: 'Bird of Night', solo: '태현', album: '별의 장: TOGETHER' },
+  { id: 'sunday-driver', title: 'Sunday Driver', solo: '수빈', album: '별의 장: TOGETHER' },
+  { id: 'dance-with-you', title: 'Dance With You', solo: '휴닝카이', album: '별의 장: TOGETHER' },
+  { id: 'ghost-girl', title: 'Ghost Girl', solo: '연준', album: '별의 장: TOGETHER' },
+  { id: 'talk-to-you', title: 'Talk to You', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 01', title_: true },
+  { id: 'take-my-half', title: 'Take My Half', solo: '범규', album: '별의 장: TOGETHER' },
   { id: 'dear-sputnik', title: 'Dear Sputnik' },
   { id: 'where-do-you-go', title: 'Where Do You Go?' },
   { id: 'no-rules', title: 'No Rules', album: '혼돈의 장: FREEZE' },
@@ -34,7 +34,7 @@ export const SONGS = [
   { id: 'eternally', title: 'Eternally', album: '꿈의 장: ETERNITY' },
   { id: 'crown', title: '어느날 머리에서 뿔이 자랐다 (CROWN)', short: 'CROWN', album: '꿈의 장: STAR', title_: true },
   { id: 'beautiful-strangers', title: 'Beautiful Strangers', album: '별의 장: TOGETHER', title_: true },
-  { id: 'song-of-the-stars', title: 'Song of the Stars' },
+  { id: 'song-of-the-stars', title: '별의 노래 (Song of the Stars)', short: 'Song of the Stars', album: '별의 장: TOGETHER' },
   { id: 'miracle', title: 'Miracle', album: 'minisode 3: TOMORROW' },
   { id: 'higher-than-heaven', title: 'Higher Than Heaven', jp: true, title_: true },
   { id: 'see-you-there-tomorrow', title: '내일에서 기다릴게 (I\'ll See You There Tomorrow)', short: 'I\'ll See You There Tomorrow', album: 'minisode 3: TOMORROW' },
@@ -64,6 +64,47 @@ export const SONGS = [
   { id: 'back-for-more', title: 'Back For More', album: '이름의 장: FREEFALL' },
   { id: 'hitotsu-no-chikai', title: "ひとつの誓い (We'll Never Change)", short: 'ひとつの誓い', album: '誓い (CHIKAI)', jp: true },
   { id: 'forty-one-winks', title: 'Forty One Winks', album: '별의 장: SANCTUARY' },
+
+  // 지난 투어(ACT : BOY ~ ACT : PROMISE) 세트리스트에 나온 곡
+  { id: 'poppin-star', title: "Poppin' Star", album: '꿈의 장: STAR' },
+  { id: 'nap-of-a-star', title: 'Nap of a Star', album: '꿈의 장: STAR' },
+  { id: 'cwjltma', title: "Can't We Just Leave The Monster Alive?", short: 'CWJLTMA', album: '꿈의 장: MAGIC' },
+  { id: 'magic-island', title: 'Magic Island', album: '꿈의 장: MAGIC' },
+  { id: '20cm', title: '20cm' },
+  { id: 'ice-cream', title: 'Ice Cream' },
+  { id: 'fairy-of-shampoo', title: 'Fairy of Shampoo', album: '꿈의 장: ETERNITY' },
+  { id: 'ghosting', title: 'Ghosting', album: 'minisode1 : Blue Hour' },
+  { id: 'what-if-puma', title: 'What if I had been that PUMA', album: '혼돈의 장: FREEZE' },
+  { id: 'maze-in-the-mirror', title: 'Maze in the Mirror', album: '혼돈의 장: FREEZE' },
+  { id: 'anti-romantic', title: 'Anti-Romantic', album: '혼돈의 장: FREEZE' },
+  { id: 'lonely-boy', title: 'Lonely Boy (The Tattoo On My Ring Finger)', short: 'Lonely Boy', album: '혼돈의 장: FIGHT OR ESCAPE' },
+  { id: 'trust-fund-baby', title: 'Trust Fund Baby' },
+  { id: 'thursdays-child', title: "Thursday's Child Has Far To Go", album: "minisode 2: Thursday's Child" },
+  { id: 'tinnitus', title: 'Tinnitus (Wanna be a rock)', short: 'Tinnitus', album: '이름의 장: TEMPTATION' },
+  { id: 'blue-spring', title: 'Blue Spring', album: '이름의 장: FREEFALL' },
+  { id: 'dreamer', title: 'Dreamer', album: '이름의 장: FREEFALL' },
+  { id: 'deep-down', title: 'Deep Down', album: '이름의 장: FREEFALL' },
+  { id: 'quarter-life', title: 'Quarter Life', album: 'minisode 3: TOMORROW' },
+  { id: 'the-killa', title: 'The Killa (I Belong to You)', short: 'The Killa', album: 'minisode 3: TOMORROW' },
+  { id: 'force', title: 'Force', jp: true },
+  { id: 'ring', title: 'Ring', jp: true },
+  { id: 'hydrangea-love', title: 'Hydrangea Love', jp: true },
+  { id: 'ito', title: 'Ito', jp: true },
+
+  // 멤버 솔로 (개인 앨범·믹스테이프)
+  { id: 'ggum', title: 'GGUM', solo: '연준', soloAlbum: true, album: "YEONJUN's Mixtape: GGUM (2024)", title_: true },
+  { id: 'yj-forever', title: 'Forever', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 01' },
+  { id: 'yj-let-me-tell-you', title: 'Let Me Tell You (feat. Daniela of KATSEYE)', short: 'Let Me Tell You', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 01' },
+  { id: 'yj-do-it', title: 'Do It', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 01' },
+  { id: 'yj-nothin-bout-me', title: "Nothin' 'Bout Me", solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 01' },
+  { id: 'yj-coma', title: 'Coma', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 01' },
+  { id: 'yj-ice-cream', title: 'Ice Cream', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02', title_: true },
+  { id: 'yj-vanilla', title: 'Vanilla', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02' },
+  { id: 'yj-baby-wassup', title: 'Baby Wassup?', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02' },
+  { id: 'yj-no-more-disco', title: 'No More Disco', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02' },
+  { id: 'yj-fxxking-star', title: 'Fxxking Star', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02' },
+  { id: 'yj-long-way-long-ride', title: 'Long Way Long Ride', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02' },
+  { id: 'panic', title: 'Panic', solo: '범규', soloAlbum: true, album: "BEOMGYU's Mixtape: Panic (2025)", title_: true },
 
   // 7TH YEAR (2026.04) — 이번 투어 예상 신곡
   { id: 'just-one-more-day', title: '하루에 하루만 더 (Stick With You)', short: '하루에 하루만 더', album: '7TH YEAR', title_: true, isNew: true },
