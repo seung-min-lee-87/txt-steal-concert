@@ -123,22 +123,28 @@ export default function TourPage({ go }) {
       <div className="news-list">
         {ALBUM_NEWS.map((a) => (
           <article key={a.title} className={'card news' + (a.logo ? ' has-logo' : '')}>
-            <p className="news-kind">
-              {a.kind} · {a.upcoming ? '발매 예정 ' : ''}
-              {prettyDate(a.date)}
-              {a.upcoming && a.date >= today && <span className="news-dday">{dDay(a.date)}</span>}
-            </p>
+            {/* 로고(또는 제목)를 위에 크게, 날짜·버튼은 아랫줄에 */}
             {a.logo ? <img className="news-logo" src={a.logo} alt={a.title} /> : <h3>{a.title}</h3>}
-            <p>{a.text}</p>
-            {a.links && (
-              <div className="news-links">
-                {a.links.map((l) => (
-                  <a key={l.url} className="btn small presave" href={l.url} target="_blank" rel="noreferrer">
-                    🎧 {l.label} ↗
-                  </a>
-                ))}
+            <div className="news-bottom">
+              <div className="news-meta">
+                <p className="news-kind">{a.kind}</p>
+                <p className="news-date">
+                  {a.upcoming ? '발매 예정 ' : ''}
+                  {prettyDate(a.date)}
+                  {a.upcoming && a.date >= today && <span className="news-dday">{dDay(a.date)}</span>}
+                </p>
               </div>
-            )}
+              {a.links && (
+                <div className="news-links">
+                  {a.links.map((l) => (
+                    <a key={l.url} className="btn small presave" href={l.url} target="_blank" rel="noreferrer">
+                      🎧 {l.label} ↗
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+            {a.text && <p className="news-text">{a.text}</p>}
           </article>
         ))}
       </div>
