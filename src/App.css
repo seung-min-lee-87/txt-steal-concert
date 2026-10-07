@@ -297,7 +297,7 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .now-next.fan { color: var(--sky); opacity: .85; }
 
 .cue-list {
-  list-style: none; margin: 12px 0 0; padding: 40% 0; max-height: 52vh; overflow-y: auto;
+  position: relative; list-style: none; margin: 12px 0 0; padding: 40% 0; max-height: 52vh; overflow-y: auto;
   border-radius: var(--radius); background: rgba(0,0,0,.2); border: 1px solid var(--card-line);
   -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
   mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
@@ -361,3 +361,12 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 }
 
 .footer { margin: 48px 0 0; padding-top: 16px; border-top: 1px solid var(--card-line); color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+/* 줄 일부만 팬이 외치는 부분 */
+.fan-part { background: none; color: var(--sky); font-weight: 800; }
+.cue.past .fan-part { opacity: .7; }
+.now.part { border-color: rgba(125,188,255,.5); }
+.now.part .now-label { color: var(--sky); }
+
+.bundle { margin-top: 12px; }
+.bundle-msg { margin: 10px 0 0; color: var(--sky); font-weight: 700; font-size: 14px; }

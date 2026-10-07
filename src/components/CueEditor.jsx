@@ -185,7 +185,7 @@ export default function CueEditor({ song, state, update, player, t }) {
             <p className="hint small">
               나무위키 응원법을 복사해서 그대로 붙여넣으세요. 한 줄이 한 칸이 돼요.
               <br />
-              <b>팬이 외치는 줄</b>은 맨 앞에 <code>!</code>를 붙이면 📣로 표시돼요. (나중에 버튼으로 바꿔도 돼요)
+              <b>팬이 외치는 줄</b>은 맨 앞에 <code>!</code>를 붙이면 📣로 표시돼요. 줄의 <b>일부만</b> 외친다면 그 부분을 <code>{'{'}중괄호{'}'}</code>로 감싸요.
             </p>
             <textarea
               ref={draftRef}

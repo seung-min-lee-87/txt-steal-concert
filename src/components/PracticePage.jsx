@@ -7,6 +7,8 @@ import { usePlayer, parseYouTubeId } from '../lib/usePlayer'
 import { activeIndex, nextTime, formatTime } from '../lib/cues'
 import Badges from './Badges'
 import CueEditor from './CueEditor'
+import CueText, { hasPart } from './CueText'
+import BundleCard from './BundleCard'
 
 const RATES = [0.5, 0.75, 1, 1.25]
 
@@ -16,11 +18,11 @@ export function loadSongState(id) {
 }
 
 export default function PracticePage({ songId, go, hasCheer, onSaved }) {
-  if (!songId || !SONG_MAP[songId]) return <SongPicker go={go} hasCheer={hasCheer} />
+  if (!songId || !SONG_MAP[songId]) return <SongPicker go={go} hasCheer={hasCheer} onSaved={onSaved} />
   return <Practice key={songId} song={SONG_MAP[songId]} go={go} onSaved={onSaved} />
 }
 
-function SongPicker({ go, hasCheer }) {
+function SongPicker({ go, hasCheer, onSaved }) {
   const ready = SONGS.filter((s) => hasCheer(s.id))
   const rest = SONGS.filter((s) => !hasCheer(s.id))
   const order = (s) => (s.isNew ? 0 : APPEARANCES[s.id] ? 1 : 2)
@@ -33,11 +35,12 @@ function SongPicker({ go, hasCheer }) {
         <h3>처음이라면 이렇게 해보세요</h3>
         <ol>
           <li>연습할 곡을 고르고, 유튜브 주소를 붙여넣거나 내 음악 파일을 골라요.</li>
-          <li>「편집」 탭에 나무위키 응원법을 복사해 붙여넣어요. 팬이 외치는 줄은 앞에 <b>!</b>를 붙이거나 📣 버튼으로 표시해요.</li>
+          <li>「편집」 탭에 나무위키 응원법을 복사해 붙여넣어요. 팬이 외치는 줄은 앞에 <b>!</b>를 붙이거나 📣 버튼으로 표시해요. 아래 「응원법 묶음 불러오기」를 쓰면 한 번에 들어가요.</li>
           <li>「싱크 맞추기」를 누르고, 노래를 들으면서 줄이 바뀔 때마다 큰 버튼을 톡 눌러요.</li>
           <li>「연습」 탭에서 노래방처럼 따라 외치기! 외워졌다면 🙈 가리기 모드로 시험해봐요.</li>
         </ol>
       </div>
+      <BundleCard onSaved={onSaved} />
       {ready.length > 0 && (
         <>
           <h2 className="section-title">📣 응원법 준비된 곡 <span className="en">Ready</span></h2>
@@ -351,18 +354,28 @@ function Practice({ song, go, onSaved }) {
                 </div>
               ) : (
                 <>
-                  <div className={'now card' + (cur?.fan ? ' fan' : '')}>
+                  <div className={'now card' + (cur?.fan ? ' fan' : cur && hasPart(cur.text) ? ' part' : '')}>
                     <p className="now-label">
                       {!timed
                         ? '편집 탭에서 싱크를 맞추면 자동으로 따라가요'
                         : cur
                           ? cur.fan
                             ? '📣 다 같이!'
-                            : '🎤 멤버 파트'
+                            : hasPart(cur.text)
+                              ? '📣 파란 부분 같이!'
+                              : '🎤 멤버 파트'
                           : '곧 시작해요'}
                     </p>
                     <p className="now-text">
-                      {cur ? (hide && cur.fan && !peek[active] ? '● ● ●' : cur.text) : '…'}
+                      {cur ? (
+                        hide && cur.fan && !peek[active] ? (
+                          '● ● ●'
+                        ) : (
+                          <CueText text={cur.text} masked={hide && !peek[active]} />
+                        )
+                      ) : (
+                        '…'
+                      )}
                     </p>
                     {next && (
                       <>
@@ -372,14 +385,15 @@ function Practice({ song, go, onSaved }) {
                         <p className={'now-next' + (next.fan ? ' fan' : '')}>
                           다음{untilNext != null && untilNext < 3 ? ` (${Math.max(0, untilNext).toFixed(1)}초)` : ''}:{' '}
                           {next.fan ? '📣 ' : ''}
-                          {hide && next.fan ? '● ● ●' : next.text}
+                          {hide && next.fan ? '● ● ●' : <CueText text={next.text} masked={hide} />}
                         </p>
                       </>
                     )}
                   </div>
                   <ol className="cue-list" ref={listRef}>
                     {cues.map((c, i) => {
-                      const masked = hide && c.fan && i >= active && !peek[i]
+                      const hidden = hide && i >= active && !peek[i]
+                      const masked = hidden && c.fan
                       return (
                         <li
                           key={i}
@@ -390,12 +404,14 @@ function Practice({ song, go, onSaved }) {
                         >
                           <button
                             onClick={() => {
-                              if (masked) setPeek({ ...peek, [i]: true })
+                              if (hidden && (c.fan || hasPart(c.text))) setPeek({ ...peek, [i]: true })
                               else if (c.t != null) seek(Math.max(0, c.t - offset - 0.3))
                             }}
                           >
                             <span className="cue-time">{c.t != null ? formatTime(c.t) : '--'}</span>
-                            <span className="cue-text">{masked ? '● ● ● (눌러서 보기)' : c.text}</span>
+                            <span className="cue-text">
+                              {masked ? '● ● ● (눌러서 보기)' : <CueText text={c.text} masked={hidden} />}
+                            </span>
                           </button>
                         </li>
                       )
