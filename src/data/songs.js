@@ -2,7 +2,7 @@
 // - title: true  → 타이틀곡
 // - solo: '멤버' → 솔로곡 (soloAlbum: 멤버 개인 앨범에 실린 곡)
 // - jp: true     → 일본 오리지널 곡
-// - cover: true  → 다른 가수 곡 커버
+// - ost: true    → 드라마 OST
 // - isNew: true  → 아직 콘서트에서 안 부른 신곡 (7TH YEAR 등)
 // - album        → 확실한 것만 적었다. 모르면 비워둔다.
 // 세트리스트 등장 여부(🔁)는 setlists.js를 보고 자동으로 계산한다.
@@ -94,8 +94,8 @@ export const SONGS = [
 
   // 범규 솔로 (2026 MOA CON에서 부름)
   { id: 'panic', title: 'Panic', solo: '범규', soloAlbum: true, album: "BEOMGYU's Mixtape: Panic (2025)", title_: true },
-  // 커버 곡
-  { id: 'geunari-omyeon', title: '그날이 오면', album: '언젠가는 슬기로울 전공의생활 OST Part 9', cover: true },
+  // 드라마 OST (2025.05.11)
+  { id: 'geunari-omyeon', title: '그날이 오면', album: '언젠가는 슬기로울 전공의생활 OST Part 9', ost: true },
 
   // 연준 솔로 (응원법이 있는 곡만)
   { id: 'ggum', title: 'GGUM', solo: '연준', soloAlbum: true, album: "YEONJUN's Mixtape: GGUM (2024)", title_: true },

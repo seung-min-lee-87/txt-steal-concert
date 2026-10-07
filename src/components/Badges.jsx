@@ -6,7 +6,7 @@ export const LEGEND = [
   { icon: '🎤', label: '솔로곡' },
   { icon: '🇯🇵', label: '일본곡 / 일본어 ver.' },
   { icon: '✨', label: '신곡 (아직 라이브 전)' },
-  { icon: '🎙️', label: '커버곡' },
+  { icon: '🎬', label: 'OST' },
   { icon: '🔁', label: '지난 투어에서 부른 곡' },
   { icon: '📣', label: '내 응원법 준비됨' },
 ]
@@ -17,7 +17,7 @@ export function songBadges(song, { jpVer = false, hasCheer = false } = {}) {
   const out = []
   if (song.title_) out.push({ icon: '👑', label: '타이틀' })
   if (song.solo) out.push({ icon: '🎤', label: `${song.solo} 솔로` })
-  if (song.cover) out.push({ icon: '🎙️', label: '커버' })
+  if (song.ost) out.push({ icon: '🎬', label: 'OST' })
   else if (!song.title_ && !song.solo && !song.jp) out.push({ icon: '💿', label: '수록곡' })
   if (song.jp) out.push({ icon: '🇯🇵', label: '일본곡' })
   else if (jpVer) out.push({ icon: '🇯🇵', label: '일본어 ver.' })
