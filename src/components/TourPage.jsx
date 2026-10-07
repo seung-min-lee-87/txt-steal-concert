@@ -102,7 +102,7 @@ export default function TourPage({ go }) {
       </section>
 
       <h2 className="section-title">공연 일정 <span className="en">World Tour</span></h2>
-      <p className="hint">내가 가는 날을 눌러 표시해두면 위 카운트다운이 그 날짜로 바뀌어요.</p>
+      <p className="hint">내가 가는 날을 눌러 표시해두면 위 카운트다운이 해당 날짜로 바뀝니다.</p>
       <div className="show-grid">
         {featured.map((show) => (
           <ShowCard key={show.id} show={show} going={going} toggle={toggle} today={today} />
@@ -144,7 +144,7 @@ export default function TourPage({ go }) {
           <ShowCard show={pickedShow} going={going} toggle={toggle} today={today} />
         </div>
       )}
-      <p className="hint">AND MORE — 추가 공연은 발표되는 대로 넣을게요.</p>
+      <p className="hint">AND MORE</p>
 
       <h2 className="section-title">공식 포스터 <span className="en">Key Visual</span></h2>
       <div className="posters">
