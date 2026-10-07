@@ -2,7 +2,8 @@
 // 출처: setlist.fm 및 공연 후기 기사 (검색으로 확인). 앙코르·일부 곡은 공연 날마다 다르다.
 // 항목: { song: 곡 id, jpVer: 일본어 버전 여부 }
 // tour: 공식 투어명 / name: 짧은 이름 / year: 연도
-// theme: 공식 포스터에서 따온 투어 로고·색 (bg 배경, accent 강조색, logo 투명 로고, poster 포스터)
+// theme: 공식 포스터에서 따온 투어 로고·색
+//   bg 배너 배경, accent 탭 강조색, ink 배너 글자색, tabInk 선택된 탭 글자색, glow 배너 빛, logo 투명 로고, poster 포스터
 
 const s = (song, jpVer = false) => ({ song, jpVer })
 // by: 원곡 멤버가 아닌 다른 멤버가 부른 경우 그 멤버
@@ -10,23 +11,48 @@ const by = (song, member) => ({ song, jpVer: false, by: member })
 const list = (...ids) => ids.map((id) => s(id))
 
 export const TOURS = [
-  { key: 'moa-con', name: 'MOA CON', full: '2026 TXT MOA CON', years: '2026' },
+  {
+    key: 'moa-con',
+    name: 'MOA CON',
+    full: '2026 TXT MOA CON',
+    years: '2026',
+    theme: { bg: '#ed572a', accent: '#ed572a', ink: '#1a1a1a', tabInk: '#1a1a1a', glow: '#ff9a6e', logo: '/images/tours/moa-con-logo.webp', poster: '/images/tours/moa-con-poster.webp' },
+  },
   {
     key: 'act-tomorrow',
     name: 'ACT : TOMORROW',
     full: 'TOMORROW X TOGETHER WORLD TOUR <ACT : TOMORROW>',
     years: '2025–2026',
-    theme: {
-      bg: '#161c2c',
-      accent: '#8fb5dc',
-      logo: '/images/tours/act-tomorrow-logo.webp',
-      poster: '/images/tours/act-tomorrow-seoul.webp',
-    },
+    theme: { bg: '#161c2c', accent: '#8fb5dc', ink: '#8fb5dc', tabInk: '#161c2c', glow: '#8fb5dc', logo: '/images/tours/act-tomorrow-logo.webp', poster: '/images/tours/act-tomorrow-seoul.webp' },
   },
-  { key: 'act-promise', name: 'ACT : PROMISE', full: 'TOMORROW X TOGETHER WORLD TOUR <ACT : PROMISE>', years: '2024' },
-  { key: 'act-sweet-mirage', name: 'ACT : SWEET MIRAGE', full: 'TOMORROW X TOGETHER WORLD TOUR <ACT : SWEET MIRAGE>', years: '2023' },
-  { key: 'act-love-sick', name: 'ACT : LOVE SICK', full: 'TOMORROW X TOGETHER WORLD TOUR <ACT : LOVE SICK>', years: '2022' },
-  { key: 'act-boy', name: 'ACT : BOY', full: 'TOMORROW X TOGETHER ONLINE CONCERT <ACT : BOY>', years: '2021' },
+  {
+    key: 'act-promise',
+    name: 'ACT : PROMISE',
+    full: 'TOMORROW X TOGETHER WORLD TOUR <ACT : PROMISE>',
+    years: '2024',
+    theme: { bg: '#3a4530', accent: '#e9c08a', ink: '#e9c08a', tabInk: '#2c3420', glow: '#f0b878', logo: '/images/tours/act-promise-logo.webp', poster: '/images/tours/act-promise-poster.webp' },
+  },
+  {
+    key: 'act-sweet-mirage',
+    name: 'ACT : SWEET MIRAGE',
+    full: 'TOMORROW X TOGETHER WORLD TOUR <ACT : SWEET MIRAGE>',
+    years: '2023',
+    theme: { bg: '#a95d65', accent: '#f8eee2', ink: '#fff3e6', tabInk: '#8e4650', glow: '#d58a8e', logo: '/images/tours/act-sweet-mirage-logo.webp', poster: '/images/tours/act-sweet-mirage-poster.webp' },
+  },
+  {
+    key: 'act-love-sick',
+    name: 'ACT : LOVE SICK',
+    full: 'TOMORROW X TOGETHER WORLD TOUR <ACT : LOVE SICK>',
+    years: '2022',
+    theme: { bg: '#1c2328', accent: '#c9d1d3', ink: '#c9d1d3', tabInk: '#1c2328', glow: '#6d7a80', logo: '/images/tours/act-love-sick-logo.webp', poster: '/images/tours/act-love-sick-poster.webp' },
+  },
+  {
+    key: 'act-boy',
+    name: 'ACT : BOY',
+    full: 'TOMORROW X TOGETHER ONLINE CONCERT <ACT : BOY>',
+    years: '2021',
+    theme: { bg: '#e9edeb', accent: '#9fb4f0', ink: '#1b1b1b', tabInk: '#1b1b1b', glow: '#c3b6f2', logo: '/images/tours/act-boy-logo.webp', poster: '/images/tours/act-boy-poster.webp' },
+  },
 ]
 
 export const SETLISTS = [

@@ -52,7 +52,7 @@ export default function SetlistPage({ go, hasCheer }) {
             role="tab"
             aria-selected={tab === t.key}
             className={'tab' + (tab === t.key ? ' on' : '')}
-            style={tab === t.key && t.theme ? { background: t.theme.accent, borderColor: t.theme.accent, color: t.theme.bg } : undefined}
+            style={tab === t.key && t.theme ? { background: t.theme.accent, borderColor: t.theme.accent, color: t.theme.tabInk } : undefined}
             onClick={() => pickTour(t.key)}
           >
             <span className="tab-year">{t.years}</span> {t.name}
@@ -182,7 +182,7 @@ function SongRow({ song, go, num, jpVer, by, hasCheer, full = false }) {
 function TourBanner({ tour, onPoster }) {
   const th = tour.theme
   const style = th
-    ? { '--tour-bg': th.bg, '--tour-accent': th.accent }
+    ? { '--tour-bg': th.bg, '--tour-accent': th.accent, '--tour-ink': th.ink, '--tour-glow': th.glow }
     : undefined
   return (
     <section className={'tour-banner' + (th ? ' themed' : '')} style={style}>
