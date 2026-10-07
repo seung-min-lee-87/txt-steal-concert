@@ -18,7 +18,12 @@ export const SHOWS = [
     dates: ['2026-11-13', '2026-11-14', '2026-11-15'],
     note: '투어 첫 공연! 새 앨범 「PERFECT STORM」(11/16 발매) 바로 전이라 신곡 선공개 가능성 있음',
   },
-  { id: 'macau', region: 'MO', area: 'Asia', city: '마카오', dates: ['2026-11-21', '2026-11-22'] },
+  { id: 'macau', 
+    region: 'MO', 
+    area: 'Asia',
+    city: '마카오', 
+    venue: 'GALAXY ARENA', 
+    dates: ['2026-11-21', '2026-11-22'] },
   {
     id: 'fukuoka',
     region: 'JP',
