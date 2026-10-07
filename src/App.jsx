@@ -3,6 +3,7 @@ import TourPage from './components/TourPage'
 import SetlistPage from './components/SetlistPage'
 import PracticePage, { loadSongState } from './components/PracticePage'
 import ChantPage from './components/ChantPage'
+import { PlayerProvider } from './lib/PlayerContext'
 import './App.css'
 
 // 주소 끝(#/tour, #/setlist, #/practice/곡id)으로 화면을 나눈다.
@@ -39,6 +40,7 @@ export default function App() {
   const onSaved = useCallback(() => setVersion((v) => v + 1), [])
 
   return (
+    <PlayerProvider go={go}>
     <div className="app">
       <header className="topbar">
         <a className="brand" href="#/tour" aria-label="STEAL THE WIND 홈">
@@ -78,5 +80,6 @@ export default function App() {
         ))}
       </nav>
     </div>
+    </PlayerProvider>
   )
 }

@@ -3,7 +3,9 @@ import { SONGS, SONG_MAP } from '../data/songs'
 import { APPEARANCES } from '../data/setlists'
 import { DEFAULT_CHEERS, videoOffset } from '../data/cheers'
 import { loadJSON, saveJSON, putAudio, getAudio, deleteAudio } from '../lib/storage'
-import { usePlayer, parseYouTubeId } from '../lib/usePlayer'
+import { parseYouTubeId } from '../lib/usePlayer'
+import { useSongPlayer } from '../lib/PlayerContext'
+import VideoSlot from './VideoSlot'
 import { activeIndex, nextTime, formatTime } from '../lib/cues'
 import Badges from './Badges'
 import CueEditor from './CueEditor'
@@ -13,6 +15,9 @@ import SyncCalibrator from './SyncCalibrator'
 import { chantMeta } from '../data/cheers'
 
 const RATES = [0.5, 0.75, 1, 1.25]
+
+// 곡별 음악 파일 주소. 페이지를 다시 열어도 같은 주소를 써야 공용 재생기가 "같은 곡"으로 알아본다.
+const FILE_URLS = {}
 
 export function loadSongState(id) {
   const base = { youtube: '', cues: [], offset: 0, source: 'youtube', ...(DEFAULT_CHEERS[id] || {}) }
@@ -109,13 +114,16 @@ function Practice({ song, go, onSaved }) {
 
   // 저장해둔 음악 파일 불러오기
   useEffect(() => {
-    let url
+    if (FILE_URLS[song.id]) {
+      setFileInfo(FILE_URLS[song.id])
+      return
+    }
     getAudio(song.id).then((rec) => {
       if (!rec) return
-      url = URL.createObjectURL(rec.blob)
-      setFileInfo({ url, name: rec.name })
+      FILE_URLS[song.id] = { url: URL.createObjectURL(rec.blob), name: rec.name }
+      setFileInfo(FILE_URLS[song.id])
     })
-    return () => url && URL.revokeObjectURL(url)
+    // 페이지를 떠나도 공용 재생기가 계속 쓸 수 있도록 파일 주소는 해제하지 않는다
   }, [song.id])
 
   const ytId = parseYouTubeId(state.youtube)
@@ -125,7 +133,8 @@ function Practice({ song, go, onSaved }) {
     return null
   }, [state.source, fileInfo, ytId])
 
-  const player = usePlayer(source)
+  const sp = useSongPlayer(song.id, source)
+  const player = sp.player
   const { time, playing, duration, play, pause, seek, setRate, getTime } = player
   // 유튜브는 영상별 보정값, 내 음악 파일은 state.offset
   const offset = source?.type === 'youtube' ? videoOffset(song.id, state, ytId).offset : state.offset || 0
@@ -190,14 +199,14 @@ function Practice({ song, go, onSaved }) {
   async function onPickFile(e) {
     const file = e.target.files?.[0]
     if (!file) return
-    if (fileInfo) URL.revokeObjectURL(fileInfo.url)
-    setFileInfo({ url: URL.createObjectURL(file), name: file.name })
+    FILE_URLS[song.id] = { url: URL.createObjectURL(file), name: file.name }
+    setFileInfo(FILE_URLS[song.id])
     update({ source: 'file' })
     await putAudio(song.id, file)
   }
 
   function removeFile() {
-    if (fileInfo) URL.revokeObjectURL(fileInfo.url)
+    delete FILE_URLS[song.id]
     setFileInfo(null)
     deleteAudio(song.id)
     update({ source: 'youtube' })
@@ -279,12 +288,11 @@ function Practice({ song, go, onSaved }) {
               </div>
             )}
             <input id="file-pick" type="file" accept="audio/*,video/*" hidden onChange={onPickFile} />
-            <div className={'yt-frame' + (source?.type === 'youtube' ? '' : ' hidden')} ref={player.ytHostRef} />
-            <audio ref={player.audioRef} preload="auto" />
+            <VideoSlot sp={sp} source={source} />
             {!source && <p className="hint small">음원을 정하면 재생 버튼이 켜져요.</p>}
           </section>
 
-          <section className="card transport">
+          <section className={'card transport' + (sp.otherPlaying ? ' is-hidden' : '')}>
             <input
               className="seekbar"
               type="range"

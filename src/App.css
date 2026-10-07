@@ -481,3 +481,42 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .now-text .pron { font-size: .55em; margin-top: 6px; }
 
 .footer-notice { margin: 0 0 8px; color: var(--ivory); font-size: 13px; font-weight: 600; }
+
+/* 사이트 공용 재생기 */
+.gp-video { position: fixed; z-index: 4; overflow: hidden; border-radius: 12px; background: #000; }
+.gp-video.off { display: none; }
+.gp-video.mini {
+  left: 24px; bottom: calc(64px + 16px + env(safe-area-inset-bottom)); width: 112px; height: 63px;
+  border-radius: 8px; z-index: 11; box-shadow: 0 4px 14px rgba(0,0,0,.5);
+}
+.gp-host, .gp-host iframe { width: 100%; height: 100%; display: block; }
+.gp-mini {
+  position: fixed; z-index: 10; left: 16px; right: 16px; bottom: calc(64px + 8px + env(safe-area-inset-bottom));
+  display: flex; align-items: center; gap: 10px; min-height: 79px; padding: 8px 10px 8px 12px;
+  background: rgba(0, 24, 6, .96); backdrop-filter: blur(12px);
+  border: 1px solid var(--card-line); border-radius: 16px; box-shadow: 0 8px 28px rgba(0,0,0,.5);
+}
+.gp-mini.with-video { padding-left: 132px; }
+.gp-icon { font-size: 26px; }
+.gp-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; text-align: left; border: 0; background: none; padding: 0; }
+.gp-title { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gp-line { font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gp-line.fan { color: var(--sky); font-weight: 700; }
+.gp-play { flex: none; width: 44px; height: 44px; background: var(--ivory); color: var(--forest); border: 0; }
+.gp-close { flex: none; border: 0; background: none; color: var(--muted); font-size: 16px; padding: 6px; }
+@media (min-width: 760px) {
+  .gp-mini { left: 24px; right: auto; width: min(520px, calc(100% - 48px)); bottom: 20px; }
+  .gp-video.mini { left: 36px; bottom: 28px; }
+}
+.app { padding-bottom: 180px; }
+@media (min-width: 760px) { .app { padding-bottom: 130px; } }
+/* 다른 곡이 재생 중일 때 영상 자리 */
+.video-wait { position: relative; display: block; width: 100%; padding: 0; border: 0; cursor: pointer; background: #000; }
+.video-wait img { width: 100%; height: 100%; object-fit: cover; opacity: .55; display: block; }
+.video-wait-label {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  color: var(--ivory); font-weight: 800; font-size: 17px; text-shadow: 0 2px 8px rgba(0,0,0,.6);
+}
+.video-wait-label small { font-weight: 500; font-size: 12px; opacity: .85; }
+.transport.is-hidden { display: none; }
+.gp-video.page { display: none; }

@@ -3,7 +3,9 @@ import { SONG_MAP } from '../data/songs'
 import { APPEARANCES } from '../data/setlists'
 import { CHANT_ORDER, CHANT_SOURCE, TIMING_SOURCE, chantMeta, videoOffset } from '../data/cheers'
 import { VIDEOS } from '../data/videos'
-import { usePlayer, parseYouTubeId } from '../lib/usePlayer'
+import { parseYouTubeId } from '../lib/usePlayer'
+import { useSongPlayer } from '../lib/PlayerContext'
+import VideoSlot from './VideoSlot'
 import { activeIndex, formatTime } from '../lib/cues'
 import { loadJSON, saveJSON } from '../lib/storage'
 import Badges from './Badges'
@@ -124,7 +126,8 @@ function ChantDetail({ song, go }) {
   const [which, setWhich] = useState('main') // main: 연습용(음원 길이) 영상, mv: 공식 MV
   const vid = which === 'mv' && video?.mv ? video.mv : parseYouTubeId(state.youtube)
   const source = useMemo(() => (vid ? { type: 'youtube', id: vid } : null), [vid])
-  const player = usePlayer(source)
+  const sp = useSongPlayer(song.id, source)
+  const player = sp.player
   const cues = state.cues
   const synced = cues.some((c) => c.t != null)
   const { offset, sure } = videoOffset(song.id, state, vid)
@@ -193,7 +196,7 @@ function ChantDetail({ song, go }) {
             </div>
           )}
           {source ? (
-            <div className="yt-frame" ref={player.ytHostRef} />
+            <VideoSlot sp={sp} source={source} />
           ) : (
             <div className="card empty">이 곡은 아직 영상이 없어요. 연습 모드에서 유튜브 주소를 넣을 수 있어요.</div>
           )}
