@@ -130,6 +130,8 @@ function ChantDetail({ song, go }) {
   const { offset, sure } = videoOffset(song.id, state, vid)
   const [calibrating, setCalibrating] = useState(false)
   const [follow, setFollow] = useState(() => loadJSON('chant-follow', true))
+  const [showPron, setShowPron] = useState(() => loadJSON('show-pron', true))
+  const hasPron = cues.some((c) => c.pron)
   const listRef = useRef(null)
   const t = player.time + offset
   const active = synced && (sure || !calibrating) ? activeIndex(cues, t) : -1
@@ -243,6 +245,17 @@ function ChantDetail({ song, go }) {
               setCalibrating={setCalibrating}
             />
           )}
+          {hasPron && (
+            <button
+              className={'chip follow' + (showPron ? ' on' : '')}
+              onClick={() => {
+                setShowPron(!showPron)
+                saveJSON('show-pron', !showPron)
+              }}
+            >
+              🇰🇷 한국어 발음 {showPron ? '켜짐' : '꺼짐'}
+            </button>
+          )}{' '}
           {synced && (
             <button className={'chip follow' + (follow ? ' on' : '')} onClick={toggleFollow}>
               {follow ? '자동 따라가기 켜짐' : '자동 따라가기 꺼짐'}
@@ -269,6 +282,11 @@ function ChantDetail({ song, go }) {
                 }}
               >
                 <CueText text={c.text} />
+                {showPron && c.pron && (
+                  <span className="pron">
+                    <CueText text={c.pron} />
+                  </span>
+                )}
               </button>
             </li>
           ))}

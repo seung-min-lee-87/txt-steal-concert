@@ -408,7 +408,14 @@ function Practice({ song, go, onSaved }) {
                         hide && cur.fan && !peek[active] ? (
                           '● ● ●'
                         ) : (
-                          <CueText text={cur.text} masked={hide && !peek[active]} />
+                          <>
+                            <CueText text={cur.text} masked={hide && !peek[active]} />
+                            {cur.pron && (
+                              <span className="pron">
+                                <CueText text={cur.pron} masked={hide && !peek[active]} />
+                              </span>
+                            )}
+                          </>
                         )
                       ) : (
                         '…'
@@ -448,6 +455,11 @@ function Practice({ song, go, onSaved }) {
                             <span className="cue-time">{c.t != null ? formatTime(c.t) : '--'}</span>
                             <span className="cue-text">
                               {masked ? '● ● ● (눌러서 보기)' : <CueText text={c.text} masked={hidden} />}
+                              {!masked && c.pron && (
+                                <span className="pron">
+                                  <CueText text={c.pron} masked={hidden} />
+                                </span>
+                              )}
                             </span>
                           </button>
                         </li>

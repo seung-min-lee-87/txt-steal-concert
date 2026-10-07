@@ -29,7 +29,7 @@ export const SONGS = [
   { id: 'talk-to-you', title: 'Talk to You', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 01', title_: true },
   { id: 'take-my-half', title: 'Take My Half', solo: '범규', album: '별의 장: TOGETHER' },
   { id: 'dear-sputnik', title: 'Dear Sputnik' },
-  { id: 'where-do-you-go', title: 'Where Do You Go?' },
+  { id: 'where-do-you-go', title: 'Where Do You Go?', album: 'Starkissed (일본 정규 3집)', jp: true },
   { id: 'no-rules', title: 'No Rules', album: '혼돈의 장: FREEZE' },
   { id: 'deja-vu', title: 'Deja Vu', album: 'minisode 3: TOMORROW', title_: true },
   { id: 'eternally', title: 'Eternally', album: '꿈의 장: ETERNITY' },

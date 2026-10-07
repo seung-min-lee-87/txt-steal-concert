@@ -473,3 +473,9 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .tour-banner-poster img { display: block; width: 100%; height: auto; }
 @media (min-width: 760px) { .tour-banner-poster { width: 110px; } }
 .sung-over { opacity: .55; text-decoration-thickness: 1.5px; margin-right: 2px; }
+
+/* 일본어 가사 아래 한국어 발음 */
+.pron { display: block; margin-top: 2px; font-size: .78em; font-weight: 500; color: var(--muted); opacity: .9; }
+.chant-line.fan .pron, .cue.fan .pron { color: rgba(125,188,255,.75); }
+.pron .fan-part { font-weight: 700; }
+.now-text .pron { font-size: .55em; margin-top: 6px; }
