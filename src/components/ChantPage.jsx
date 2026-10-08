@@ -13,7 +13,8 @@ import Badges from './Badges'
 import AlbumChip from './AlbumChip'
 import CueText, { hasPart } from './CueText'
 import { loadSongState } from './PracticePage'
-import { stagesOf, stageLabel } from '../data/stages'
+import { stagesOf } from '../data/stages'
+import { videoOptions } from '../lib/videoOptions'
 import SyncCalibrator, { calibrate } from './SyncCalibrator'
 
 const FILTERS = [
@@ -126,12 +127,7 @@ function ChantList({ go }) {
 function ChantDetail({ song, go }) {
   const [state, setState] = useState(() => loadSongState(song.id))
   const video = VIDEOS[song.id]
-  // 고를 수 있는 영상: 연습용(음원 길이) 영상, 공식 MV, 음악방송 무대(팬 응원 소리)
-  const options = [
-    ...(state.youtube ? [{ key: 'main', label: video?.kind || '영상', id: parseYouTubeId(state.youtube) }] : []),
-    ...(video?.mv ? [{ key: 'mv', label: '공식 MV', id: video.mv }] : []),
-    ...stagesOf(song.id).map((s) => ({ key: s.id, label: '📣 ' + stageLabel(s), id: s.id, stage: s })),
-  ]
+  const options = videoOptions(song.id, state)
   const [which, setWhich] = useState('main')
   const picked = options.find((o) => o.key === which) || options[0]
   const vid = picked?.id || null

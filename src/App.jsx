@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import TourPage from './components/TourPage'
 import SetlistPage from './components/SetlistPage'
 import PracticePage, { loadSongState } from './components/PracticePage'
+import SyncStudio from './components/SyncStudio'
 import ChantPage from './components/ChantPage'
 import { PlayerProvider } from './lib/PlayerContext'
 import { FEATURES } from './config'
@@ -62,7 +63,9 @@ export default function App() {
           <PracticePage songId={route.id} go={go} hasCheer={hasCheer} onSaved={onSaved} />
         )}
         {route.page === 'chant' && <ChantPage songId={route.id} go={go} />}
-        {!['setlist', 'practice', 'chant'].includes(route.page) && <TourPage go={go} />}
+        {/* 싱크 맞추기 테스트 페이지: 메뉴에 없고 주소(#/sync)로만 들어온다 */}
+        {route.page === 'sync' && <SyncStudio songId={route.id} go={go} />}
+        {!['setlist', 'practice', 'chant', 'sync'].includes(route.page) && <TourPage go={go} />}
       </main>
 
       <footer className="footer">

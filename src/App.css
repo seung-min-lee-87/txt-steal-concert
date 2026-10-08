@@ -552,3 +552,21 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .city-chip.going { border-color: rgba(125,188,255,.7); }
 .city-chip.past { opacity: .5; }
 .picked-show { margin-top: 12px; }
+/* 싱크 맞추기 테스트 페이지 */
+.studio-select { width: 100%; margin: 4px 0 12px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--card-line); background: var(--card); color: var(--text); font-size: 15px; }
+.studio-video { margin-bottom: 12px; }
+.studio-help ol { margin: 6px 0; padding-left: 20px; font-size: 14px; line-height: 1.6; }
+.studio-help, .studio-export { margin: 12px 0; }
+.studio-lines { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 4px; }
+.studio-line { display: flex; gap: 6px; align-items: stretch; border: 1px solid transparent; border-radius: 10px; background: var(--card); }
+.studio-line.fan .studio-text { color: var(--sky); font-weight: 700; }
+.studio-line.active { background: var(--sky-soft); }
+.studio-line.cursor { border-color: var(--ivory); }
+.studio-line.edited .studio-t { color: #ffd479; }
+.studio-text { flex: 1; display: flex; gap: 10px; align-items: baseline; text-align: left; border: 0; background: none; color: var(--text); padding: 8px 10px; font-size: 14px; cursor: pointer; }
+.studio-t { font-variant-numeric: tabular-nums; font-size: 12px; color: var(--muted); min-width: 52px; }
+.studio-nudge { display: flex; gap: 2px; padding: 4px; }
+.studio-nudge button { border: 1px solid var(--card-line); background: transparent; color: var(--muted); border-radius: 8px; font-size: 12px; padding: 0 8px; cursor: pointer; }
+.studio-export textarea { width: 100%; box-sizing: border-box; font-family: ui-monospace, monospace; font-size: 11px; background: rgba(0,0,0,.25); color: var(--text); border: 1px solid var(--card-line); border-radius: 8px; padding: 8px; }
+.studio-export-btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.studio-export-btns .btn { text-decoration: none; }

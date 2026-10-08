@@ -3,7 +3,7 @@
 import CueText from './CueText'
 
 // 사람이 듣고 누르기까지 걸리는 시간 (초)
-const REACTION = 0.2
+export const REACTION = 0.2
 
 export function calibrate(anchor, player, setOffset) {
   if (!anchor) return

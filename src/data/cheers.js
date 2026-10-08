@@ -6,6 +6,12 @@ import CHANTS from './chants.json'
 import { VIDEOS } from './videos'
 import { findStage } from './stages'
 
+// 테스트 페이지(#/sync)에서 맞춰 내보낸 공개 싱크 파일들 (src/data/sync/곡id.json)
+const SYNC_FILES = import.meta.glob('./sync/*.json', { eager: true, import: 'default' })
+export const PUBLISHED_SYNC = Object.fromEntries(
+  Object.entries(SYNC_FILES).map(([path, v]) => [path.match(/([^/]+)\.json$/)[1], v]),
+)
+
 export const CHANT_SOURCE = CHANTS.source
 export const TIMING_SOURCE = CHANTS.timingSource
 export const CHANT_ORDER = CHANTS.order
@@ -28,6 +34,8 @@ export function guessOffset(id) {
 export function videoOffset(songId, state, vid) {
   const mine = state.offsets?.[vid]
   if (mine != null) return { offset: mine, sure: true }
+  const published = PUBLISHED_SYNC[songId]?.offsets?.[vid]
+  if (published != null) return { offset: published, sure: true }
   if (vid && vid === VIDEOS[songId]?.id) return guessOffset(songId)
   const st = findStage(songId, vid)
   if (st?.offset != null) return { offset: st.offset, sure: true }
@@ -42,5 +50,11 @@ export function chantMeta(id) {
 export const DEFAULT_CHEERS = {}
 for (const [id, v] of Object.entries(VIDEOS)) DEFAULT_CHEERS[id] = { youtube: v.id }
 for (const [id, v] of Object.entries(CHANTS.songs)) {
-  DEFAULT_CHEERS[id] = { ...DEFAULT_CHEERS[id], cues: v.cues }
+  DEFAULT_CHEERS[id] = { ...DEFAULT_CHEERS[id], cues: applyTimes(v.cues, PUBLISHED_SYNC[id]?.times) }
+}
+
+// 공개 싱크의 줄별 시간을 덮어쓴다. 응원법 줄 수가 바뀌었으면(가사 수정 등) 어긋나니까 쓰지 않는다.
+export function applyTimes(cues, times) {
+  if (!times || times.length !== cues.length) return cues
+  return cues.map((c, i) => ({ ...c, t: times[i] }))
 }
