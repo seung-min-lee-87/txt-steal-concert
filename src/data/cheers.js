@@ -42,6 +42,16 @@ export function videoOffset(songId, state, vid) {
   return { offset: 0, sure: false }
 }
 
+// "한 번에 맞추기" 기준 줄.
+// 테스트 페이지에서 직접 고른 줄(공개 싱크 파일의 anchor)이 있으면 팬 응원 줄이라도 그 줄을 쓴다.
+// 없으면 기본 기준 줄(멤버 가사), 그것도 없으면 시간이 있는 첫 멤버 가사 줄.
+export function pickAnchor(id, cues, chosen = PUBLISHED_SYNC[id]?.anchor) {
+  if (chosen != null && cues[chosen]?.t != null) return cues[chosen]
+  const a = CHANTS.songs[id]?.anchor ?? 0
+  if (cues[a]?.t != null && !cues[a].fan) return cues[a]
+  return cues.find((c) => c.t != null && !c.fan)
+}
+
 export function chantMeta(id) {
   const s = CHANTS.songs[id]
   return s ? { anchor: s.anchor ?? 0, duration: s.duration, source: s.source || CHANTS.source } : null

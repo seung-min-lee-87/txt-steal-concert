@@ -3,7 +3,7 @@
 // "내보내기"로 만든 파일을 GitHub의 src/data/sync/곡id.json 에 올리면 모든 방문자의 기본값이 된다.
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { SONG_MAP } from '../data/songs'
-import { CHANT_ORDER, DEFAULT_CHEERS, PUBLISHED_SYNC, chantMeta, videoOffset } from '../data/cheers'
+import { CHANT_ORDER, DEFAULT_CHEERS, PUBLISHED_SYNC, pickAnchor, videoOffset } from '../data/cheers'
 import { useSongPlayer } from '../lib/PlayerContext'
 import { videoOptions } from '../lib/videoOptions'
 import { activeIndex, formatTime } from '../lib/cues'
@@ -51,10 +51,9 @@ function Studio({ song, go }) {
   const [rate, setRateState] = useState(1)
   const listRef = useRef(null)
 
-  const meta = chantMeta(song.id)
-  const anchor =
-    (meta && cues[meta.anchor]?.t != null && !cues[meta.anchor].fan && cues[meta.anchor]) ||
-    cues.find((c) => c.t != null && !c.fan)
+  // 기준 줄: 이 기기에서 고른 줄 > 공개 싱크 파일의 줄 > 기본
+  const anchorIdx = draft.anchor ?? PUBLISHED_SYNC[song.id]?.anchor
+  const anchor = pickAnchor(song.id, cues, anchorIdx)
 
   function setTime(i, t) {
     setDraft({ ...draft, times: { ...draft.times, [i]: r2(Math.max(0, t)) } })
@@ -92,10 +91,11 @@ function Studio({ song, go }) {
   const exported = useMemo(() => {
     const offsets = { ...(PUBLISHED_SYNC[song.id]?.offsets || {}), ...draft.offsets }
     const times = cues.map((c) => (c.t == null ? null : r2(c.t)))
-    return `{\n  "times": ${JSON.stringify(times)},\n  "offsets": ${JSON.stringify(offsets)}\n}\n`
+    const anchorLine = anchorIdx != null ? `,\n  "anchor": ${anchorIdx}` : ''
+    return `{\n  "times": ${JSON.stringify(times)},\n  "offsets": ${JSON.stringify(offsets)}${anchorLine}\n}\n`
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [draft, song.id])
-  const edited = Object.keys(draft.times).length + Object.keys(draft.offsets).length
+  }, [draft, song.id, anchorIdx])
+  const edited = Object.keys(draft.times).length + Object.keys(draft.offsets).length + (draft.anchor != null ? 1 : 0)
   const published = !!PUBLISHED_SYNC[song.id]
   const githubUrl = published
     ? `${REPO}/edit/main/src/data/sync/${song.id}.json`
@@ -160,6 +160,19 @@ function Studio({ song, go }) {
         </p>
       </div>
 
+      <p className="studio-anchor">
+        🎯 영상 맞추기 기준 줄: <b>{anchor ? <CueText text={anchor.text} /> : '없음'}</b>{' '}
+        <button
+          className="btn small ghost"
+          disabled={cues[cursor]?.t == null || cues[cursor] === anchor}
+          onClick={() => {
+            setDraft({ ...draft, anchor: cursor })
+            setCalibrating(true)
+          }}
+        >
+          선택한 줄({cursor + 1}번)로 바꾸기
+        </button>
+      </p>
       {vid && (
         <SyncCalibrator
           anchor={anchor}
@@ -186,7 +199,10 @@ function Studio({ song, go }) {
             }
           >
             <button className="studio-text" onClick={() => jumpTo(i)}>
-              <span className="studio-t">{c.t == null ? '--:--' : formatTime(c.t)}</span>
+              <span className="studio-t">
+                {c === anchor && <span title="영상 맞추기 기준 줄">🎯 </span>}
+                {c.t == null ? '--:--' : formatTime(c.t)}
+              </span>
               <CueText text={c.text} />
             </button>
             <span className="studio-nudge">

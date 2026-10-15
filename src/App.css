@@ -570,3 +570,4 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .studio-export textarea { width: 100%; box-sizing: border-box; font-family: ui-monospace, monospace; font-size: 11px; background: rgba(0,0,0,.25); color: var(--text); border: 1px solid var(--card-line); border-radius: 8px; padding: 8px; }
 .studio-export-btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .studio-export-btns .btn { text-decoration: none; }
+.studio-anchor { font-size: 14px; margin: 12px 0 8px; line-height: 1.8; }

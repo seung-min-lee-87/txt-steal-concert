@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { SONG_MAP } from '../data/songs'
 import { APPEARANCES } from '../data/setlists'
-import { CHANT_ORDER, CHANT_SOURCE, TIMING_SOURCE, chantMeta, videoOffset } from '../data/cheers'
+import { CHANT_ORDER, CHANT_SOURCE, TIMING_SOURCE, chantMeta, pickAnchor, videoOffset } from '../data/cheers'
 import { VIDEOS } from '../data/videos'
 import { parseYouTubeId } from '../lib/usePlayer'
 import { useSongPlayer } from '../lib/PlayerContext'
@@ -147,9 +147,7 @@ function ChantDetail({ song, go }) {
 
   // 한 번에 맞추기 기준 줄: 첫 번째 가사 줄
   const meta = chantMeta(song.id)
-  const anchor =
-    (meta && cues[meta.anchor]?.t != null && !cues[meta.anchor].fan && cues[meta.anchor]) ||
-    cues.find((c) => c.t != null && !c.fan)
+  const anchor = pickAnchor(song.id, cues)
 
   function setOffset(n) {
     const next = { ...loadJSON('song:' + song.id, {}), offsets: { ...state.offsets, [vid]: n } }
