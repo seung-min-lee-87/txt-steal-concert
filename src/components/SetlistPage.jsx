@@ -3,6 +3,7 @@ import { SETLISTS, APPEARANCES, TOURS } from '../data/setlists'
 import { SONGS, SONG_MAP } from '../data/songs'
 import Badges, { Legend } from './Badges'
 import AlbumChip from './AlbumChip'
+import { ALBUM_COLORS } from '../data/albums'
 import { CHANT_ORDER } from '../data/cheers'
 import { FEATURES } from '../config'
 
@@ -165,7 +166,11 @@ function SongRow({ song, go, num, jpVer, by, hasCheer, full = false }) {
   const link = songLink(song.id)
   const Row = link ? 'button' : 'div'
   return (
-    <Row className={'song-row' + (link ? '' : ' no-link')} onClick={link ? () => go(link) : undefined}>
+    <Row
+      className={'song-row' + (link ? '' : ' no-link')}
+      style={{ '--album': ALBUM_COLORS[song.album] }}
+      onClick={link ? () => go(link) : undefined}
+    >
       {num != null && <span className="num">{num}</span>}
       <span className="song-main">
         <span className="song-title">

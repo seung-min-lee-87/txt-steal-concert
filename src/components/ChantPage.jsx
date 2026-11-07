@@ -11,6 +11,7 @@ import { activeIndex, formatTime } from '../lib/cues'
 import { loadJSON, saveJSON } from '../lib/storage'
 import Badges from './Badges'
 import AlbumChip from './AlbumChip'
+import { ALBUM_COLORS } from '../data/albums'
 import CueText, { hasPart } from './CueText'
 import { loadSongState } from './PracticePage'
 import { stagesOf } from '../data/stages'
@@ -98,7 +99,11 @@ function ChantList({ go }) {
               const fanLines = st.cues.filter((c) => c.fan || hasPart(c.text)).length
               return (
                 <li key={song.id}>
-                  <button className="song-row" onClick={() => go(`#/chant/${song.id}`)}>
+                  <button
+                    className="song-row"
+                    style={{ '--album': ALBUM_COLORS[song.album] }}
+                    onClick={() => go(`#/chant/${song.id}`)}
+                  >
                     <span className="song-main">
                       <span className="song-title">{song.title}</span>
                       <span className="chant-meta">
