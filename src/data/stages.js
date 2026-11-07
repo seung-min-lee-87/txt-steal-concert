@@ -1,6 +1,7 @@
 // 실제 음악방송 무대 영상 (관객 응원 소리가 들리는 것)
 // 곡별로 여러 개 넣을 수 있다. offset: 응원법 시간(음원 기준)에 더할 값(초).
 //   offset을 모르면 비워두면 되고, 화면에서 "한 번에 맞추기"로 맞추면 된다.
+// first: true 를 붙이면 그 무대 영상이 맨 앞 버튼(처음 열었을 때 나오는 영상)이 된다.
 // 관객이 있던 시기(2019~2020.2, 2022.5~) 방송사 공식 채널 영상만 골랐다.
 export const STAGES = {
   'blue-orangeade': [{ id: 'XNBe4AIRrxc', show: '더쇼', date: '2019-03-12' }],
@@ -17,7 +18,7 @@ export const STAGES = {
   'chasing-that-feeling': [{ id: 'w_DQu1JoKvY', show: '뮤직뱅크', date: '2023-10-27' }, { id: 'Km2M14Tvyis', show: '엠카운트다운', date: '2023-10-19' }],
   'back-for-more': [{ id: 'tDr8PMkkYqo', show: '뮤직뱅크', date: '2023-10-13' }, { id: '9zq49ktu3Sk', show: '엠카운트다운', date: '2023-10-19' }],
   'see-you-there-tomorrow': [{ id: '679oSwJav0U', show: '뮤직뱅크', date: '2024-04-05' }, { id: 'VTS9cWe5atA', show: '음악중심', date: '2024-04-06' }],
-  'deja-vu': [{ id: 'IySlMjDGbsM', show: '뮤직뱅크', date: '2024-04-12' }, { id: 'C3HY9Ay_1L0', show: '음악중심', date: '2024-04-13' }],
+  'deja-vu': [{ id: 'C3HY9Ay_1L0', show: '음악중심', date: '2024-04-13', first: true }],
   'over-the-moon': [{ id: 'mmSamMi6xF0', show: '뮤직뱅크', date: '2024-11-15' }, { id: 'L9yLkv7Fvu4', show: '음악중심', date: '2024-11-16' }],
   'forty-one-winks': [{ id: 'bPXKEhNC1tY', show: '뮤직뱅크', date: '2024-11-08' }, { id: 'kTcPjzr3-yA', show: '음악중심', date: '2024-11-09' }],
   'love-language': [{ id: 'W-LOSGElZ_M', show: '뮤직뱅크', date: '2025-05-02' }, { id: 'smkrQN0KUr8', show: '음악중심', date: '2025-05-03' }],

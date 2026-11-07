@@ -128,7 +128,7 @@ function ChantDetail({ song, go }) {
   const [state, setState] = useState(() => loadSongState(song.id))
   const video = VIDEOS[song.id]
   const options = videoOptions(song.id, state)
-  const [which, setWhich] = useState('main')
+  const [which, setWhich] = useState(null) // 처음엔 맨 앞 영상
   const picked = options.find((o) => o.key === which) || options[0]
   const vid = picked?.id || null
   const source = useMemo(() => (vid ? { type: 'youtube', id: vid } : null), [vid])
