@@ -25,7 +25,7 @@ export const VIDEOS = {
   'where-do-you-go': { id: '4-U5xMpVeBw', kind: 'MV', dur: 204 }, // TXT (투모로우바이투게더) 'Where Do You Go?' Official MV
   'deja-vu': { id: 'DiHUEWBRQEI', kind: 'MV', dur: 241 }, // TXT (투모로우바이투게더) 'Deja Vu' Official MV
   'eternally': { id: 'ldx45XGJrH4', kind: '무대 영상', dur: 225 }, // [T:TCAM] ‘Eternally’ stage @ ACT : LOVE SICK IN SEOUL - TXT (투모로우바이투게더
-  'crown': { id: '6HMsGJRLtto', kind: '안무 연습 영상', dur: 229, mv: 'W3iSnJ663II' }, // TXT (투모로우바이투게더) ‘어느날 머리에서 뿔이 자랐다 (CROWN)’ Dance Practice
+  'crown': { id: '6HMsGJRLtto', kind: '안무 연습 영상', dur: 229, mv: 'W3iSnJ663II', order: ['mv', 'stage', 'main'] }, // TXT (투모로우바이투게더) ‘어느날 머리에서 뿔이 자랐다 (CROWN)’ Dance Practice
   'beautiful-strangers': { id: 'oG16Esx419c', kind: '안무 영상', dur: 139, mv: 'IcwHopeT5gY' }, // 'Beautiful Strangers' Choreography Video (YEONJUN draft) | TXT (투모로우바이
   'song-of-the-stars': { id: 'bsKe_P8cjrw', kind: '무대 영상', dur: 331 }, // ‘별의 노래 (Song of the Stars)’ stage @ ACT : TOMORROW IN SEOUL | TXT (투모로
   'miracle': { id: '8efrOFRXMxo', kind: '공식 영상', dur: 168 }, // 'Miracle (기적은 너와 내가 함께하는 순간마다 일어나고 있어)' Special Thanks to MOA | TXT (투

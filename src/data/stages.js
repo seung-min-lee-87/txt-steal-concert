@@ -5,7 +5,7 @@
 // 관객이 있던 시기(2019~2020.2, 2022.5~) 방송사 공식 채널 영상만 골랐다.
 export const STAGES = {
   'blue-orangeade': [{ id: 'XNBe4AIRrxc', show: '더쇼', date: '2019-03-12' }],
-  'crown': [{ id: 'KjFowwKfVuI', show: '뮤직뱅크', date: '2019-03-29' }, { id: '9nwyKQVUwD0', show: '엠카운트다운', date: '2019-03-21' }],
+  'crown': [{ id: 'KjFowwKfVuI', show: '뮤직뱅크', date: '2019-03-29' }],
   'cat-dog': [{ id: 'IzWug96-zNE', show: '뮤직뱅크', date: '2019-05-03' }, { id: 'dWHAiC9G1eE', show: '엠카운트다운', date: '2019-05-02' }],
   'new-rules': [{ id: 'HMG67w8yQ_c', show: '뮤직뱅크', date: '2019-12-20' }],
   'run-away': [{ id: 'ZGuYGJ7Liss', show: '뮤직뱅크', date: '2019-11-15' }],
