@@ -10,7 +10,8 @@ export function calibrate(anchor, player, setOffset) {
   setOffset(Math.round((anchor.t - player.getTime() + REACTION) * 10) / 10)
 }
 
-export default function SyncCalibrator({ anchor, player, offset, sure, setOffset, calibrating, setCalibrating }) {
+// onReset: 이 기기에 저장된 내 보정값이 공개 싱크와 다를 때만 넘어온다 (공개 싱크로 되돌리기 버튼)
+export default function SyncCalibrator({ anchor, player, offset, sure, setOffset, calibrating, setCalibrating, onReset }) {
   if (!anchor) return null
   const nudge = (d) => setOffset(Math.round((offset + d) * 10) / 10)
 
@@ -30,6 +31,11 @@ export default function SyncCalibrator({ anchor, player, offset, sure, setOffset
           <button className="btn small ghost" onClick={() => setCalibrating(true)}>
             다시 맞추기
           </button>
+          {onReset && (
+            <button className="btn small ghost" onClick={onReset} title="이 기기에서 맞춘 값을 지우고 사이트 기본 싱크로">
+              ↺ 공개 싱크로 되돌리기
+            </button>
+          )}
         </div>
       </div>
     )

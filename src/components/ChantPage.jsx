@@ -163,6 +163,23 @@ function ChantDetail({ song, go }) {
     setState(loadSongState(song.id))
   }
 
+  // 이 기기에 저장된 내 값(보정·줄 시간)이 공개 싱크와 다르면 되돌리기 버튼을 보여준다
+  const published = PUBLISHED_SYNC[song.id]
+  const mine = loadJSON('song:' + song.id, {})
+  const myOffset = mine.offsets?.[vid]
+  const canReset =
+    !!published &&
+    ((myOffset != null && myOffset !== published.offsets?.[vid]) || mine.cues?.some((c) => c.t != null))
+  function resetToPublished() {
+    const next = { ...mine, offsets: { ...mine.offsets } }
+    delete next.offsets[vid]
+    delete next.cues
+    if (vid === parseYouTubeId(state.youtube)) delete next.offset
+    saveJSON('song:' + song.id, next)
+    setState(loadSongState(song.id))
+    setCalibrating(false)
+  }
+
   const idx = CHANT_ORDER.indexOf(song.id)
   const prev = SONG_MAP[CHANT_ORDER[idx - 1]]
   const next = SONG_MAP[CHANT_ORDER[idx + 1]]
@@ -261,6 +278,7 @@ function ChantDetail({ song, go }) {
               setOffset={setOffset}
               calibrating={calibrating || !sure}
               setCalibrating={setCalibrating}
+              onReset={canReset ? resetToPublished : undefined}
             />
           )}
           {hasPron && (
