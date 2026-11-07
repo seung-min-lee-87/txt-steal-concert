@@ -10,7 +10,7 @@ export const STAGES = {
   'new-rules': [{ id: 'HMG67w8yQ_c', show: '뮤직뱅크', date: '2019-12-20' }],
   'run-away': [{ id: 'ZGuYGJ7Liss', show: '뮤직뱅크', date: '2019-11-15' }],
   'angel-or-devil': [{ id: '3_FAG693htE', show: '뮤직뱅크', date: '2019-11-29' }, { id: 'L487HniOBbU', show: '엠카운트다운', date: '2019-10-24' }],
-  'loser-lover': [{ id: 'YfLjfvLC0Po', show: '전국반짝투어', date: '2025-08-12' }],
+  'loser-lover': [{ id: 'LCL6nKq_ako', show: '뮤직뱅크', date: '2021-08-20' }],
   'opening-sequence': [{ id: 'CZmUIA6r5tQ', show: '뮤직뱅크', date: '2022-05-20' }],
   'good-boy-gone-bad': [{ id: '_XcOu_PN_10', show: '뮤직뱅크', date: '2022-06-24' }, { id: 'AoKEa5AkXig', show: '뮤직뱅크', date: '2022-05-20' }],
   'devil-by-the-window': [{ id: '75TVBD4QdLg', show: '뮤직뱅크', date: '2023-02-10' }, { id: '3cYjeHjWXZQ', show: '엠카운트다운', date: '2023-02-02' }],
