@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { SONG_MAP } from '../data/songs'
 import { APPEARANCES } from '../data/setlists'
-import { CHANT_ORDER, CHANT_SOURCE, TIMING_SOURCE, chantMeta, pickAnchor, videoOffset } from '../data/cheers'
+import { CHANT_ORDER, CHANT_SOURCE, PUBLISHED_SYNC, TIMING_SOURCE, chantMeta, pickAnchor, videoOffset } from '../data/cheers'
 import { VIDEOS } from '../data/videos'
 import { parseYouTubeId } from '../lib/usePlayer'
 import { useSongPlayer } from '../lib/PlayerContext'
@@ -36,8 +36,9 @@ export default function ChantPage({ songId, go }) {
   return <ChantList go={go} />
 }
 
+// "싱크 완료" = 직접 맞춰서 공개 싱크 파일(src/data/sync/곡id.json)을 올린 곡
 function isSynced(id) {
-  return loadSongState(id).cues.some((c) => c.t != null)
+  return !!PUBLISHED_SYNC[id]
 }
 
 function ChantList({ go }) {
@@ -111,7 +112,7 @@ function ChantList({ go }) {
                         <span>📣 {fanLines}곳</span>
                         {VIDEOS[song.id] && <span>▶ {VIDEOS[song.id].kind}</span>}
                         {stagesOf(song.id).length > 0 && <span>📺 음방 응원</span>}
-                        {st.cues.some((c) => c.t != null) && <span className="synced">⏱ 싱크됨</span>}
+                        {isSynced(song.id) && <span className="synced">⏱ 싱크 완료</span>}
                       </span>
                     </span>
                     <span className="go">›</span>
