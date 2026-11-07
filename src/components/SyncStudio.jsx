@@ -60,9 +60,17 @@ function Studio({ song, go }) {
   }
 
   // 지금 들리는 순간을 커서 줄의 시작 시간으로 찍고 다음 줄로
+  // 멈춘 상태에서 누르면 멈춘 그 위치를 그대로 찍는다 (되감기·앞으로로 정확한 위치를 찾은 뒤 찍을 때)
+  const [notice, setNotice] = useState('')
   function tapNow() {
-    // 느리게 재생하면 반응 시간도 영상 시간으로 그만큼 짧아진다
-    setTime(cursor, player.getTime() + offset - REACTION * rate)
+    if (!sure) {
+      setNotice('먼저 위의 「영상과 한 번만 맞춰주세요」에서 지금!을 눌러 이 영상을 보정해 주세요.')
+      return
+    }
+    setNotice('')
+    // 재생 중이면 사람 반응 시간만큼 빼준다. 느리게 재생하면 그만큼 영상 시간으로는 짧아진다
+    const reaction = player.playing ? REACTION * rate : 0
+    setTime(cursor, player.getTime() + offset - reaction)
     setCursor(Math.min(cursor + 1, cues.length - 1))
   }
 
@@ -260,9 +268,10 @@ function Studio({ song, go }) {
             {rate}×
           </button>
           <span className="mini-time">{formatTime(player.time)}</span>
-          <button className="btn primary mini-now" disabled={!player.playing || !sure} onClick={tapNow}>
+          <button className="btn primary mini-now" onClick={tapNow}>
             ⏱ 찍기 ({cursor + 1}번)
           </button>
+          {notice && <p className="studio-notice">{notice}</p>}
         </div>
       )}
     </div>
