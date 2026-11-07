@@ -250,6 +250,16 @@ function Studio({ song, go }) {
             ? 'GitHub 파일을 열고 ✏️ → 내용 전부 지우고 붙여넣기 → Commit changes'
             : '열린 GitHub 화면에서 바로 Commit changes만 누르면 돼요.'}
         </p>
+        {!published && (
+          // 화면이 예전 버전이라 방금 올린 파일을 모를 때: "같은 이름 파일이 있다" 오류가 나면 이쪽으로
+          <p className="hint small">
+            「A file with the same name already exists」 오류가 나면 이미 올린 파일이 있는 거예요 →{' '}
+            <a href={`${REPO}/edit/main/src/data/sync/${song.id}.json`} target="_blank" rel="noreferrer">
+              기존 파일 열기 ↗
+            </a>{' '}
+            에서 내용 전부 지우고 붙여넣기
+          </p>
+        )}
       </div>
 
       {player.ready && (
