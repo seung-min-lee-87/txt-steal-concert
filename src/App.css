@@ -133,7 +133,7 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .btn.light { background: var(--ivory); color: var(--forest); border: 0; }
 .btn.ghost { background: transparent; }
 .chip {
-  border: 1px solid rgba(242,238,226,.22); background: rgba(242,238,226,.07); color: var(--text);
+  border: 1px solid rgba(242,238,226,.3); background: rgba(242,238,226,.12); color: var(--text);
   padding: 6px 12px; border-radius: 999px; font-size: 13px; white-space: nowrap;
 }
 .chip.on { background: var(--sky-soft); color: var(--text); border-color: rgba(125,188,255,.6); }
@@ -220,9 +220,9 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .set-group ol, .song-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .song-row {
   width: 100%; display: flex; align-items: center; gap: 12px; text-align: left;
-  background: rgba(242,238,226,.09); border: 1px solid rgba(242,238,226,.2); border-radius: 12px; padding: 11px 12px;
+  background: rgba(242,238,226,.14); border: 1px solid rgba(242,238,226,.28); border-radius: 12px; padding: 11px 12px;
 }
-.song-row:hover { border-color: rgba(125,188,255,.55); background: rgba(242,238,226,.14); }
+.song-row:hover { border-color: rgba(125,188,255,.65); background: rgba(242,238,226,.2); }
 .num { width: 28px; text-align: center; font-family: var(--font-label); font-weight: 600; color: var(--sky); font-size: 18px; flex: none; }
 .song-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
 .song-title { font-weight: 600; font-size: 15px; }
@@ -533,7 +533,7 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .btn.presave { background: #1ed760; color: #06210f; border: 0; text-decoration: none; font-weight: 700; }
 .news .news-text { margin: 12px 0 0; font-size: 13px; }
 .song-row.no-link { cursor: default; }
-.song-row.no-link:hover { border-color: rgba(242,238,226,.2); background: rgba(242,238,226,.09); }
+.song-row.no-link:hover { border-color: rgba(242,238,226,.28); background: rgba(242,238,226,.14); }
 .video-seg button { font-size: 13px; padding: 8px 4px; }
 .stage-note { margin: -2px 0 8px; font-size: 13px; color: var(--muted); }
 .video-seg.two-rows { border-radius: 20px; }
