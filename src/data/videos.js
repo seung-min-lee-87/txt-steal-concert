@@ -2,6 +2,7 @@
 // 응원법 시간이 음원 기준이라, 음원과 길이가 같은 영상(주로 안무 연습 영상)을 우선 골랐다.
 // mv: 공식 MV가 따로 있으면 그 영상 id (앞뒤 연출 때문에 "한 번에 맞추기" 필요)
 // dur: 영상 길이(초). 바꾸려면 id만 고치면 된다.
+// order: 영상 버튼 순서 (main 연습용 영상, mv 공식 MV, stage 음방 무대). 맨 앞이 처음 열리는 영상.
 export const VIDEOS = {
   'loser-lover': { id: 'JzODRUBBXpc', kind: 'MV', dur: 237 }, // TXT (투모로우바이투게더) 'LO$ER=LO♡ER' Official MV
   'wishlist': { id: 'ApKJya5GDzo', kind: '공식 영상', dur: 201 }, // [T:TIME] ‘Wishlist’ Special Video (Holiday ver.) - TXT (투모로우바이투게더)
@@ -36,7 +37,7 @@ export const VIDEOS = {
   'kitto-zutto': { id: 'f0ZuP1Da948', kind: 'MV', dur: 177 }, // TXT (투모로우바이투게더) ‘きっとずっと (Kitto Zutto)' Official MV
   'cant-stop': { id: 'sswmsnPigDc', kind: 'MV', dur: 159 }, // TXT (투모로우바이투게더) 'Can't Stop' Official MV
   'happy-fools': { id: 'nAtSdy6of-k', kind: '공식 영상', dur: 160 }, // [2023 DREAM WEEK] TXT (투모로우바이투게더) 'Happy Fools (TOMORROW X TOGETHER Ve
-  'run-away': { id: 'jqHslIR2x7w', kind: '안무 연습 영상', dur: 214, mv: '6yWPfUz0z94' }, // TXT (투모로우바이투게더) ‘9와 4분의 3 승강장에서 너를 기다려 (Run Away)’ Dance Practice
+  'run-away': { id: 'jqHslIR2x7w', kind: '안무 연습 영상', dur: 214, mv: '6yWPfUz0z94', order: ['mv', 'stage', 'main'] }, // TXT (투모로우바이투게더) ‘9와 4분의 3 승강장에서 너를 기다려 (Run Away)’ Dance Practice
   'angel-or-devil': { id: 'KyQacFvXWAM', kind: '안무 연습 영상', dur: 238, mv: 'cfm97EKin4c' }, // TXT (투모로우바이투게더) ‘Angel Or Devil’ Dance Practice
   'cant-you-see-me': { id: 'HwdOeu8I4Ho', kind: '안무 연습 영상', dur: 210, mv: 'cMFHUTJ13Ys' }, // TXT (투모로우바이투게더) ‘세계가 불타버린 밤, 우린... (Can't You See Me?)' Dance Practice
   'puma': { id: 'qz7bJKO_JzU', kind: '안무 연습 영상', dur: 212, mv: 'ImTgS5OXgbU' }, // TXT (투모로우바이투게더) ‘동물원을 빠져나온 퓨마' Dance Practice

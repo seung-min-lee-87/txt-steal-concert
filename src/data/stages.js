@@ -18,7 +18,7 @@ export const STAGES = {
   'chasing-that-feeling': [{ id: 'w_DQu1JoKvY', show: '뮤직뱅크', date: '2023-10-27' }, { id: 'Km2M14Tvyis', show: '엠카운트다운', date: '2023-10-19' }],
   'back-for-more': [{ id: 'tDr8PMkkYqo', show: '뮤직뱅크', date: '2023-10-13' }, { id: '9zq49ktu3Sk', show: '엠카운트다운', date: '2023-10-19' }],
   'see-you-there-tomorrow': [{ id: '679oSwJav0U', show: '뮤직뱅크', date: '2024-04-05' }, { id: 'VTS9cWe5atA', show: '음악중심', date: '2024-04-06' }],
-  'deja-vu': [{ id: 'C3HY9Ay_1L0', show: '음악중심', date: '2024-04-13', first: true }, { id: 'IySlMjDGbsM', show: '뮤직뱅크', date: '2024-04-12' }],
+  'deja-vu': [{ id: 'C3HY9Ay_1L0', show: '음악중심', date: '2024-04-13' }, { id: 'IySlMjDGbsM', show: '뮤직뱅크', date: '2024-04-12' }],
   'over-the-moon': [{ id: 'mmSamMi6xF0', show: '뮤직뱅크', date: '2024-11-15' }, { id: 'L9yLkv7Fvu4', show: '음악중심', date: '2024-11-16' }],
   'forty-one-winks': [{ id: 'bPXKEhNC1tY', show: '뮤직뱅크', date: '2024-11-08' }, { id: 'kTcPjzr3-yA', show: '음악중심', date: '2024-11-09' }],
   'love-language': [{ id: 'W-LOSGElZ_M', show: '뮤직뱅크', date: '2025-05-02' }, { id: 'smkrQN0KUr8', show: '음악중심', date: '2025-05-03' }],
