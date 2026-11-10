@@ -225,6 +225,9 @@ function ChantDetail({ song, go }) {
             </div>
           )}
           {picked?.stage && <p className="stage-note">📺 {picked.stage.show} 실제 무대예요. 팬들 응원 소리를 들으며 따라 해보세요!</p>}
+          {picked?.key === 'main' && video?.noSync && (
+            <p className="stage-note">🎬 뮤직비디오는 중간 연출 때문에 응원법 싱크가 맞지 않아요. 영상 감상용이에요.</p>
+          )}
           {source ? (
             <VideoSlot sp={sp} source={source} />
           ) : (

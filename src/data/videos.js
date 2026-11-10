@@ -2,11 +2,12 @@
 // 응원법 시간이 음원 기준이라, 음원과 길이가 같은 영상(주로 안무 연습 영상)을 우선 골랐다.
 // mv: 공식 MV가 따로 있으면 그 영상 id (앞뒤 연출 때문에 "한 번에 맞추기" 필요)
 // dur: 영상 길이(초). 바꾸려면 id만 고치면 된다.
+// noSync: 연습용 영상(main)이 MV라 중간 연출 때문에 싱크가 안 맞으면 true → 화면에 안내 문구
 // order: 영상 버튼 순서 (main 연습용 영상, mv 공식 MV, stage 음방 무대). 맨 앞이 처음 열리는 영상.
 export const VIDEOS = {
   'loser-lover': { id: 'JzODRUBBXpc', kind: 'MV', dur: 237 }, // TXT (투모로우바이투게더) 'LO$ER=LO♡ER' Official MV
   'wishlist': { id: 'ApKJya5GDzo', kind: '공식 영상', dur: 201 }, // [T:TIME] ‘Wishlist’ Special Video (Holiday ver.) - TXT (투모로우바이투게더)
-  'blue-hour': { id: 'Vd9QkWsd5p4', kind: 'MV', dur: 304, order: ['stage'] }, // MV는 숨기고 음방 무대만 // TXT (투모로우바이투게더) '5시 53분의 하늘에서 발견한 너와 나' Official MV
+  'blue-hour': { id: 'Vd9QkWsd5p4', kind: 'MV', dur: 304, order: ['stage', 'main'], noSync: true }, // MV는 음방 뒤 (중간 연출로 싱크 안 맞음) // TXT (투모로우바이투게더) '5시 53분의 하늘에서 발견한 너와 나' Official MV
   'blue-orangeade': { id: 'nzgUcGMR2QI', kind: '안무 연습 영상', dur: 186 }, // TXT (투모로우바이투게더) ‘Blue Orangeade’ Dance Practice
   'love-language': { id: '9mMg2b7-K4E', kind: '공식 영상', dur: 179, mv: '8aRTMQvbODs' }, // TXT (투모로우바이투게더) 'Love Language' Special Film
   'over-the-moon': { id: 'oCYVYbk0quo', kind: '안무 연습 영상', dur: 158, mv: '80SH8Z_DOnY' }, // ‘Over The Moon’ Dance Practice | TXT (투모로우바이투게더)
@@ -16,7 +17,7 @@ export const VIDEOS = {
   'frost': { id: 'X3lA4EeeXtM', kind: 'MV', dur: 242 }, // TXT (투모로우바이투게더) 'Frost' Official MV
   'good-boy-gone-bad': { id: 'Os_6c5j6YiQ', kind: 'MV', dur: 216 }, // TXT (투모로우바이투게더) 'Good Boy Gone Bad' Official MV
   'skipping-stones': { id: 'FKXEcZyBaes', kind: '무대 영상', dur: 118 }, // BEOMGYU X TAEHYUN X HUENINGKAI '물수제비 (Skipping Stones)' Live Clip - TX
-  '0x1-lovesong': { id: 'd5bbqKYu51w', kind: 'MV', dur: 276 }, // TXT (투모로우바이투게더) '0X1=LOVESONG (I Know I Love You) feat. Seori' Officia
+  '0x1-lovesong': { id: 'd5bbqKYu51w', kind: 'MV', dur: 276, order: ['stage', 'main'], noSync: true }, // MV는 음방 뒤 (중간 연출로 싱크 안 맞음) // TXT (투모로우바이투게더) '0X1=LOVESONG (I Know I Love You) feat. Seori' Officia
   'bird-of-night': { id: '0NpyuuGqK9k', kind: 'MV', dur: 170 }, // 태현 (TAEHYUN) 'Bird of Night' Official MV
   'sunday-driver': { id: 'o9thOizwRW4', kind: 'MV', dur: 187 }, // 수빈 (SOOBIN) 'Sunday Driver' Official MV
   'dance-with-you': { id: 'zOaZ_MoV18U', kind: 'MV', dur: 164 }, // 휴닝카이 (HUENINGKAI) 'Dance With You' Official MV
