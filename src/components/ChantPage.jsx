@@ -110,7 +110,7 @@ function ChantList({ go }) {
                       <span className="chant-meta">
                         <Badges song={song} compact />
                         <span>📣 {fanLines}곳</span>
-                        {VIDEOS[song.id] && <span>▶ {VIDEOS[song.id].kind}</span>}
+                        {VIDEOS[song.id] && (VIDEOS[song.id].order || ['main']).includes('main') && <span>▶ {VIDEOS[song.id].kind}</span>}
                         {stagesOf(song.id).length > 0 && <span>📺 음방 응원</span>}
                         {isSynced(song.id) && <span className="synced">⏱ 싱크 완료</span>}
                       </span>

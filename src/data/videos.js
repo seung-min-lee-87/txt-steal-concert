@@ -6,7 +6,7 @@
 export const VIDEOS = {
   'loser-lover': { id: 'JzODRUBBXpc', kind: 'MV', dur: 237 }, // TXT (투모로우바이투게더) 'LO$ER=LO♡ER' Official MV
   'wishlist': { id: 'ApKJya5GDzo', kind: '공식 영상', dur: 201 }, // [T:TIME] ‘Wishlist’ Special Video (Holiday ver.) - TXT (투모로우바이투게더)
-  'blue-hour': { id: 'Vd9QkWsd5p4', kind: 'MV', dur: 304 }, // TXT (투모로우바이투게더) '5시 53분의 하늘에서 발견한 너와 나' Official MV
+  'blue-hour': { id: 'Vd9QkWsd5p4', kind: 'MV', dur: 304, order: ['stage'] }, // MV는 숨기고 음방 무대만 // TXT (투모로우바이투게더) '5시 53분의 하늘에서 발견한 너와 나' Official MV
   'blue-orangeade': { id: 'nzgUcGMR2QI', kind: '안무 연습 영상', dur: 186 }, // TXT (투모로우바이투게더) ‘Blue Orangeade’ Dance Practice
   'love-language': { id: '9mMg2b7-K4E', kind: '공식 영상', dur: 179, mv: '8aRTMQvbODs' }, // TXT (투모로우바이투게더) 'Love Language' Special Film
   'over-the-moon': { id: 'oCYVYbk0quo', kind: '안무 연습 영상', dur: 158, mv: '80SH8Z_DOnY' }, // ‘Over The Moon’ Dance Practice | TXT (투모로우바이투게더)
