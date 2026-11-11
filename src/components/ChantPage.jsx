@@ -1,110 +1,133 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { SONG_MAP } from '../data/songs'
-import { APPEARANCES } from '../data/setlists'
-import { CHANT_ORDER, CHANT_SOURCE, PUBLISHED_SYNC, TIMING_SOURCE, chantMeta, pickAnchor, videoOffset } from '../data/cheers'
-import { VIDEOS } from '../data/videos'
-import { parseYouTubeId } from '../lib/usePlayer'
-import { useSongPlayer } from '../lib/PlayerContext'
-import VideoSlot from './VideoSlot'
-import { FEATURES } from '../config'
-import { activeIndex, formatTime } from '../lib/cues'
-import { loadJSON, saveJSON } from '../lib/storage'
-import Badges from './Badges'
-import AlbumChip from './AlbumChip'
-import { ALBUM_COLORS } from '../data/albums'
-import CueText, { hasPart } from './CueText'
-import { loadSongState } from './PracticePage'
-import { stagesOf } from '../data/stages'
-import { videoOptions } from '../lib/videoOptions'
-import SyncCalibrator, { calibrate } from './SyncCalibrator'
+import { useEffect, useMemo, useRef, useState } from "react";
+import { SONG_MAP } from "../data/songs";
+import { APPEARANCES } from "../data/setlists";
+import {
+  CHANT_ORDER,
+  CHANT_SOURCE,
+  PUBLISHED_SYNC,
+  TIMING_SOURCE,
+  chantMeta,
+  pickAnchor,
+  videoOffset,
+} from "../data/cheers";
+import { VIDEOS } from "../data/videos";
+import { parseYouTubeId } from "../lib/usePlayer";
+import { useSongPlayer } from "../lib/PlayerContext";
+import VideoSlot from "./VideoSlot";
+import { FEATURES } from "../config";
+import { activeIndex, formatTime } from "../lib/cues";
+import { loadJSON, saveJSON } from "../lib/storage";
+import Badges from "./Badges";
+import AlbumChip from "./AlbumChip";
+import { ALBUM_COLORS } from "../data/albums";
+import CueText, { hasPart } from "./CueText";
+import { loadSongState } from "./PracticePage";
+import { stagesOf } from "../data/stages";
+import { videoOptions } from "../lib/videoOptions";
+import SyncCalibrator, { calibrate } from "./SyncCalibrator";
 
 const FILTERS = [
-  { id: 'all', label: '전체' },
-  { id: 'past', label: '🔁 지난 투어 곡' },
-  { id: 'title', label: '👑 타이틀' },
-  { id: 'synced', label: '⏱ 싱크 완료' },
-]
+  { id: "all", label: "전체" },
+  { id: "past", label: "🔁 지난 투어 곡" },
+  { id: "title", label: "👑 타이틀" },
+  { id: "synced", label: "⏱ 싱크 완료" },
+];
 
 function melonUrl(song) {
-  return `https://www.melon.com/search/total/index.htm?q=${encodeURIComponent(`투모로우바이투게더 ${song.short || song.title}`)}`
+  return `https://www.melon.com/search/total/index.htm?q=${encodeURIComponent(`투모로우바이투게더 ${song.short || song.title}`)}`;
 }
 
 export default function ChantPage({ songId, go }) {
-  const id = resolveChantId(songId)
+  const id = resolveChantId(songId);
   // 주소가 조금 틀렸으면(예: sugar-rush-ridez, sugar-rush) 맞는 곡 주소로 바꿔 둔다
   useEffect(() => {
-    if (id && id !== songId) window.history.replaceState(null, '', `#/chant/${id}`)
-  }, [id, songId])
-  if (id) return <ChantDetail key={id} song={SONG_MAP[id]} go={go} />
-  return <ChantList go={go} />
+    if (id && id !== songId)
+      window.history.replaceState(null, "", `#/chant/${id}`);
+  }, [id, songId]);
+  if (id) return <ChantDetail key={id} song={SONG_MAP[id]} go={go} />;
+  return <ChantList go={go} />;
 }
 
 // 공유된 주소에 오타가 있어도 가장 비슷한 응원법 곡을 찾는다
 function resolveChantId(raw) {
-  if (!raw) return null
-  const q = decodeURIComponent(raw).toLowerCase().trim()
-  if (CHANT_ORDER.includes(q)) return q
+  if (!raw) return null;
+  const q = decodeURIComponent(raw).toLowerCase().trim();
+  if (CHANT_ORDER.includes(q)) return q;
   // 앞부분이 같은 곡 (sugar-rush → sugar-rush-ride, sugar-rush-ridez → sugar-rush-ride)
-  const prefix = CHANT_ORDER.filter((cid) => q.length >= 4 && (cid.startsWith(q) || q.startsWith(cid)))
-  if (prefix.length === 1) return prefix[0]
-  if (prefix.length > 1) return prefix.sort((a, b) => Math.abs(a.length - q.length) - Math.abs(b.length - q.length))[0]
+  const prefix = CHANT_ORDER.filter(
+    (cid) => q.length >= 4 && (cid.startsWith(q) || q.startsWith(cid)),
+  );
+  if (prefix.length === 1) return prefix[0];
+  if (prefix.length > 1)
+    return prefix.sort(
+      (a, b) => Math.abs(a.length - q.length) - Math.abs(b.length - q.length),
+    )[0];
   // 글자 2개 이내로 다른 곡
-  let best = null
-  let bestD = 3
+  let best = null;
+  let bestD = 3;
   for (const cid of CHANT_ORDER) {
-    const d = editDistance(q, cid)
-    if (d < bestD) [best, bestD] = [cid, d]
+    const d = editDistance(q, cid);
+    if (d < bestD) [best, bestD] = [cid, d];
   }
-  return best
+  return best;
 }
 
 function editDistance(a, b) {
-  const dp = Array.from({ length: b.length + 1 }, (_, j) => j)
+  const dp = Array.from({ length: b.length + 1 }, (_, j) => j);
   for (let i = 1; i <= a.length; i++) {
-    let prev = dp[0]
-    dp[0] = i
+    let prev = dp[0];
+    dp[0] = i;
     for (let j = 1; j <= b.length; j++) {
-      const tmp = dp[j]
-      dp[j] = Math.min(dp[j] + 1, dp[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1))
-      prev = tmp
+      const tmp = dp[j];
+      dp[j] = Math.min(
+        dp[j] + 1,
+        dp[j - 1] + 1,
+        prev + (a[i - 1] === b[j - 1] ? 0 : 1),
+      );
+      prev = tmp;
     }
   }
-  return dp[b.length]
+  return dp[b.length];
 }
 
 // "싱크 완료" = 직접 맞춰서 공개 싱크 파일(src/data/sync/곡id.json)을 올린 곡
 function isSynced(id) {
-  return !!PUBLISHED_SYNC[id]
+  return !!PUBLISHED_SYNC[id];
 }
 
 function ChantList({ go }) {
-  const [filter, setFilter] = useState('all')
-  const [q, setQ] = useState('')
+  const [filter, setFilter] = useState("all");
+  const [q, setQ] = useState("");
 
   // 앨범별로 묶기 (나무위키 문서 순서 = 발매 순)
   const groups = useMemo(() => {
     const list = CHANT_ORDER.map((id) => SONG_MAP[id]).filter((s) => {
-      if (filter === 'past' && !APPEARANCES[s.id]) return false
-      if (filter === 'title' && !s.title_) return false
-      if (filter === 'synced' && !isSynced(s.id)) return false
-      if (q && !(s.title + (s.short || '')).toLowerCase().includes(q.toLowerCase())) return false
-      return true
-    })
-    const out = []
+      if (filter === "past" && !APPEARANCES[s.id]) return false;
+      if (filter === "title" && !s.title_) return false;
+      if (filter === "synced" && !isSynced(s.id)) return false;
+      if (
+        q &&
+        !(s.title + (s.short || "")).toLowerCase().includes(q.toLowerCase())
+      )
+        return false;
+      return true;
+    });
+    const out = [];
     for (const s of list) {
-      const album = s.album || '기타'
-      if (out.at(-1)?.album !== album) out.push({ album, songs: [] })
-      out.at(-1).songs.push(s)
+      const album = s.album || "기타";
+      if (out.at(-1)?.album !== album) out.push({ album, songs: [] });
+      out.at(-1).songs.push(s);
     }
-    return out
-  }, [filter, q])
+    return out;
+  }, [filter, q]);
 
   return (
     <div className="page chant-list">
       <p className="kicker">Fanchant Guide</p>
       <h1 className="page-title">응원법</h1>
       <p className="hint">
-        공식 응원법 {CHANT_ORDER.length}곡. 곡을 누르면 공식 영상과 함께 응원법을 보면서 따라 할 수 있습니다.
+        공식 응원법 {CHANT_ORDER.length}곡. 곡을 누르면 공식 영상과 함께
+        응원법을 보면서 따라 할 수 있습니다.
       </p>
       <div className="chant-tools">
         <input
@@ -117,127 +140,156 @@ function ChantList({ go }) {
         />
         <div className="filters">
           {FILTERS.map((f) => (
-            <button key={f.id} className={'chip' + (filter === f.id ? ' on' : '')} onClick={() => setFilter(f.id)}>
+            <button
+              key={f.id}
+              className={"chip" + (filter === f.id ? " on" : "")}
+              onClick={() => setFilter(f.id)}
+            >
               {f.label}
             </button>
           ))}
         </div>
       </div>
-      {groups.length === 0 && <p className="hint">조건에 맞는 곡이 없습니다.</p>}
-      {groups.map((g) => (
-        <section key={g.album} className="set-group">
-          <h3 className="album-head">
-            <AlbumChip album={g.album === '기타' ? null : g.album} />
-            {g.album === '기타' && g.album}
-          </h3>
-          <ul className="song-list">
-            {g.songs.map((song) => {
-              const st = loadSongState(song.id)
-              const fanLines = st.cues.filter((c) => c.fan || hasPart(c.text)).length
-              return (
-                <li key={song.id}>
-                  <button
-                    className="song-row"
-                    style={{ '--album': ALBUM_COLORS[song.album] }}
-                    onClick={() => go(`#/chant/${song.id}`)}
-                  >
-                    <span className="song-main">
-                      <span className="song-title">{song.title}</span>
-                      <span className="chant-meta">
-                        <Badges song={song} compact />
-                        <span>📣 {fanLines}곳</span>
-                        {VIDEOS[song.id] && (VIDEOS[song.id].order || ['main']).includes('main') && <span>▶ {VIDEOS[song.id].kind}</span>}
-                        {stagesOf(song.id).length > 0 && <span>📺 음방 응원</span>}
-                        {isSynced(song.id) && <span className="synced">⏱ 싱크 완료</span>}
+      {groups.length === 0 && (
+        <p className="hint">조건에 맞는 곡이 없습니다.</p>
+      )}
+      {/* 앨범 하나 = 한 칸(세로로 곡 나열). 넓은 화면에서는 앨범 칸이 2·3개씩 가로로 놓인다 */}
+      <div className="album-grid">
+        {groups.map((g) => (
+          <section key={g.album} className="set-group">
+            <h3 className="album-head">
+              <AlbumChip album={g.album === "기타" ? null : g.album} />
+              {g.album === "기타" && g.album}
+            </h3>
+            <ul className="song-list">
+              {g.songs.map((song) => {
+                const st = loadSongState(song.id);
+                const fanLines = st.cues.filter(
+                  (c) => c.fan || hasPart(c.text),
+                ).length;
+                return (
+                  <li key={song.id}>
+                    <button
+                      className="song-row"
+                      style={{ "--album": ALBUM_COLORS[song.album] }}
+                      onClick={() => go(`#/chant/${song.id}`)}
+                    >
+                      <span className="song-main">
+                        <span className="song-title">{song.title}</span>
+                        <span className="chant-meta">
+                          <Badges song={song} compact />
+                          <span>📣 {fanLines}곳</span>
+                          {VIDEOS[song.id] &&
+                            (VIDEOS[song.id].order || ["main"]).includes(
+                              "main",
+                            ) && <span>▶ {VIDEOS[song.id].kind}</span>}
+                          {stagesOf(song.id).length > 0 && (
+                            <span>📺 음방 응원</span>
+                          )}
+                          {isSynced(song.id) && (
+                            <span className="synced">⏱ 싱크 완료</span>
+                          )}
+                        </span>
                       </span>
-                    </span>
-                    <span className="go">›</span>
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
-        </section>
-      ))}
+                      <span className="go">›</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))}
+      </div>
       <p className="hint small source">
-        응원법 출처: {CHANT_SOURCE} · 연준 솔로곡·「그날이 오면」·일본곡은 공식 응원법 공지
+        응원법 출처: {CHANT_SOURCE} · 연준 솔로곡·「그날이 오면」·일본곡은 공식
+        응원법 공지
       </p>
     </div>
-  )
+  );
 }
 
 function ChantDetail({ song, go }) {
-  const [state, setState] = useState(() => loadSongState(song.id))
-  const video = VIDEOS[song.id]
-  const options = videoOptions(song.id, state)
-  const [which, setWhich] = useState(null) // 처음엔 맨 앞 영상
-  const picked = options.find((o) => o.key === which) || options[0]
-  const vid = picked?.id || null
-  const source = useMemo(() => (vid ? { type: 'youtube', id: vid } : null), [vid])
-  const sp = useSongPlayer(song.id, source)
-  const player = sp.player
-  const cues = state.cues
-  const synced = cues.some((c) => c.t != null)
-  const { offset, sure } = videoOffset(song.id, state, vid)
-  const [calibrating, setCalibrating] = useState(false)
-  const [follow, setFollow] = useState(() => loadJSON('chant-follow', true))
-  const [showPron, setShowPron] = useState(() => loadJSON('show-pron', true))
-  const hasPron = cues.some((c) => c.pron)
-  const listRef = useRef(null)
-  const t = player.time + offset
-  const active = synced && (sure || !calibrating) ? activeIndex(cues, t) : -1
+  const [state, setState] = useState(() => loadSongState(song.id));
+  const video = VIDEOS[song.id];
+  const options = videoOptions(song.id, state);
+  const [which, setWhich] = useState(null); // 처음엔 맨 앞 영상
+  const picked = options.find((o) => o.key === which) || options[0];
+  const vid = picked?.id || null;
+  const source = useMemo(
+    () => (vid ? { type: "youtube", id: vid } : null),
+    [vid],
+  );
+  const sp = useSongPlayer(song.id, source);
+  const player = sp.player;
+  const cues = state.cues;
+  const synced = cues.some((c) => c.t != null);
+  const { offset, sure } = videoOffset(song.id, state, vid);
+  const [calibrating, setCalibrating] = useState(false);
+  const [follow, setFollow] = useState(() => loadJSON("chant-follow", true));
+  const [showPron, setShowPron] = useState(() => loadJSON("show-pron", true));
+  const hasPron = cues.some((c) => c.pron);
+  const listRef = useRef(null);
+  const t = player.time + offset;
+  const active = synced && (sure || !calibrating) ? activeIndex(cues, t) : -1;
 
   // 한 번에 맞추기 기준 줄: 첫 번째 가사 줄
-  const meta = chantMeta(song.id)
-  const anchor = pickAnchor(song.id, cues)
+  const meta = chantMeta(song.id);
+  const anchor = pickAnchor(song.id, cues);
 
   function setOffset(n) {
-    const next = { ...loadJSON('song:' + song.id, {}), offsets: { ...state.offsets, [vid]: n } }
+    const next = {
+      ...loadJSON("song:" + song.id, {}),
+      offsets: { ...state.offsets, [vid]: n },
+    };
     // 연습 모드가 같은 영상을 쓰고 있으면 그쪽 보정값도 같이 맞춘다
-    if (vid === parseYouTubeId(state.youtube)) next.offset = n
-    saveJSON('song:' + song.id, next)
-    setState(loadSongState(song.id))
+    if (vid === parseYouTubeId(state.youtube)) next.offset = n;
+    saveJSON("song:" + song.id, next);
+    setState(loadSongState(song.id));
   }
 
   // 이 기기에 저장된 내 값(보정·줄 시간)이 공개 싱크와 다르면 되돌리기 버튼을 보여준다
-  const published = PUBLISHED_SYNC[song.id]
-  const mine = loadJSON('song:' + song.id, {})
-  const myOffset = mine.offsets?.[vid]
+  const published = PUBLISHED_SYNC[song.id];
+  const mine = loadJSON("song:" + song.id, {});
+  const myOffset = mine.offsets?.[vid];
   const canReset =
     !!published &&
-    ((myOffset != null && myOffset !== published.offsets?.[vid]) || mine.cues?.some((c) => c.t != null))
+    ((myOffset != null && myOffset !== published.offsets?.[vid]) ||
+      mine.cues?.some((c) => c.t != null));
   function resetToPublished() {
-    const next = { ...mine, offsets: { ...mine.offsets } }
-    delete next.offsets[vid]
-    delete next.cues
-    if (vid === parseYouTubeId(state.youtube)) delete next.offset
-    saveJSON('song:' + song.id, next)
-    setState(loadSongState(song.id))
-    setCalibrating(false)
+    const next = { ...mine, offsets: { ...mine.offsets } };
+    delete next.offsets[vid];
+    delete next.cues;
+    if (vid === parseYouTubeId(state.youtube)) delete next.offset;
+    saveJSON("song:" + song.id, next);
+    setState(loadSongState(song.id));
+    setCalibrating(false);
   }
 
-  const idx = CHANT_ORDER.indexOf(song.id)
-  const prev = SONG_MAP[CHANT_ORDER[idx - 1]]
-  const next = SONG_MAP[CHANT_ORDER[idx + 1]]
+  const idx = CHANT_ORDER.indexOf(song.id);
+  const prev = SONG_MAP[CHANT_ORDER[idx - 1]];
+  const next = SONG_MAP[CHANT_ORDER[idx + 1]];
 
   useEffect(() => {
-    if (!follow || active < 0 || !player.playing) return
-    const el = listRef.current?.querySelector(`[data-idx="${active}"]`)
-    if (!el) return
-    const r = el.getBoundingClientRect()
+    if (!follow || active < 0 || !player.playing) return;
+    const el = listRef.current?.querySelector(`[data-idx="${active}"]`);
+    if (!el) return;
+    const r = el.getBoundingClientRect();
     // 화면 가운데 근처에 오도록 부드럽게 스크롤 (데스크톱은 응원법 칸만 스크롤)
-    window.scrollBy({ top: r.top - window.innerHeight * 0.42, behavior: 'smooth' })
-  }, [active, follow, player.playing])
+    window.scrollBy({
+      top: r.top - window.innerHeight * 0.42,
+      behavior: "smooth",
+    });
+  }, [active, follow, player.playing]);
 
   function toggleFollow() {
-    setFollow(!follow)
-    saveJSON('chant-follow', !follow)
+    setFollow(!follow);
+    saveJSON("chant-follow", !follow);
   }
 
   return (
     <div className="page chant-detail">
       <div className="chant-side">
-        <button className="text-link" onClick={() => go('#/chant')}>
+        <button className="text-link" onClick={() => go("#/chant")}>
           ← 응원법 전체
         </button>
         <p className="kicker">Fanchant Guide</p>
@@ -250,11 +302,19 @@ function ChantDetail({ song, go }) {
         <div className="chant-player">
           {options.length > 1 && (
             <div
-              className={'seg video-seg' + (options.length > 3 ? ' two-rows' : '')}
-              style={{ gridTemplateColumns: `repeat(${options.length > 3 ? 2 : options.length}, 1fr)` }}
+              className={
+                "seg video-seg" + (options.length > 3 ? " two-rows" : "")
+              }
+              style={{
+                gridTemplateColumns: `repeat(${options.length > 3 ? 2 : options.length}, 1fr)`,
+              }}
             >
               {options.map((o) => (
-                <button key={o.key} className={picked === o ? 'on' : ''} onClick={() => setWhich(o.key)}>
+                <button
+                  key={o.key}
+                  className={picked === o ? "on" : ""}
+                  onClick={() => setWhich(o.key)}
+                >
                   {o.label}
                 </button>
               ))}
@@ -262,11 +322,15 @@ function ChantDetail({ song, go }) {
           )}
           {picked?.stage && picked.stage.note !== false && (
             <p className="stage-note">
-              {picked.stage.note || `📺 ${picked.stage.show} 실제 무대예요. 팬들 응원 소리를 들으며 따라 해보세요!`}
+              {picked.stage.note ||
+                `📺 ${picked.stage.show} 실제 무대예요. 팬들 응원 소리를 들으며 따라 해보세요!`}
             </p>
           )}
-          {picked?.key === 'main' && video?.noSync && (
-            <p className="stage-note">🎬 뮤직비디오는 중간 연출 때문에 응원법 싱크가 맞지 않아요. 영상 감상용이에요.</p>
+          {picked?.key === "main" && video?.noSync && (
+            <p className="stage-note">
+              🎬 뮤직비디오는 중간 연출 때문에 응원법 싱크가 맞지 않아요. 영상
+              감상용이에요.
+            </p>
           )}
           {source ? (
             <VideoSlot sp={sp} source={source} />
@@ -275,15 +339,28 @@ function ChantDetail({ song, go }) {
           )}
           <div className="chant-links">
             {vid && (
-              <a className="btn small" href={`https://www.youtube.com/watch?v=${vid}`} target="_blank" rel="noreferrer">
+              <a
+                className="btn small"
+                href={`https://www.youtube.com/watch?v=${vid}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 ▶ 유튜브 ↗
               </a>
             )}
-            <a className="btn small" href={melonUrl(song)} target="_blank" rel="noreferrer">
+            <a
+              className="btn small"
+              href={melonUrl(song)}
+              target="_blank"
+              rel="noreferrer"
+            >
               🍈 멜론 ↗
             </a>
             {FEATURES.practice && (
-              <button className="btn small primary" onClick={() => go(`#/practice/${song.id}`)}>
+              <button
+                className="btn small primary"
+                onClick={() => go(`#/practice/${song.id}`)}
+              >
                 📣 연습 모드
               </button>
             )}
@@ -299,7 +376,7 @@ function ChantDetail({ song, go }) {
             <li>
               <span className="lg">
                 줄 안의 <mark className="fan-part">파란 글자</mark>
-              </span>{' '}
+              </span>{" "}
               그 부분만 외쳐요
             </li>
             <li>
@@ -308,7 +385,7 @@ function ChantDetail({ song, go }) {
             <li>
               <span className="lg">
                 <s className="sung-over">취소선</s>
-              </span>{' '}
+              </span>{" "}
               멤버 가사 위로 팬이 대신 외쳐요
             </li>
           </ul>
@@ -326,18 +403,21 @@ function ChantDetail({ song, go }) {
           )}
           {hasPron && (
             <button
-              className={'chip follow' + (showPron ? ' on' : '')}
+              className={"chip follow" + (showPron ? " on" : "")}
               onClick={() => {
-                setShowPron(!showPron)
-                saveJSON('show-pron', !showPron)
+                setShowPron(!showPron);
+                saveJSON("show-pron", !showPron);
               }}
             >
-              🇰🇷 한국어 발음 {showPron ? '켜짐' : '꺼짐'}
+              🇰🇷 한국어 발음 {showPron ? "켜짐" : "꺼짐"}
             </button>
-          )}{' '}
+          )}{" "}
           {synced && (
-            <button className={'chip follow' + (follow ? ' on' : '')} onClick={toggleFollow}>
-              {follow ? '자동 따라가기 켜짐' : '자동 따라가기 꺼짐'}
+            <button
+              className={"chip follow" + (follow ? " on" : "")}
+              onClick={toggleFollow}
+            >
+              {follow ? "자동 따라가기 켜짐" : "자동 따라가기 꺼짐"}
             </button>
           )}
         </div>
@@ -350,14 +430,17 @@ function ChantDetail({ song, go }) {
               key={i}
               data-idx={i}
               className={
-                'chant-line' + (c.fan ? ' fan' : '') + (i === active ? ' active' : '') + (active >= 0 && i < active ? ' past' : '')
+                "chant-line" +
+                (c.fan ? " fan" : "") +
+                (i === active ? " active" : "") +
+                (active >= 0 && i < active ? " past" : "")
               }
             >
               <button
                 disabled={c.t == null || !player.ready}
                 onClick={() => {
-                  player.seek(Math.max(0, c.t - offset - 0.3))
-                  player.play()
+                  player.seek(Math.max(0, c.t - offset - 0.3));
+                  player.play();
                 }}
               >
                 <CueText text={c.text} />
@@ -373,14 +456,20 @@ function ChantDetail({ song, go }) {
 
         <nav className="prev-next">
           {prev ? (
-            <button className="text-link" onClick={() => go(`#/chant/${prev.id}`)}>
+            <button
+              className="text-link"
+              onClick={() => go(`#/chant/${prev.id}`)}
+            >
               ← {prev.short || prev.title}
             </button>
           ) : (
             <span />
           )}
           {next && (
-            <button className="text-link" onClick={() => go(`#/chant/${next.id}`)}>
+            <button
+              className="text-link"
+              onClick={() => go(`#/chant/${next.id}`)}
+            >
               {next.short || next.title} →
             </button>
           )}
@@ -394,17 +483,25 @@ function ChantDetail({ song, go }) {
 
       {player.ready && (
         <div className="mini-player">
-          <button className="icon-btn" onClick={() => player.seek(player.getTime() - 5)} aria-label="5초 뒤로">
+          <button
+            className="icon-btn"
+            onClick={() => player.seek(player.getTime() - 5)}
+            aria-label="5초 뒤로"
+          >
             ↺5
           </button>
           <button
             className="icon-btn big"
             onClick={() => (player.playing ? player.pause() : player.play())}
-            aria-label={player.playing ? '일시정지' : '재생'}
+            aria-label={player.playing ? "일시정지" : "재생"}
           >
-            {player.playing ? '⏸' : '▶'}
+            {player.playing ? "⏸" : "▶"}
           </button>
-          <button className="icon-btn" onClick={() => player.seek(player.getTime() + 5)} aria-label="5초 앞으로">
+          <button
+            className="icon-btn"
+            onClick={() => player.seek(player.getTime() + 5)}
+            aria-label="5초 앞으로"
+          >
             5↻
           </button>
           <span className="mini-time">{formatTime(player.time)}</span>
@@ -413,8 +510,8 @@ function ChantDetail({ song, go }) {
               className="btn primary mini-now"
               disabled={!player.playing}
               onClick={() => {
-                calibrate(anchor, player, setOffset)
-                setCalibrating(false)
+                calibrate(anchor, player, setOffset);
+                setCalibrating(false);
               }}
             >
               지금!
@@ -423,5 +520,5 @@ function ChantDetail({ song, go }) {
         </div>
       )}
     </div>
-  )
+  );
 }
