@@ -100,7 +100,7 @@ function ChantList({ go }) {
   }, [filter, q])
 
   return (
-    <div className="page chant-list">
+    <div className="page">
       <p className="kicker">Fanchant Guide</p>
       <h1 className="page-title">응원법</h1>
       <p className="hint">
@@ -124,44 +124,41 @@ function ChantList({ go }) {
         </div>
       </div>
       {groups.length === 0 && <p className="hint">조건에 맞는 곡이 없습니다.</p>}
-      {/* 앨범 하나 = 한 칸(세로로 곡 나열). 넓은 화면에서는 앨범 칸이 2·3개씩 가로로 놓인다 */}
-      <div className="album-grid">
-        {groups.map((g) => (
-          <section key={g.album} className="set-group">
-            <h3 className="album-head">
-              <AlbumChip album={g.album === '기타' ? null : g.album} />
-              {g.album === '기타' && g.album}
-            </h3>
-            <ul className="song-list">
-              {g.songs.map((song) => {
-                const st = loadSongState(song.id)
-                const fanLines = st.cues.filter((c) => c.fan || hasPart(c.text)).length
-                return (
-                  <li key={song.id}>
-                    <button
-                      className="song-row"
-                      style={{ '--album': ALBUM_COLORS[song.album] }}
-                      onClick={() => go(`#/chant/${song.id}`)}
-                    >
-                      <span className="song-main">
-                        <span className="song-title">{song.title}</span>
-                        <span className="chant-meta">
-                          <Badges song={song} compact />
-                          <span>📣 {fanLines}곳</span>
-                          {VIDEOS[song.id] && (VIDEOS[song.id].order || ['main']).includes('main') && <span>▶ {VIDEOS[song.id].kind}</span>}
-                          {stagesOf(song.id).length > 0 && <span>📺 음방 응원</span>}
-                          {isSynced(song.id) && <span className="synced">⏱ 싱크 완료</span>}
-                        </span>
+      {groups.map((g) => (
+        <section key={g.album} className="set-group">
+          <h3 className="album-head">
+            <AlbumChip album={g.album === '기타' ? null : g.album} />
+            {g.album === '기타' && g.album}
+          </h3>
+          <ul className="song-list">
+            {g.songs.map((song) => {
+              const st = loadSongState(song.id)
+              const fanLines = st.cues.filter((c) => c.fan || hasPart(c.text)).length
+              return (
+                <li key={song.id}>
+                  <button
+                    className="song-row"
+                    style={{ '--album': ALBUM_COLORS[song.album] }}
+                    onClick={() => go(`#/chant/${song.id}`)}
+                  >
+                    <span className="song-main">
+                      <span className="song-title">{song.title}</span>
+                      <span className="chant-meta">
+                        <Badges song={song} compact />
+                        <span>📣 {fanLines}곳</span>
+                        {VIDEOS[song.id] && (VIDEOS[song.id].order || ['main']).includes('main') && <span>▶ {VIDEOS[song.id].kind}</span>}
+                        {stagesOf(song.id).length > 0 && <span>📺 음방 응원</span>}
+                        {isSynced(song.id) && <span className="synced">⏱ 싱크 완료</span>}
                       </span>
-                      <span className="go">›</span>
-                    </button>
-                  </li>
-                )
-              })}
-            </ul>
-          </section>
-        ))}
-      </div>
+                    </span>
+                    <span className="go">›</span>
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+      ))}
       <p className="hint small source">
         응원법 출처: {CHANT_SOURCE} · 연준 솔로곡·「그날이 오면」·일본곡은 공식 응원법 공지
       </p>
