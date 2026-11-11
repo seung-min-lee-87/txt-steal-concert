@@ -30,7 +30,6 @@ export const VIDEOS = {
   'beautiful-strangers': { id: 'oG16Esx419c', kind: '안무 영상', dur: 139, mv: 'IcwHopeT5gY' }, // 'Beautiful Strangers' Choreography Video (YEONJUN draft) | TXT (투모로우바이
   'song-of-the-stars': { id: 'bsKe_P8cjrw', kind: '무대 영상', dur: 331 }, // ‘별의 노래 (Song of the Stars)’ stage @ ACT : TOMORROW IN SEOUL | TXT (투모로
   'miracle': { id: '8efrOFRXMxo', kind: '공식 영상', dur: 168 }, // 'Miracle (기적은 너와 내가 함께하는 순간마다 일어나고 있어)' Special Thanks to MOA | TXT (투
-  'see-you-there-tomorrow': { id: 'AGtzFK8nejw', kind: '무대 영상', dur: 235 }, // ‘내일에서 기다릴게 (I’ll See You There Tomorrow)’ stage @ COMEBACK SHOWCASE | 
   'moa-diary': { id: 'ugPutzQD1yk', kind: '공식 영상', dur: 192 }, // TXT (투모로우바이투게더) '교환일기 (두밧두 와리와리)' Special Thanks to MOA
   'magic': { id: 'AP2WEsJfPYU', kind: '퍼포먼스 영상', dur: 167, mv: 'FQRnJvbLTAo' }, // TXT(투모로우바이투게더) ‘Magic’ Special Performance Video
   'our-summer': { id: 'M_iYqRNS_o0', kind: '공식 영상', dur: 211 }, // [T:TIME] TOMORROW X TOGETHER ‘Our Summer’ (selfie ver.) - TXT (투모로우바이투
