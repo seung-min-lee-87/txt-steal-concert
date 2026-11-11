@@ -100,7 +100,7 @@ function ChantList({ go }) {
   }, [filter, q])
 
   return (
-    <div className="page">
+    <div className="page chant-list">
       <p className="kicker">Fanchant Guide</p>
       <h1 className="page-title">응원법</h1>
       <p className="hint">
