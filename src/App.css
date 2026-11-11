@@ -580,14 +580,13 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .trailer:hover .trailer-play { background: var(--sky); }
 /* 배너 자동재생 (테스트) */
 .hero-media { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
-.hero-video { aspect-ratio: 2000 / 667; overflow: hidden; }
-.hero-video .hero-banner { position: absolute; inset: 0; height: 100%; }
-/* 16:9 영상을 3:1 배너에 꽉 차게 (위아래 잘림) */
-.hero-video iframe { position: absolute; left: 0; width: 100%; height: 168.75%; top: -34.375%; border: 0; pointer-events: none; opacity: 0; transition: opacity .6s; }
+.hero-video { aspect-ratio: 16 / 9; overflow: hidden; cursor: default; background: #000; }
+.hero-video .hero-banner { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; }
+.hero-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; pointer-events: none; opacity: 0; transition: opacity .6s; }
 .hero-video iframe.on { opacity: 1; }
-.hero-play { position: absolute; left: 12px; bottom: 10px; z-index: 1; padding: 5px 12px; border-radius: 999px; background: rgba(0,24,6,.55); border: 1px solid rgba(242,238,226,.45); color: var(--ivory); font-size: 12px; font-weight: 600; backdrop-filter: blur(4px); }
-.hero-media:hover .hero-play { background: var(--ivory); color: var(--forest); }
-.trailer-modal { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,.85); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 16px; }
-.trailer-box { width: min(960px, 100%); aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; }
-.trailer-box iframe { width: 100%; height: 100%; border: 0; display: block; }
-.trailer-close { border: 1px solid rgba(242,238,226,.4); background: transparent; color: var(--ivory); border-radius: 999px; padding: 8px 18px; font-size: 14px; cursor: pointer; }
+.hero-play { position: absolute; left: 12px; bottom: 10px; z-index: 1; cursor: pointer; padding: 5px 12px; border-radius: 999px; background: rgba(0,24,6,.55); border: 1px solid rgba(242,238,226,.45); color: var(--ivory); font-size: 12px; font-weight: 600; backdrop-filter: blur(4px); }
+.hero-play:hover, .hero-play[aria-pressed='true'] { background: var(--ivory); color: var(--forest); }
+/* 테스트 페이지: 배너 아래 글자를 한 줄로 (좁은 화면에선 자연스럽게 줄바꿈) */
+.hero-body.one-line { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; }
+.hero-body.one-line .hero-actions { margin: 0 0 0 auto; }
+@media (max-width: 700px) { .hero-body.one-line .kicker { flex-basis: 100%; } .hero-body.one-line .hero-actions { margin-left: 0; } }
