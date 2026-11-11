@@ -1,6 +1,7 @@
 // 실제 음악방송 무대 영상 (관객 응원 소리가 들리는 것)
 // 곡별로 여러 개 넣을 수 있다. offset: 응원법 시간(음원 기준)에 더할 값(초).
 //   offset을 모르면 비워두면 되고, 화면에서 "한 번에 맞추기"로 맞추면 된다.
+// note: 영상 아래 안내 문구를 직접 지정 (없으면 "실제 무대예요. 팬들 응원 소리를…")
 // first: true 를 붙이면 그 무대 영상이 맨 앞 버튼(처음 열었을 때 나오는 영상)이 된다.
 // 관객이 있던 시기(2019~2020.2, 2022.5~) 방송사 공식 채널 영상만 골랐다.
 export const STAGES = {
@@ -20,7 +21,7 @@ export const STAGES = {
   'sugar-rush-ride': [{ id: 'JqcigPL5p9M', show: '뮤직뱅크', date: '2023-02-10' }, { id: '1ltsjA7kMfM', show: '엠카운트다운', date: '2023-02-09' }],
   'chasing-that-feeling': [{ id: 'w_DQu1JoKvY', show: '뮤직뱅크', date: '2023-10-27' }, { id: 'Km2M14Tvyis', show: '엠카운트다운', date: '2023-10-19' }],
   'back-for-more': [{ id: 'tDr8PMkkYqo', show: '뮤직뱅크', date: '2023-10-13' }, { id: '9zq49ktu3Sk', show: '엠카운트다운', date: '2023-10-19' }],
-  'see-you-there-tomorrow': [{ id: '679oSwJav0U', show: '뮤직뱅크', date: '2024-04-05' }, { id: 'VTS9cWe5atA', show: '음악중심', date: '2024-04-06' }],
+  'see-you-there-tomorrow': [{ id: '2_ZQpWVMn9c', show: 'Performance37', first: true, note: '🎥 M2 Performance37 퍼포먼스 영상이에요.' }, { id: '679oSwJav0U', show: '뮤직뱅크', date: '2024-04-05' }, { id: 'VTS9cWe5atA', show: '음악중심', date: '2024-04-06' }],
   'deja-vu': [{ id: 'C3HY9Ay_1L0', show: '음악중심', date: '2024-04-13' }, { id: 'IySlMjDGbsM', show: '뮤직뱅크', date: '2024-04-12' }],
   'over-the-moon': [{ id: 'mmSamMi6xF0', show: '뮤직뱅크', date: '2024-11-15' }, { id: 'L9yLkv7Fvu4', show: '음악중심', date: '2024-11-16' }],
   'forty-one-winks': [{ id: 'bPXKEhNC1tY', show: '뮤직뱅크', date: '2024-11-08' }, { id: 'kTcPjzr3-yA', show: '음악중심', date: '2024-11-09' }],
@@ -37,4 +38,5 @@ export const findStage = (songId, vid) => stagesOf(songId).find((s) => s.id === 
 
 // '엠카운트다운' + '2023-01-26' → '엠카 23.01.26'
 const SHORT = { 엠카운트다운: '엠카', 뮤직뱅크: '뮤뱅', 음악중심: '음중', 인기가요: '인가', 쇼챔피언: '쇼챔', 더쇼: '더쇼', '뮤뱅 글로벌페스티벌': '뮤뱅 글페', 전국반짝투어: '반짝투어' }
-export const stageLabel = (s) => `${SHORT[s.show] || s.show} ${s.date.slice(2).replaceAll('-', '.')}`
+// 날짜(date)가 없는 영상(방송이 아닌 퍼포먼스 영상 등)은 이름만
+export const stageLabel = (s) => (s.date ? `${SHORT[s.show] || s.show} ${s.date.slice(2).replaceAll('-', '.')}` : s.show)
