@@ -573,12 +573,7 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .studio-anchor { font-size: 14px; margin: 12px 0 8px; line-height: 1.8; }
 .studio-bar { flex-wrap: wrap; }
 .studio-notice { flex-basis: 100%; margin: 4px 0 0; font-size: 12px; color: #ffd479; text-align: center; }
-/* 공식 트레일러 */
-.trailer { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--card-line); background: #000; padding: 0; cursor: pointer; }
-.trailer img, .trailer iframe { width: 100%; height: 100%; object-fit: cover; border: 0; display: block; }
-.trailer-play { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: var(--ivory); color: var(--forest); font-weight: 700; padding: 10px 18px; border-radius: 999px; font-size: 15px; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
-.trailer:hover .trailer-play { background: var(--sky); }
-/* 배너 자동재생 (테스트) */
+/* 배너 자리 트레일러 자동재생 */
 .hero-media { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
 .hero-video { aspect-ratio: 16 / 9; overflow: hidden; cursor: default; background: #000; }
 .hero-video .hero-banner { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; }
@@ -586,7 +581,7 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .hero-video iframe.on { opacity: 1; }
 .hero-play { position: absolute; left: 12px; bottom: 10px; z-index: 1; cursor: pointer; padding: 5px 12px; border-radius: 999px; background: rgba(0,24,6,.55); border: 1px solid rgba(242,238,226,.45); color: var(--ivory); font-size: 12px; font-weight: 600; backdrop-filter: blur(4px); }
 .hero-play:hover, .hero-play[aria-pressed='true'] { background: var(--ivory); color: var(--forest); }
-/* 테스트 페이지: 배너 아래 글자를 한 줄로 (좁은 화면에선 자연스럽게 줄바꿈) */
+/* 배너 아래 글자를 한 줄로 (좁은 화면에선 자연스럽게 줄바꿈) */
 .hero-body.one-line { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; }
 .hero-body.one-line .hero-actions { margin: 0 0 0 auto; }
 @media (max-width: 700px) { .hero-body.one-line .kicker { flex-basis: 100%; } .hero-body.one-line .hero-actions { margin-left: 0; } }
