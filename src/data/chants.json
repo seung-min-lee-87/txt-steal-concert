@@ -253,7 +253,7 @@
       "anchor": 1,
       "duration": 175.0,
       "cues": [
-        {"t":5,"text":"최수빈 최연준 최범규 강태현 휴닝카이 투모로우바이투게더)","fan":true},
+        {"t":5,"text":"최수빈 최연준 최범규 강태현 휴닝카이 투모로우바이투게더","fan":true},
         {"t":10.71,"text":"I think I’m feeling all right","fan":false},
         {"t":13.16,"text":"아니면 아니었나 {hey}","fan":false},
         {"t":15.61,"text":"반복의 수학시간","fan":false},
