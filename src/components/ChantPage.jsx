@@ -260,7 +260,7 @@ function ChantDetail({ song, go }) {
               ))}
             </div>
           )}
-          {picked?.stage && (
+          {picked?.stage && picked.stage.note !== false && (
             <p className="stage-note">
               {picked.stage.note || `📺 ${picked.stage.show} 실제 무대예요. 팬들 응원 소리를 들으며 따라 해보세요!`}
             </p>

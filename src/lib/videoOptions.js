@@ -5,7 +5,7 @@ import { parseYouTubeId } from './usePlayer'
 // 곡별로 고를 수 있는 영상: 연습용(음원 길이) 영상, 공식 MV, 음악방송 무대(팬 응원 소리)
 export function videoOptions(songId, state) {
   const video = VIDEOS[songId]
-  const stages = stagesOf(songId).map((s) => ({ key: s.id, label: '📣 ' + stageLabel(s), id: s.id, stage: s }))
+  const stages = stagesOf(songId).map((s) => ({ key: s.id, label: s.label || '📣 ' + stageLabel(s), id: s.id, stage: s }))
   const groups = {
     main: state.youtube ? [{ key: 'main', label: video?.kind || '영상', id: parseYouTubeId(state.youtube) }] : [],
     mv: video?.mv ? [{ key: 'mv', label: '공식 MV', id: video.mv }] : [],

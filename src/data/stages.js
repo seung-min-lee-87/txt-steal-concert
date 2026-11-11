@@ -2,6 +2,7 @@
 // 곡별로 여러 개 넣을 수 있다. offset: 응원법 시간(음원 기준)에 더할 값(초).
 //   offset을 모르면 비워두면 되고, 화면에서 "한 번에 맞추기"로 맞추면 된다.
 // note: 영상 아래 안내 문구를 직접 지정 (없으면 "실제 무대예요. 팬들 응원 소리를…")
+// label: 버튼 이름을 직접 지정 (없으면 "📣 방송 날짜"), note: false 면 안내 문구 없음
 // first: true 를 붙이면 그 무대 영상이 맨 앞 버튼(처음 열었을 때 나오는 영상)이 된다.
 // 관객이 있던 시기(2019~2020.2, 2022.5~) 방송사 공식 채널 영상만 골랐다.
 export const STAGES = {
@@ -9,7 +10,11 @@ export const STAGES = {
   '0x1-lovesong': [{ id: 'swZ-GR0maMs', show: '컴백쇼', date: '2021-05-31' }],
   'we-lost-the-summer': [{ id: '-VbliCTPZxI', show: '뮤직뱅크', date: '2020-11-13' }],
   'blue-hour': [{ id: 'GYa1RcgVgY4', show: '뮤직뱅크', date: '2020-10-30' }],
-  'blue-orangeade': [{ id: 'XNBe4AIRrxc', show: '더쇼', date: '2019-03-12' }],
+  'blue-orangeade': [
+    { id: 'cqW8gUEEA7E', show: '데뷔 쇼케이스', date: '2019-03-04', first: true, label: '📣 데뷔 쇼케이스', note: '📺 Mnet 데뷔 셀러브레이션 쇼 무대예요.' },
+    { id: 'LTz8NjNQp-s', show: '공식 영상', first: true, label: '공식 영상', note: false },
+    { id: '75ANyLWSFGE', show: '쇼챔피언', label: '📣 쇼챔 EP.307' },
+  ],
   'crown': [{ id: 'KjFowwKfVuI', show: '뮤직뱅크', date: '2019-03-29' }],
   'cat-dog': [{ id: 'IzWug96-zNE', show: '뮤직뱅크', date: '2019-05-03' }, { id: 'dWHAiC9G1eE', show: '엠카운트다운', date: '2019-05-02' }],
   'new-rules': [{ id: 'HMG67w8yQ_c', show: '뮤직뱅크', date: '2019-12-20' }],
