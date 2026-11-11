@@ -51,7 +51,7 @@ export const VIDEOS = {
   'forty-one-winks': { id: 'J1Q-6FvVxck', kind: '퍼포먼스 영상', dur: 151 }, // ‘Forty One Winks’ Special Performance Video | TXT (투모로우바이투게더)
   'just-one-more-day': { id: 'jOnLqqDRfY4', kind: 'MV', dur: 278 }, // TXT (투모로우바이투게더) '하루에 하루만 더 (Stick With You)' Official MV
   'new-rules': { id: 'OxtraGjrKz0', kind: '스튜디오 춤', dur: 179 }, // [BE ORIGINAL] TXT 'New Rules' (4K) | STUDIO CHOOM (예전 안무 연습 영상: YVAEyZ35_ew)
-  'drama': { id: '9bGCUD2-0J4', kind: '안무 연습 영상', dur: 217 }, // TXT (투모로우바이투게더) ‘Drama’ Dance Practice
+  'drama': { id: '9bGCUD2-0J4', kind: '안무 연습 영상', dur: 217, mv: 'pS--UQaubHc' }, // TXT (투모로우바이투게더) ‘Drama’ Dance Practice
   'no-rules': { id: 'lDRkALaSjzU', kind: '안무 연습 영상', dur: 195 }, // TXT (투모로우바이투게더) ‘No Rules’ Dance Practice
   'ggum': { id: '1T9tLMh99Wo', kind: 'MV', dur: 164 }, // 연준 (YEONJUN) ‘GGUM’ Official MV
   'talk-to-you': { id: 'NIGA89HGTBU', kind: '퍼포먼스 영상', dur: 181 }, // 'Talk to You' Performance Video | NO LABELS: PART 01
