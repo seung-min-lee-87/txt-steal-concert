@@ -41,9 +41,11 @@ function prettyDate(date) {
   return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} (${WEEK[d.getDay()]})`
 }
 
-export default function TourPage({ go }) {
+// heroVideo: 테스트 페이지(#/tour-test)용 — 배너 자리에서 트레일러를 소리 없이 자동재생
+export default function TourPage({ go, heroVideo = false }) {
   const [going, setGoing] = useState(() => loadJSON('going', {}))
   const [zoom, setZoom] = useState(null)
+  const [trailer, setTrailer] = useState(false)
 
   function toggle(date) {
     const next = { ...going, [date]: !going[date] }
@@ -70,10 +72,14 @@ export default function TourPage({ go }) {
   return (
     <div className="page">
       <section className="hero">
-        <picture>
-          <source media="(max-width: 700px)" srcSet="/images/banner-sm.webp" />
-          <img className="hero-banner" src="/images/banner.webp" alt="TOMORROW X TOGETHER WORLD TOUR STEAL THE WIND" />
-        </picture>
+        {heroVideo && TOUR.trailer ? (
+          <HeroVideo id={TOUR.trailer} onOpen={() => setTrailer(true)} />
+        ) : (
+          <picture>
+            <source media="(max-width: 700px)" srcSet="/images/banner-sm.webp" />
+            <img className="hero-banner" src="/images/banner.webp" alt="TOMORROW X TOGETHER WORLD TOUR STEAL THE WIND" />
+          </picture>
+        )}
         <div className="hero-body">
           <p className="kicker">Tomorrow X Together World Tour</p>
           <p className="hero-sub">
@@ -101,7 +107,7 @@ export default function TourPage({ go }) {
         </div>
       </section>
 
-      {TOUR.trailer && (
+      {TOUR.trailer && !heroVideo && (
         <>
           <h2 className="section-title">
             공식 트레일러 <span className="en">Official Trailer</span>
@@ -163,6 +169,7 @@ export default function TourPage({ go }) {
           </button>
         ))}
       </div>
+      {trailer && <TrailerModal id={TOUR.trailer} onClose={() => setTrailer(false)} />}
       {zoom && (
         <button className="lightbox" onClick={() => setZoom(null)} aria-label="닫기">
           <img src={zoom.src} alt={zoom.alt} />
@@ -256,5 +263,65 @@ function Trailer({ id }) {
       />
       <span className="trailer-play">▶ 트레일러 보기</span>
     </button>
+  )
+}
+
+// 배너 자리 자동재생 (소리 없이 반복). 영상이 실제로 재생되기 시작하면 배너 이미지 위로 나타난다.
+// 자동재생이 막힌 기기에서는 배너 이미지가 그대로 보인다. 누르면 소리 있는 큰 창으로.
+function HeroVideo({ id, onOpen }) {
+  const frameRef = useRef(null)
+  const [playing, setPlaying] = useState(false)
+  useEffect(() => {
+    function onMessage(e) {
+      if (!/youtube\.com$/.test(new URL(e.origin).hostname)) return
+      try {
+        const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data
+        if (d?.info?.playerState === 1) setPlaying(true)
+      } catch {
+        // 유튜브가 아닌 메시지는 무시
+      }
+    }
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
+  }, [])
+  // 재생 상태를 알려달라고 유튜브 플레이어에 요청
+  const listen = () => frameRef.current?.contentWindow?.postMessage(JSON.stringify({ event: 'listening', id: 1 }), '*')
+  const params = `autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&disablekb=1&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&enablejsapi=1`
+  return (
+    <button className="hero-media hero-video" onClick={onOpen} aria-label="공식 트레일러 소리 켜고 보기">
+      <picture>
+        <source media="(max-width: 700px)" srcSet="/images/banner-sm.webp" />
+        <img className="hero-banner" src="/images/banner.webp" alt="TOMORROW X TOGETHER WORLD TOUR STEAL THE WIND" />
+      </picture>
+      <iframe
+        ref={frameRef}
+        className={playing ? 'on' : ''}
+        src={`https://www.youtube.com/embed/${id}?${params}`}
+        title="STEAL THE WIND Official Trailer"
+        allow="autoplay; encrypted-media"
+        tabIndex={-1}
+        onLoad={listen}
+      />
+      <span className="hero-play">🔊 소리 켜고 보기</span>
+    </button>
+  )
+}
+
+// 공식 트레일러 팝업 (소리 있음). 바깥이나 ✕를 누르면 닫힘
+function TrailerModal({ id, onClose }) {
+  return (
+    <div className="trailer-modal" onClick={onClose} role="dialog" aria-label="공식 트레일러">
+      <div className="trailer-box" onClick={(e) => e.stopPropagation()}>
+        <iframe
+          src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1`}
+          title="STEAL THE WIND Official Trailer"
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+          allowFullScreen
+        />
+      </div>
+      <button className="trailer-close" onClick={onClose} aria-label="닫기">
+        ✕ 닫기
+      </button>
+    </div>
   )
 }

@@ -65,7 +65,9 @@ export default function App() {
         {route.page === 'chant' && <ChantPage songId={route.id} go={go} />}
         {/* 싱크 맞추기 테스트 페이지: 메뉴에 없고 주소(#/sync)로만 들어온다 */}
         {route.page === 'sync' && <SyncStudio songId={route.id} go={go} />}
-        {!['setlist', 'practice', 'chant', 'sync'].includes(route.page) && <TourPage go={go} />}
+        {/* 배너 자동재생 테스트 페이지: 메뉴에 없고 주소(#/tour-test)로만 */}
+        {route.page === 'tour-test' && <TourPage go={go} heroVideo />}
+        {!['setlist', 'practice', 'chant', 'sync', 'tour-test'].includes(route.page) && <TourPage go={go} />}
       </main>
 
       <footer className="footer">
