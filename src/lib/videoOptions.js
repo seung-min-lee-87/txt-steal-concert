@@ -11,8 +11,8 @@ export function videoOptions(songId, state) {
     mv: video?.mv ? [{ key: 'mv', label: '공식 MV', id: video.mv }] : [],
     stage: stages.filter((o) => !o.stage.first),
   }
-  // 버튼 순서: videos.js 의 order (예: ['mv', 'stage', 'main']). 없으면 연습 영상 → MV → 무대.
+  // 버튼 순서: videos.js 의 order (예: ['mv', 'stage', 'main']). 없으면 MV → 연습용(안무) 영상 → 음방 무대.
   // first: true 인 무대 영상은 항상 맨 앞.
-  const order = video?.order || ['main', 'mv', 'stage']
+  const order = video?.order || ['mv', 'main', 'stage']
   return [...stages.filter((o) => o.stage.first), ...order.flatMap((g) => groups[g] || [])]
 }

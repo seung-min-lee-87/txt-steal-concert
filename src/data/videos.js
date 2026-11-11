@@ -26,7 +26,7 @@ export const VIDEOS = {
   'where-do-you-go': { id: '4-U5xMpVeBw', kind: 'MV', dur: 204 }, // TXT (투모로우바이투게더) 'Where Do You Go?' Official MV
   'deja-vu': { id: 'DiHUEWBRQEI', kind: 'MV', dur: 241 }, // TXT (투모로우바이투게더) 'Deja Vu' Official MV
   'eternally': { id: 'ldx45XGJrH4', kind: '무대 영상', dur: 225 }, // [T:TCAM] ‘Eternally’ stage @ ACT : LOVE SICK IN SEOUL - TXT (투모로우바이투게더
-  'crown': { id: '6HMsGJRLtto', kind: '안무 연습 영상', dur: 229, mv: 'W3iSnJ663II', order: ['mv', 'stage', 'main'] }, // TXT (투모로우바이투게더) ‘어느날 머리에서 뿔이 자랐다 (CROWN)’ Dance Practice
+  'crown': { id: '6HMsGJRLtto', kind: '안무 연습 영상', dur: 229, mv: 'W3iSnJ663II' }, // TXT (투모로우바이투게더) ‘어느날 머리에서 뿔이 자랐다 (CROWN)’ Dance Practice
   'beautiful-strangers': { id: 'oG16Esx419c', kind: '안무 영상', dur: 139, mv: 'IcwHopeT5gY' }, // 'Beautiful Strangers' Choreography Video (YEONJUN draft) | TXT (투모로우바이
   'song-of-the-stars': { id: 'bsKe_P8cjrw', kind: '무대 영상', dur: 331 }, // ‘별의 노래 (Song of the Stars)’ stage @ ACT : TOMORROW IN SEOUL | TXT (투모로
   'miracle': { id: '8efrOFRXMxo', kind: '공식 영상', dur: 168 }, // 'Miracle (기적은 너와 내가 함께하는 순간마다 일어나고 있어)' Special Thanks to MOA | TXT (투
@@ -37,7 +37,7 @@ export const VIDEOS = {
   'kitto-zutto': { id: 'f0ZuP1Da948', kind: 'MV', dur: 177 }, // TXT (투모로우바이투게더) ‘きっとずっと (Kitto Zutto)' Official MV
   'cant-stop': { id: 'sswmsnPigDc', kind: 'MV', dur: 159 }, // TXT (투모로우바이투게더) 'Can't Stop' Official MV
   'happy-fools': { id: 'nAtSdy6of-k', kind: '공식 영상', dur: 160 }, // [2023 DREAM WEEK] TXT (투모로우바이투게더) 'Happy Fools (TOMORROW X TOGETHER Ve
-  'run-away': { id: 'jqHslIR2x7w', kind: '안무 연습 영상', dur: 214, mv: '6yWPfUz0z94', order: ['mv', 'stage', 'main'] }, // TXT (투모로우바이투게더) ‘9와 4분의 3 승강장에서 너를 기다려 (Run Away)’ Dance Practice
+  'run-away': { id: 'jqHslIR2x7w', kind: '안무 연습 영상', dur: 214, mv: '6yWPfUz0z94' }, // TXT (투모로우바이투게더) ‘9와 4분의 3 승강장에서 너를 기다려 (Run Away)’ Dance Practice
   'angel-or-devil': { id: 'KyQacFvXWAM', kind: '안무 연습 영상', dur: 238, mv: 'cfm97EKin4c' }, // TXT (투모로우바이투게더) ‘Angel Or Devil’ Dance Practice
   'cant-you-see-me': { id: 'HwdOeu8I4Ho', kind: '안무 연습 영상', dur: 210, mv: 'cMFHUTJ13Ys' }, // TXT (투모로우바이투게더) ‘세계가 불타버린 밤, 우린... (Can't You See Me?)' Dance Practice
   'puma': { id: 'qz7bJKO_JzU', kind: '안무 연습 영상', dur: 212, mv: 'ImTgS5OXgbU' }, // TXT (투모로우바이투게더) ‘동물원을 빠져나온 퓨마' Dance Practice
