@@ -577,9 +577,11 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .hero-media { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
 .hero-video { aspect-ratio: 16 / 9; overflow: hidden; cursor: default; background: #000; }
 .hero-video .hero-banner { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; }
-.hero-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; pointer-events: none; opacity: 0; transition: opacity .6s; }
-.hero-video iframe.on { opacity: 1; }
-.hero-play { position: absolute; left: 12px; bottom: 10px; z-index: 1; cursor: pointer; padding: 5px 12px; border-radius: 999px; background: rgba(0,24,6,.55); border: 1px solid rgba(242,238,226,.45); color: var(--ivory); font-size: 12px; font-weight: 600; backdrop-filter: blur(4px); }
+.hero-yt { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .6s; }
+.hero-yt.on { opacity: 1; }
+.hero-yt iframe { width: 100%; height: 100%; border: 0; display: block; }
+.hero-controls { position: absolute; left: 12px; bottom: 10px; z-index: 1; display: flex; gap: 6px; }
+.hero-play { cursor: pointer; padding: 5px 12px; border-radius: 999px; background: rgba(0,24,6,.55); border: 1px solid rgba(242,238,226,.45); color: var(--ivory); font-size: 12px; font-weight: 600; backdrop-filter: blur(4px); }
 .hero-play:hover, .hero-play[aria-pressed='true'] { background: var(--ivory); color: var(--forest); }
 /* 배너 아래 글자를 한 줄로 (좁은 화면에선 자연스럽게 줄바꿈) */
 .hero-body.one-line { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; }

@@ -10,7 +10,7 @@ export function parseYouTubeId(input) {
 }
 
 let ytPromise = null
-function loadYouTubeAPI() {
+export function loadYouTubeAPI() {
   if (window.YT?.Player) return Promise.resolve(window.YT)
   if (!ytPromise) {
     ytPromise = new Promise((resolve) => {

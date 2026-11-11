@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ALBUM_NEWS, FLAGS, SHOWS, TOUR } from '../data/tour'
 import { loadJSON, saveJSON } from '../lib/storage'
+import { loadYouTubeAPI } from '../lib/usePlayer'
 
 const POSTERS = [
   { src: '/images/poster-seoul.webp', alt: '서울 공연 포스터' },
@@ -224,53 +225,75 @@ function ShowCard({ show, going, toggle, today }) {
   )
 }
 
-// 배너 자리 자동재생 (16:9 그대로, 소리 없이 반복). 영상이 실제로 재생되기 시작하면 배너 이미지 위로 나타난다.
-// 자동재생이 막힌 기기에서는 배너 이미지가 그대로 보인다. 버튼으로 그 자리에서 소리만 켜고 끈다.
+// 배너 자리 트레일러 (16:9, 소리 없이 자동 반복재생). 유튜브 공식 플레이어 API로 재생/멈춤·소리를 제어한다.
+// 영상이 실제로 재생되기 시작하면 배너 이미지 위로 나타나고, 자동재생이 막힌 기기에서는 ▶ 버튼으로 시작.
 function HeroVideo({ id }) {
-  const frameRef = useRef(null)
+  const hostRef = useRef(null)
+  const playerRef = useRef(null)
+  const [shown, setShown] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [sound, setSound] = useState(false)
+
   useEffect(() => {
-    function onMessage(e) {
-      try {
-        if (!/youtube\.com$/.test(new URL(e.origin).hostname)) return
-        const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data
-        if (d?.info?.playerState === 1) setPlaying(true)
-      } catch {
-        // 유튜브가 아닌 메시지는 무시
-      }
+    let player
+    let cancelled = false
+    loadYouTubeAPI().then((YT) => {
+      if (cancelled || !hostRef.current) return
+      player = new YT.Player(hostRef.current, {
+        videoId: id,
+        playerVars: { autoplay: 1, mute: 1, loop: 1, playlist: id, controls: 0, disablekb: 1, modestbranding: 1, playsinline: 1, rel: 0, iv_load_policy: 3 },
+        events: {
+          onReady: (e) => {
+            playerRef.current = e.target
+            e.target.mute()
+            e.target.playVideo()
+          },
+          onStateChange: (e) => {
+            const on = e.data === YT.PlayerState.PLAYING
+            setPlaying(on)
+            if (on) setShown(true)
+          },
+        },
+      })
+    })
+    return () => {
+      cancelled = true
+      player?.destroy?.()
     }
-    window.addEventListener('message', onMessage)
-    return () => window.removeEventListener('message', onMessage)
-  }, [])
-  // 유튜브 플레이어에 명령 보내기 (enablejsapi=1)
-  const send = (msg) => frameRef.current?.contentWindow?.postMessage(JSON.stringify(msg), '*')
-  const listen = () => send({ event: 'listening', id: 1 })
+  }, [id])
+
+  function togglePlay() {
+    const p = playerRef.current
+    if (!p) return
+    if (playing) p.pauseVideo()
+    else p.playVideo()
+  }
   function toggleSound() {
-    if (sound) send({ event: 'command', func: 'mute', args: [] })
+    const p = playerRef.current
+    if (!p) return
+    if (sound) p.mute()
     else {
-      send({ event: 'command', func: 'unMute', args: [] })
-      send({ event: 'command', func: 'setVolume', args: [100] })
-      send({ event: 'command', func: 'playVideo', args: [] })
+      p.unMute()
+      p.setVolume(100)
+      if (!playing) p.playVideo()
     }
     setSound(!sound)
   }
-  const params = `autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&disablekb=1&modestbranding=1&playsinline=1&rel=0&iv_load_policy=3&enablejsapi=1`
+
   return (
     <div className="hero-media hero-video">
       <img className="hero-banner" src="/images/banner.webp" alt="TOMORROW X TOGETHER WORLD TOUR STEAL THE WIND" />
-      <iframe
-        ref={frameRef}
-        className={playing ? 'on' : ''}
-        src={`https://www.youtube.com/embed/${id}?${params}`}
-        title="STEAL THE WIND Official Trailer"
-        allow="autoplay; encrypted-media"
-        tabIndex={-1}
-        onLoad={listen}
-      />
-      <button className="hero-play" onClick={toggleSound} aria-pressed={sound}>
-        {sound ? '🔇 소리 끄기' : '🔊 소리 켜기'}
-      </button>
+      <div className={'hero-yt' + (shown ? ' on' : '')}>
+        <div ref={hostRef} />
+      </div>
+      <div className="hero-controls">
+        <button className="hero-play" onClick={togglePlay} aria-label={playing ? '일시정지' : '재생'}>
+          {playing ? '⏸' : '▶'}
+        </button>
+        <button className="hero-play" onClick={toggleSound} aria-pressed={sound}>
+          {sound ? '🔇 소리 끄기' : '🔊 소리 켜기'}
+        </button>
+      </div>
     </div>
   )
 }
