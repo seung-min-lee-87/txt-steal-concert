@@ -17,7 +17,7 @@ export const STAGES = {
     { id: '75ANyLWSFGE', show: '쇼챔피언', label: '📣 쇼챔 EP.307' },
   ],
   'crown': [{ id: 'KjFowwKfVuI', show: '뮤직뱅크', date: '2019-03-29' }],
-  'cat-dog': [{ id: 'IzWug96-zNE', show: '뮤직뱅크', date: '2019-05-03' }, { id: 'dWHAiC9G1eE', show: '엠카운트다운', date: '2019-05-02' }],
+  'cat-dog': [{ id: 'IzWug96-zNE', show: '뮤직뱅크', date: '2019-05-03' }],
   'new-rules': [{ id: 'HMG67w8yQ_c', show: '뮤직뱅크', date: '2019-12-20' }],
   'run-away': [{ id: 'ZGuYGJ7Liss', show: '뮤직뱅크', date: '2019-11-15' }],
   'angel-or-devil': [{ id: '3_FAG693htE', show: '뮤직뱅크', date: '2019-11-29' }, { id: 'L487HniOBbU', show: '엠카운트다운', date: '2019-10-24' }],
