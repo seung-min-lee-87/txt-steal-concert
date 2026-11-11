@@ -18,7 +18,7 @@ export const STAGES = {
   'opening-sequence': [{ id: 'CZmUIA6r5tQ', show: '뮤직뱅크', date: '2022-05-20' }],
   'good-boy-gone-bad': [{ id: '_XcOu_PN_10', show: '뮤직뱅크', date: '2022-06-24' }, { id: 'AoKEa5AkXig', show: '뮤직뱅크', date: '2022-05-20' }],
   'devil-by-the-window': [{ id: '75TVBD4QdLg', show: '뮤직뱅크', date: '2023-02-10' }, { id: '3cYjeHjWXZQ', show: '엠카운트다운', date: '2023-02-02' }],
-  'sugar-rush-ride': [{ id: 'JqcigPL5p9M', show: '뮤직뱅크', date: '2023-02-10' }, { id: '1ltsjA7kMfM', show: '엠카운트다운', date: '2023-02-09' }],
+  'sugar-rush-ride': [{ id: '1ltsjA7kMfM', show: '엠카운트다운', date: '2023-02-09' }],
   'chasing-that-feeling': [{ id: 'w_DQu1JoKvY', show: '뮤직뱅크', date: '2023-10-27' }, { id: 'Km2M14Tvyis', show: '엠카운트다운', date: '2023-10-19' }],
   'back-for-more': [{ id: 'tDr8PMkkYqo', show: '뮤직뱅크', date: '2023-10-13' }, { id: '9zq49ktu3Sk', show: '엠카운트다운', date: '2023-10-19' }],
   'see-you-there-tomorrow': [{ id: '2_ZQpWVMn9c', show: 'Performance37', first: true, note: '🎥 M2 Performance37 퍼포먼스 영상이에요.' }, { id: '679oSwJav0U', show: '뮤직뱅크', date: '2024-04-05' }, { id: 'VTS9cWe5atA', show: '음악중심', date: '2024-04-06' }],

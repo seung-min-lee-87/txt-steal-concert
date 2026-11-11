@@ -44,7 +44,7 @@ export const VIDEOS = {
   'we-lost-the-summer': { id: 'kwy0nR1_SBQ', kind: 'MV', dur: 235 }, // TXT (투모로우바이투게더) '날씨를 잃어버렸어' Official MV
   'opening-sequence': { id: 'eU8om2tfSYQ', kind: '안무 연습 영상', dur: 182 }, // TXT (투모로우바이투게더) 'Opening Sequence' Dance Practice
   'devil-by-the-window': { id: '0u50XFKHJKY', kind: '퍼포먼스 영상', dur: 207 }, // TXT(투모로우바이투게더) ‘Devil by the Window’ Special Performance Video
-  'sugar-rush-ride': { id: 'paL62pifsbc', kind: '안무 연습 영상', dur: 194, mv: 'P9tKTxbgdkk' }, // TXT (투모로우바이투게더) 'Sugar Rush Ride' Dance Practice
+  'sugar-rush-ride': { id: 'paL62pifsbc', kind: '안무 연습 영상', dur: 194, mv: 'P9tKTxbgdkk', order: ['mv', 'main', 'stage'] }, // TXT (투모로우바이투게더) 'Sugar Rush Ride' Dance Practice
   'chasing-that-feeling': { id: 'WMswPS8gfNs', kind: '안무 연습 영상', dur: 190, mv: 'ISnyONG1dEc' }, // TXT (투모로우바이투게더) ‘Chasing That Feeling’ Dance Practice
   'back-for-more': { id: 'e42AhJzYpVE', kind: 'MV', dur: 207 }, // TXT (투모로우바이투게더), Anitta ‘Back for More’ Official MV
   'hitotsu-no-chikai': { id: '5BVC6VggY3A', kind: 'MV', dur: 199 }, // TXT (투모로우바이투게더) 'We’ll Never Change' Official MV
