@@ -23,7 +23,7 @@ export const SHOWS = [
     area: 'Asia',
     city: '마카오', 
     venue: 'GALAXY ARENA', 
-    dates: ['2026-11-21', '2026-11-22'] },
+    dates: ['2026-11-20', '2026-11-21', '2026-11-22'] },
   {
     id: 'fukuoka',
     region: 'JP',
