@@ -23,7 +23,7 @@ export const STAGES = {
   ],
   'crown': [{ id: 'KjFowwKfVuI', show: '뮤직뱅크', date: '2019-03-29' }],
   'cat-dog': [{ id: 'IzWug96-zNE', show: '뮤직뱅크', date: '2019-05-03' }],
-  'new-rules': [{ id: 'HMG67w8yQ_c', show: '뮤직뱅크', date: '2019-12-20' }],
+  'new-rules': [{ id: 'qqZD4gVOgj4', show: '쇼챔피언', label: '📣 쇼챔 EP.338' }],
   'run-away': [{ id: 'ZGuYGJ7Liss', show: '뮤직뱅크', date: '2019-11-15' }],
   'angel-or-devil': [{ id: '3_FAG693htE', show: '뮤직뱅크', date: '2019-11-29' }],
   'loser-lover': [{ id: 'LCL6nKq_ako', show: '뮤직뱅크', date: '2021-08-20' }, { id: 'BC05GyNpBcA', show: '더 시즌즈 밴드', date: '2024-11-08' }],
