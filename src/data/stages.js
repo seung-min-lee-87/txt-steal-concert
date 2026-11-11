@@ -6,6 +6,7 @@
 // first: true 를 붙이면 그 무대 영상이 맨 앞 버튼(처음 열었을 때 나오는 영상)이 된다.
 // 관객이 있던 시기(2019~2020.2, 2022.5~) 방송사 공식 채널 영상만 골랐다.
 export const STAGES = {
+  'drama': [{ id: 'f8nQsoyUjIc', show: '쇼챔피언', label: '📣 쇼챔 EP.355' }],
   'puma': [{ id: 'lG_7rtN5ATM', show: '뮤직뱅크', date: '2020-06-12' }],
   'yj-ice-cream': [{ id: 'yAwnujpuIGo', show: '인기가요', date: '2026-07-12' }],
   'ggum': [
