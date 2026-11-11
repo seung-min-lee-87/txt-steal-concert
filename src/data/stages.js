@@ -6,6 +6,7 @@
 // first: true 를 붙이면 그 무대 영상이 맨 앞 버튼(처음 열었을 때 나오는 영상)이 된다.
 // 관객이 있던 시기(2019~2020.2, 2022.5~) 방송사 공식 채널 영상만 골랐다.
 export const STAGES = {
+  'cant-you-see-me': [{ id: 'U9-vLD_rrUc', show: '엠카운트다운', date: '2020-05-21' }],
   'moa-diary': [{ id: 'sC9r-q62HZc', show: '뮤직뱅크', date: '2021-08-20' }],
   '0x1-lovesong': [{ id: 'swZ-GR0maMs', show: '컴백쇼', date: '2021-05-31' }],
   'we-lost-the-summer': [{ id: '-VbliCTPZxI', show: '뮤직뱅크', date: '2020-11-13' }],
