@@ -40,7 +40,7 @@ export const VIDEOS = {
   'run-away': { id: 'jqHslIR2x7w', kind: '안무 연습 영상', dur: 214, mv: '6yWPfUz0z94' }, // TXT (투모로우바이투게더) ‘9와 4분의 3 승강장에서 너를 기다려 (Run Away)’ Dance Practice
   'angel-or-devil': { id: 'KyQacFvXWAM', kind: '안무 연습 영상', dur: 238, mv: 'cfm97EKin4c' }, // TXT (투모로우바이투게더) ‘Angel Or Devil’ Dance Practice
   'cant-you-see-me': { id: 'HwdOeu8I4Ho', kind: '안무 연습 영상', dur: 210, mv: 'cMFHUTJ13Ys' }, // TXT (투모로우바이투게더) ‘세계가 불타버린 밤, 우린... (Can't You See Me?)' Dance Practice
-  'puma': { id: 'qz7bJKO_JzU', kind: '안무 연습 영상', dur: 212, mv: 'ImTgS5OXgbU' }, // TXT (투모로우바이투게더) ‘동물원을 빠져나온 퓨마' Dance Practice
+  'puma': { id: 'DI-p_p4jjlk', kind: '스튜디오 춤', mv: 'ImTgS5OXgbU' }, // [BE ORIGINAL] '동물원을 빠져나온 퓨마(PUMA)' | STUDIO CHOOM (예전 안무 연습 영상: qz7bJKO_JzU)
   'we-lost-the-summer': { id: 'kwy0nR1_SBQ', kind: 'MV', dur: 235 }, // TXT (투모로우바이투게더) '날씨를 잃어버렸어' Official MV
   'opening-sequence': { id: 'eU8om2tfSYQ', kind: '안무 연습 영상', dur: 182 }, // TXT (투모로우바이투게더) 'Opening Sequence' Dance Practice
   'devil-by-the-window': { id: '0u50XFKHJKY', kind: '퍼포먼스 영상', dur: 207 }, // TXT(투모로우바이투게더) ‘Devil by the Window’ Special Performance Video
