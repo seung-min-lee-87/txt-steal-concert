@@ -101,6 +101,15 @@ export default function TourPage({ go }) {
         </div>
       </section>
 
+      {TOUR.trailer && (
+        <>
+          <h2 className="section-title">
+            공식 트레일러 <span className="en">Official Trailer</span>
+          </h2>
+          <Trailer id={TOUR.trailer} />
+        </>
+      )}
+
       <h2 className="section-title">공연 일정 <span className="en">World Tour</span></h2>
       <p className="hint">내가 가는 날을 눌러 표시해두면 위 카운트다운이 해당 날짜로 바뀝니다.</p>
       <div className="show-grid">
@@ -219,5 +228,33 @@ function ShowCard({ show, going, toggle, today }) {
       </div>
       {show.note && <p className="show-note">{show.note}</p>}
     </article>
+  )
+}
+
+// 처음엔 썸네일만, 누르면 그 자리에서 재생 (페이지가 무거워지지 않게)
+function Trailer({ id }) {
+  const [on, setOn] = useState(false)
+  if (on) {
+    return (
+      <div className="trailer">
+        <iframe
+          src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1`}
+          title="STEAL THE WIND Official Trailer"
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+          allowFullScreen
+        />
+      </div>
+    )
+  }
+  return (
+    <button className="trailer" onClick={() => setOn(true)} aria-label="공식 트레일러 재생">
+      <img
+        src={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`}
+        onError={(e) => (e.currentTarget.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`)}
+        alt=""
+        loading="lazy"
+      />
+      <span className="trailer-play">▶ 트레일러 보기</span>
+    </button>
   )
 }

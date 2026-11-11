@@ -573,3 +573,8 @@ code { background: var(--card-strong); padding: 0 4px; border-radius: 4px; }
 .studio-anchor { font-size: 14px; margin: 12px 0 8px; line-height: 1.8; }
 .studio-bar { flex-wrap: wrap; }
 .studio-notice { flex-basis: 100%; margin: 4px 0 0; font-size: 12px; color: #ffd479; text-align: center; }
+/* 공식 트레일러 */
+.trailer { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--card-line); background: #000; padding: 0; cursor: pointer; }
+.trailer img, .trailer iframe { width: 100%; height: 100%; object-fit: cover; border: 0; display: block; }
+.trailer-play { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: var(--ivory); color: var(--forest); font-weight: 700; padding: 10px 18px; border-radius: 999px; font-size: 15px; box-shadow: 0 6px 20px rgba(0,0,0,.4); }
+.trailer:hover .trailer-play { background: var(--sky); }
