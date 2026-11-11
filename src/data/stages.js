@@ -31,7 +31,7 @@ export const STAGES = {
   'loser-lover': [{ id: 'LCL6nKq_ako', show: '뮤직뱅크', date: '2021-08-20' }, { id: 'BC05GyNpBcA', show: '더 시즌즈 밴드', date: '2024-11-08' }],
   'opening-sequence': [{ id: 'CZmUIA6r5tQ', show: '뮤직뱅크', date: '2022-05-20' }],
   'good-boy-gone-bad': [{ id: '_XcOu_PN_10', show: '뮤직뱅크', date: '2022-06-24' }, { id: 'AoKEa5AkXig', show: '뮤직뱅크', date: '2022-05-20' }],
-  'devil-by-the-window': [{ id: '75TVBD4QdLg', show: '뮤직뱅크', date: '2023-02-10' }, { id: '3cYjeHjWXZQ', show: '엠카운트다운', date: '2023-02-02' }],
+  'devil-by-the-window': [{ id: '9fCfnZdCt-k', show: '인기가요', date: '2023-01-29' }],
   'sugar-rush-ride': [{ id: '1ltsjA7kMfM', show: '엠카운트다운', date: '2023-02-09' }],
   'chasing-that-feeling': [{ id: 'w_DQu1JoKvY', show: '뮤직뱅크', date: '2023-10-27' }, { id: 'Km2M14Tvyis', show: '엠카운트다운', date: '2023-10-19' }],
   'back-for-more': [{ id: 'tDr8PMkkYqo', show: '뮤직뱅크', date: '2023-10-13' }, { id: '9zq49ktu3Sk', show: '엠카운트다운', date: '2023-10-19' }],
