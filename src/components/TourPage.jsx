@@ -71,10 +71,19 @@ export default function TourPage({ go }) {
   return (
     <div className="page">
       <section className="hero">
-        <picture>
-          <source media="(max-width: 700px)" srcSet="/images/banner-sm.webp" />
-          <img className="hero-banner" src="/images/banner.webp" alt="TOMORROW X TOGETHER WORLD TOUR STEAL THE WIND" />
-        </picture>
+        {/* 배너를 누르면 공식 트레일러가 팝업으로 재생된다 */}
+        <button
+          className="hero-media"
+          onClick={() => TOUR.trailer && setTrailer(true)}
+          disabled={!TOUR.trailer}
+          aria-label="공식 트레일러 보기"
+        >
+          <picture>
+            <source media="(max-width: 700px)" srcSet="/images/banner-sm.webp" />
+            <img className="hero-banner" src="/images/banner.webp" alt="TOMORROW X TOGETHER WORLD TOUR STEAL THE WIND" />
+          </picture>
+          {TOUR.trailer && <span className="hero-play">▶ Official Trailer</span>}
+        </button>
         <div className="hero-body">
           <p className="kicker">Tomorrow X Together World Tour</p>
           <p className="hero-sub">
@@ -98,11 +107,6 @@ export default function TourPage({ go }) {
             <button className="btn ghost" onClick={() => go('#/setlist')}>
               📝 지난 세트리스트
             </button>
-            {TOUR.trailer && (
-              <button className="btn ghost" onClick={() => setTrailer(true)}>
-                ▶ 공식 트레일러
-              </button>
-            )}
           </div>
         </div>
       </section>
