@@ -2591,11 +2591,12 @@
     },
 
     "yj-ice-cream": {
-      "anchor": 2,
+      "anchor": 3,
       "duration": 124.0,
       "source": "위버스 공식 공지 「연준 응원법 안내」",
       "cues": [
         {"t":2,"text":"(함성)","fan":true},
+        {"t":5,"text":"YJ!","fan":true},
         {"t":7.9,"text":"Ice, Ice","fan":true},
         {"t":8.93,"text":"Girl, I want you to understand {(최연준!)}","fan":false},
         {"t":13.47,"text":"너와 내 사이의 masterplan {(최연준!)}","fan":false},
