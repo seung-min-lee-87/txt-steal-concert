@@ -6,6 +6,7 @@
 // first: true 를 붙이면 그 무대 영상이 맨 앞 버튼(처음 열었을 때 나오는 영상)이 된다.
 // 관객이 있던 시기(2019~2020.2, 2022.5~) 방송사 공식 채널 영상만 골랐다.
 export const STAGES = {
+  'yj-ice-cream': [{ id: 'YILt2e0l1AI', show: '엠카운트다운', date: '2026-07-23' }],
   'ggum': [
     { id: 'unjJ3aicvIw', show: '엠카운트다운', date: '2024-09-26' },
     { id: 'x3Y2-mQRWFw', show: '스튜디오 춤', label: '스튜디오 춤', note: '🎥 STUDIO CHOOM 퍼포먼스 영상이에요.' },
