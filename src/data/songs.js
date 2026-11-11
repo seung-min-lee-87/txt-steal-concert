@@ -79,7 +79,7 @@ export const SONGS = [
   { id: 'maze-in-the-mirror', title: 'Maze in the Mirror', album: '혼돈의 장: FREEZE' },
   { id: 'anti-romantic', title: 'Anti-Romantic', album: '혼돈의 장: FREEZE' },
   { id: 'lonely-boy', title: 'Lonely Boy (The Tattoo On My Ring Finger)', short: 'Lonely Boy', album: '혼돈의 장: FIGHT OR ESCAPE' },
-  { id: 'trust-fund-baby', title: 'Trust Fund Baby' },
+  { id: 'trust-fund-baby', title: 'Trust Fund Baby', album: "minisode 2: Thursday's Child" },
   { id: 'thursdays-child', title: "Thursday's Child Has Far To Go", album: "minisode 2: Thursday's Child" },
   { id: 'tinnitus', title: 'Tinnitus (Wanna be a rock)', short: 'Tinnitus', album: '이름의 장: TEMPTATION' },
   { id: 'blue-spring', title: 'Blue Spring', album: '이름의 장: FREEFALL' },
