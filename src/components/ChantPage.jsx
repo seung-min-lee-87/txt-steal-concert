@@ -30,10 +30,46 @@ function melonUrl(song) {
 }
 
 export default function ChantPage({ songId, go }) {
-  if (songId && SONG_MAP[songId] && CHANT_ORDER.includes(songId)) {
-    return <ChantDetail key={songId} song={SONG_MAP[songId]} go={go} />
-  }
+  const id = resolveChantId(songId)
+  // 주소가 조금 틀렸으면(예: sugar-rush-ridez, sugar-rush) 맞는 곡 주소로 바꿔 둔다
+  useEffect(() => {
+    if (id && id !== songId) window.history.replaceState(null, '', `#/chant/${id}`)
+  }, [id, songId])
+  if (id) return <ChantDetail key={id} song={SONG_MAP[id]} go={go} />
   return <ChantList go={go} />
+}
+
+// 공유된 주소에 오타가 있어도 가장 비슷한 응원법 곡을 찾는다
+function resolveChantId(raw) {
+  if (!raw) return null
+  const q = decodeURIComponent(raw).toLowerCase().trim()
+  if (CHANT_ORDER.includes(q)) return q
+  // 앞부분이 같은 곡 (sugar-rush → sugar-rush-ride, sugar-rush-ridez → sugar-rush-ride)
+  const prefix = CHANT_ORDER.filter((cid) => q.length >= 4 && (cid.startsWith(q) || q.startsWith(cid)))
+  if (prefix.length === 1) return prefix[0]
+  if (prefix.length > 1) return prefix.sort((a, b) => Math.abs(a.length - q.length) - Math.abs(b.length - q.length))[0]
+  // 글자 2개 이내로 다른 곡
+  let best = null
+  let bestD = 3
+  for (const cid of CHANT_ORDER) {
+    const d = editDistance(q, cid)
+    if (d < bestD) [best, bestD] = [cid, d]
+  }
+  return best
+}
+
+function editDistance(a, b) {
+  const dp = Array.from({ length: b.length + 1 }, (_, j) => j)
+  for (let i = 1; i <= a.length; i++) {
+    let prev = dp[0]
+    dp[0] = i
+    for (let j = 1; j <= b.length; j++) {
+      const tmp = dp[j]
+      dp[j] = Math.min(dp[j] + 1, dp[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1))
+      prev = tmp
+    }
+  }
+  return dp[b.length]
 }
 
 // "싱크 완료" = 직접 맞춰서 공개 싱크 파일(src/data/sync/곡id.json)을 올린 곡
