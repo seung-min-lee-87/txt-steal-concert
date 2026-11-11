@@ -2376,11 +2376,12 @@
     },
 
     "ggum": {
-      "anchor": 3,
+      "anchor": 4,
       "duration": 152.0,
       "source": "위버스 공식 공지 「연준 응원법 안내」",
       "cues": [
         {"t":10.0,"text":"(함성)","fan":true},
+        {"t":11,"text":"Let's go (let's go, let's go, let's go, let's go)","fan":false},
         {"t":12,"text":"투모로우 바이 투게더!","fan":true},
         {"t":14.37,"text":"YJ!","fan":true},
         {"t":15.01,"text":"Yeah I make it chewy like {껌 질겅}","fan":false},
