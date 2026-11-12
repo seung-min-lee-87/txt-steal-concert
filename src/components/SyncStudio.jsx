@@ -211,7 +211,14 @@ function Studio({ song, go }) {
                 {c === anchor && <span title="영상 맞추기 기준 줄">🎯 </span>}
                 {c.t == null ? '--:--' : formatTime(c.t)}
               </span>
-              <CueText text={c.text} />
+              <span>
+                <CueText text={c.text} />
+                {c.pron && (
+                  <span className="pron">
+                    <CueText text={c.pron} />
+                  </span>
+                )}
+              </span>
             </button>
             <span className="studio-nudge">
               <button onClick={() => c.t != null && setTime(i, c.t - 0.1)} aria-label="0.1초 빠르게">
