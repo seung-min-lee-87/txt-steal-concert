@@ -17,6 +17,7 @@ export const ALBUM_COLORS = {
   'Love Language (싱글)': '#f2261f',
   '별의 장: TOGETHER': '#1447ff',
   '7TH YEAR': '#ab1461',
+  'PERFECT STORM': '#56606e',
   'Setsuna Hanabi (일본 싱글 5집)': '#24306b',
   'Starkissed (일본 정규 3집)': '#7b5cc4',
   "YEONJUN's Mixtape: GGUM (2024)": '#ff6fa8',

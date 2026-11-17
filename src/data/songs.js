@@ -115,13 +115,13 @@ export const SONGS = [
   { id: 'so-what', title: 'So What', album: '7TH YEAR' },
   { id: '21st-century-romance', title: '21st Century Romance', album: '7TH YEAR', isNew: true },
   { id: 'the-next-after-next', title: '다음의 다음 (Dream of Mine)', short: '다음의 다음', album: '7TH YEAR' },
-  // STEAL THE WIND 서울(2026.11)에서 처음 공개된 곡. 앨범은 확인되면 채운다 (PERFECT STORM 수록 추정).
-  { id: 'storm-is', title: '지금까지와는 다른 무언가가 필요해 (STORM IS...)', short: 'STORM IS...' },
-  { id: 'hate-it-or-love-it', title: 'HATE IT OR LOVE IT' },
-  { id: 'sweetest-escape', title: 'SWEETEST ESCAPE' },
-  { id: 'touch-the-sky', title: 'TOUCH THE SKY' },
-  { id: 'higher-love', title: 'HIGHER LOVE' },
-  { id: 'angel-bite', title: 'Angel Bite' },
+  // 미니 9집 PERFECT STORM (2026.11.16) — STEAL THE WIND 서울 공연에서 발매 전 첫 공개
+  { id: 'storm-is', title: '지금까지와는 다른 무언가가 필요해 (STORM IS...)', short: 'STORM IS...', album: 'PERFECT STORM' },
+  { id: 'hate-it-or-love-it', title: 'HATE IT OR LOVE IT', album: 'PERFECT STORM' },
+  { id: 'sweetest-escape', title: 'SWEETEST ESCAPE', album: 'PERFECT STORM' },
+  { id: 'touch-the-sky', title: 'TOUCH THE SKY', album: 'PERFECT STORM' },
+  { id: 'higher-love', title: 'HIGHER LOVE', album: 'PERFECT STORM' },
+  { id: 'angel-bite', title: 'Angel Bite', album: 'PERFECT STORM' },
 ]
 
 export const SONG_MAP = Object.fromEntries(SONGS.map((s) => [s.id, s]))
