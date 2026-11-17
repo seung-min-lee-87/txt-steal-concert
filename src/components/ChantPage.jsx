@@ -17,7 +17,8 @@ import { loadSongState } from './PracticePage'
 import { stagesOf } from '../data/stages'
 import { videoOptions } from '../lib/videoOptions'
 import SyncCalibrator, { calibrate } from './SyncCalibrator'
-import { tr } from '../lib/i18n'
+import { isEn, tr } from '../lib/i18n'
+import { fanRomaja } from '../lib/romaja'
 
 const FILTERS = [
   { id: 'all', label: '전체' },
@@ -184,6 +185,10 @@ function ChantDetail({ song, go }) {
   const [follow, setFollow] = useState(() => loadJSON('chant-follow', true))
   const [showPron, setShowPron] = useState(() => loadJSON('show-pron', true))
   const hasPron = cues.some((c) => c.pron)
+  // 영어 모드: 응원 부분 아래에 영어 발음(로마자)
+  const [showRom, setShowRom] = useState(() => loadJSON('show-rom', true))
+  const roms = useMemo(() => cues.map(fanRomaja), [cues])
+  const hasRom = isEn() && roms.some(Boolean)
   const listRef = useRef(null)
   const t = player.time + offset
   const active = synced && (sure || !calibrating) ? activeIndex(cues, t) : -1
@@ -336,6 +341,17 @@ function ChantDetail({ song, go }) {
               {tr('🇰🇷 한국어 발음 {v}', { v: tr(showPron ? '켜짐' : '꺼짐') })}
             </button>
           )}{' '}
+          {hasRom && (
+            <button
+              className={'chip follow' + (showRom ? ' on' : '')}
+              onClick={() => {
+                setShowRom(!showRom)
+                saveJSON('show-rom', !showRom)
+              }}
+            >
+              {tr('🔤 영어 발음 {v}', { v: tr(showRom ? '켜짐' : '꺼짐') })}
+            </button>
+          )}{' '}
           {synced && (
             <button className={'chip follow' + (follow ? ' on' : '')} onClick={toggleFollow}>
               {tr(follow ? '자동 따라가기 켜짐' : '자동 따라가기 꺼짐')}
@@ -367,6 +383,7 @@ function ChantDetail({ song, go }) {
                     <CueText text={c.pron} />
                   </span>
                 )}
+                {hasRom && showRom && roms[i] && <span className="rom">{roms[i]}</span>}
               </button>
             </li>
           ))}

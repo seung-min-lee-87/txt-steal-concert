@@ -191,6 +191,7 @@ const EN = {
   취소선: 'Strikethrough',
   '멤버 가사 위로 팬이 대신 외쳐요': 'Fans chant over the members’ line',
   '🇰🇷 한국어 발음 {v}': '🇰🇷 Korean pronunciation {v}',
+  '🔤 영어 발음 {v}': '🔤 Romanization {v}',
   켜짐: 'on',
   꺼짐: 'off',
   '자동 따라가기 켜짐': 'Auto-scroll on',
