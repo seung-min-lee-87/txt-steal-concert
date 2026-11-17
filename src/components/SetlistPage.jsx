@@ -43,7 +43,7 @@ export default function SetlistPage({ go, hasCheer }) {
       <p className="kicker">Setlist</p>
       <h1 className="page-title">세트리스트</h1>
       <p className="hint">
-        이번 투어는 아직 시작 전이라, 지난 콘서트들의 서울·일본 공연을 모아뒀어요. {FEATURES.practice
+        STEAL THE WIND 서울 공연과 지난 콘서트들의 서울·일본 공연을 모아뒀어요. {FEATURES.practice
           ? '곡을 누르면 응원법(없으면 연습 화면)으로 가요.'
           : '응원법이 있는 곡(📣)을 누르면 응원법 화면으로 가요.'}
       </p>

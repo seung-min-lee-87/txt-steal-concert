@@ -104,17 +104,24 @@ export const SONGS = [
   { id: 'yj-fxxking-star', title: 'Fxxking Star', solo: '연준', soloAlbum: true, album: 'NO LABELS: PART 02' },
 
   // 일본 싱글 5집 Setsuna Hanabi (2026.08.19) — 이번 일본 공연 예상 신곡
-  { id: 'setsuna-hanabi', title: 'セツナハナビ (Setsuna Hanabi)', short: 'Setsuna Hanabi', album: 'Setsuna Hanabi (일본 싱글 5집)', jp: true, title_: true, isNew: true },
+  { id: 'setsuna-hanabi', title: 'セツナハナビ (Setsuna Hanabi)', short: 'Setsuna Hanabi', album: 'Setsuna Hanabi (일본 싱글 5집)', jp: true, title_: true },
   { id: 'jp-silence', title: 'Silence', album: 'Setsuna Hanabi (일본 싱글 5집)', jp: true, isNew: true },
   { id: 'nice-to-meet-ya', title: 'Nice to Meet Ya', album: 'Setsuna Hanabi (일본 싱글 5집)', jp: true, isNew: true },
 
   // 7TH YEAR (2026.04) — 이번 투어 예상 신곡
-  { id: 'just-one-more-day', title: '하루에 하루만 더 (Stick With You)', short: '하루에 하루만 더', album: '7TH YEAR', title_: true, isNew: true },
-  { id: 'bed-of-thorns', title: 'Bed of Thorns', album: '7TH YEAR', isNew: true },
-  { id: 'take-me-to-nirvana', title: 'Take Me to Nirvana (feat. Vinida Weng)', short: 'Take Me to Nirvana', album: '7TH YEAR', isNew: true },
-  { id: 'so-what', title: 'So What', album: '7TH YEAR', isNew: true },
+  { id: 'just-one-more-day', title: '하루에 하루만 더 (Stick With You)', short: '하루에 하루만 더', album: '7TH YEAR', title_: true },
+  { id: 'bed-of-thorns', title: 'Bed of Thorns', album: '7TH YEAR' },
+  { id: 'take-me-to-nirvana', title: 'Take Me to Nirvana (feat. Vinida Weng)', short: 'Take Me to Nirvana', album: '7TH YEAR' },
+  { id: 'so-what', title: 'So What', album: '7TH YEAR' },
   { id: '21st-century-romance', title: '21st Century Romance', album: '7TH YEAR', isNew: true },
-  { id: 'the-next-after-next', title: 'The Next After Next', album: '7TH YEAR', isNew: true },
+  { id: 'the-next-after-next', title: '다음의 다음 (Dream of Mine)', short: '다음의 다음', album: '7TH YEAR' },
+  // STEAL THE WIND 서울(2026.11)에서 처음 공개된 곡. 앨범은 확인되면 채운다 (PERFECT STORM 수록 추정).
+  { id: 'storm-is', title: '지금까지와는 다른 무언가가 필요해 (STORM IS...)', short: 'STORM IS...' },
+  { id: 'hate-it-or-love-it', title: 'HATE IT OR LOVE IT' },
+  { id: 'sweetest-escape', title: 'SWEETEST ESCAPE' },
+  { id: 'touch-the-sky', title: 'TOUCH THE SKY' },
+  { id: 'higher-love', title: 'HIGHER LOVE' },
+  { id: 'angel-bite', title: 'Angel Bite' },
 ]
 
 export const SONG_MAP = Object.fromEntries(SONGS.map((s) => [s.id, s]))

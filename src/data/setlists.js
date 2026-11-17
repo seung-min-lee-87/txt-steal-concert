@@ -12,6 +12,13 @@ const list = (...ids) => ids.map((id) => s(id))
 
 export const TOURS = [
   {
+    key: 'steal-the-wind',
+    name: 'STEAL THE WIND',
+    full: 'TOMORROW X TOGETHER WORLD TOUR <STEAL THE WIND>',
+    years: '2026–2027',
+    theme: { bg: '#0f2f1a', accent: '#cfe8c8', ink: '#f2eee2', tabInk: '#0f2f1a', glow: '#5f9c6c', logo: '/images/logo-cream.webp', poster: '/images/poster-seoul.webp' },
+  },
+  {
     key: 'moa-con',
     name: 'MOA CON',
     full: '2026 TXT MOA CON',
@@ -56,6 +63,40 @@ export const TOURS = [
 ]
 
 export const SETLISTS = [
+  {
+    id: 'seoul-2026-steal-the-wind',
+    tourKey: 'steal-the-wind',
+    city: '서울',
+    region: 'KR',
+    label: '2026 STEAL THE WIND 서울',
+    tour: 'TOMORROW X TOGETHER WORLD TOUR <STEAL THE WIND>',
+    date: '2026-11-13',
+    venue: 'KSPO DOME',
+    source: '사용자 정리 셋리스트 (2026.11.13–15 서울 공연)',
+    notes: [
+      '공연 기간 2026.11.13–15 서울 KSPO DOME (3회 매진)',
+      '새 앨범 「PERFECT STORM」 수록곡을 발매 전에 처음 공개',
+      '유닛 무대는 곡 옆 괄호가 부른 멤버',
+      'Beautiful Strangers는 리믹스 버전으로 불렀어요',
+      '앵콜은 날마다 달랐어요 (15일 마지막 곡은 「Angel Bite」였다는 보도)',
+    ],
+    groups: [
+      { name: 'OPENING', items: [s('storm-is'), s('take-me-to-nirvana'), s('setsuna-hanabi')] },
+      { name: 'ACT I', items: list('bed-of-thorns', 'the-next-after-next', 'just-one-more-day') },
+      {
+        name: 'ACT II',
+        items: [
+          s('hate-it-or-love-it'), s('tinnitus'), by('the-killa', '수빈, 연준'), by('quarter-life', '범규, 태현, 휴닝카이'),
+          s('thursdays-child'), by('sweetest-escape', '연준, 태현, 휴닝카이'), by('touch-the-sky', '수빈, 범규'), s('so-what'), s('higher-love'),
+        ],
+      },
+      { name: 'ACT III', items: list('yj-ice-cream', 'yj-fxxking-star') },
+      { name: 'ACT IV', items: list('beautiful-strangers', 'deja-vu') },
+      { name: 'ACT V', items: list('sugar-rush-ride', 'good-boy-gone-bad', '0x1-lovesong') },
+      { name: 'ACT VI', items: list('run-away') },
+      { name: 'ENCORE', items: list('crown') },
+    ],
+  },
   {
     id: 'seoul-2026-moacon',
     tourKey: 'moa-con',
