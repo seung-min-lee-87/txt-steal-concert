@@ -16,6 +16,15 @@ const NAMES = [
   ['범규', 'Beomgyu'],
   ['태현', 'Taehyun'],
   ['모아', 'MOA'],
+  // 줄이 나뉘거나 한 글자씩 끊어 외치는 이름
+  ['투.모.로우', 'To.mor.row'],
+  ['바이 투게더', 'X Together'],
+  ['바이투게더', 'X Together'],
+  ['투모로우', 'Tomorrow'],
+  ['최! 연! 준!', 'Choi! Yeon! Jun!'],
+  ['월월월월', 'wol wol wol wol'],
+  // 소리 지르는 구간 표시
+  ['함성', 'Cheer'],
 ]
 
 // 초성 19, 중성 21, 종성 28 (0 = 없음)

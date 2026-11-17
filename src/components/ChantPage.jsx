@@ -187,7 +187,8 @@ function ChantDetail({ song, go }) {
   const hasPron = cues.some((c) => c.pron)
   // 영어 모드: 응원 부분 아래에 영어 발음(로마자)
   const [showRom, setShowRom] = useState(() => loadJSON('show-rom', true))
-  const roms = useMemo(() => cues.map(fanRomaja), [cues])
+  // 일본곡은 가사가 일본어라 로마자는 붙이지 않는다
+  const roms = useMemo(() => (song.jp ? [] : cues.map(fanRomaja)), [cues, song.jp])
   const hasRom = isEn() && roms.some(Boolean)
   const listRef = useRef(null)
   const t = player.time + offset
