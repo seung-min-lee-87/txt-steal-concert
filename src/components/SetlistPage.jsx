@@ -4,6 +4,7 @@ import { SONGS, SONG_MAP } from '../data/songs'
 import Badges, { Legend } from './Badges'
 import AlbumChip from './AlbumChip'
 import { ALBUM_COLORS } from '../data/albums'
+import { tr, trData } from '../lib/i18n'
 import { CHANT_ORDER } from '../data/cheers'
 import { FEATURES } from '../config'
 
@@ -42,15 +43,14 @@ export default function SetlistPage({ go, hasCheer }) {
   return (
     <div className="page">
       <p className="kicker">Setlist</p>
-      <h1 className="page-title">세트리스트</h1>
+      <h1 className="page-title">{tr('세트리스트')}</h1>
       <p className="hint">
-        STEAL THE WIND 서울 공연과 지난 콘서트들의 서울·일본 공연을 모아뒀어요. {FEATURES.practice
-          ? '곡을 누르면 응원법(없으면 연습 화면)으로 가요.'
-          : '응원법이 있는 곡(📣)을 누르면 응원법 화면으로 가요.'}
+        {tr('STEAL THE WIND 서울 공연과 지난 콘서트들의 서울·일본 공연을 모아뒀어요. ')}
+        {tr(FEATURES.practice ? '곡을 누르면 응원법(없으면 연습 화면)으로 가요.' : '응원법이 있는 곡(📣)을 누르면 응원법 화면으로 가요.')}
       </p>
       <Legend />
 
-      <div className="tabs" role="tablist" aria-label="투어 선택">
+      <div className="tabs" role="tablist" aria-label={tr('투어 선택')}>
         {TOURS.map((t) => (
           <button
             key={t.key}
@@ -69,37 +69,37 @@ export default function SetlistPage({ go, hasCheer }) {
           className={'tab' + (tab === 'all' ? ' on' : '')}
           onClick={() => pickTour('all')}
         >
-          📚 곡 모아보기
+          {tr('📚 곡 모아보기')}
         </button>
       </div>
 
       {tour && <TourBanner tour={tour} onPoster={setZoom} />}
       {zoom && (
-        <button className="lightbox" onClick={() => setZoom(null)} aria-label="닫기">
-          <img src={zoom} alt={`${tour?.name} 포스터`} />
+        <button className="lightbox" onClick={() => setZoom(null)} aria-label={tr('닫기')}>
+          <img src={zoom} alt={tr('{name} 포스터', { name: tour?.name })} />
         </button>
       )}
 
       {current && (
         <div className="setlist">
-          <div className="filters" aria-label="공연 선택">
+          <div className="filters" aria-label={tr('공연 선택')}>
             {shows.map((s) => (
               <button
                 key={s.id}
                 className={'chip' + (current.id === s.id ? ' on' : '')}
                 onClick={() => setShowId(s.id)}
               >
-                {s.region === 'KR' ? '🇰🇷' : '🇯🇵'} {s.label}
+                {s.region === 'KR' ? '🇰🇷' : '🇯🇵'} {trData(s.label)}
               </button>
             ))}
           </div>
           <p className="setlist-meta">
-            {current.tour || tour?.full} · {current.venue} · {current.date.replaceAll('-', '.')}
+            {current.tour || tour?.full} · {trData(current.venue)} · {current.date.replaceAll('-', '.')}
           </p>
           {current.notes && (
             <ul className="setlist-notes">
               {current.notes.map((n) => (
-                <li key={n}>{n}</li>
+                <li key={n}>{tr(n)}</li>
               ))}
             </ul>
           )}
@@ -107,11 +107,11 @@ export default function SetlistPage({ go, hasCheer }) {
             let n = 0
             return current.groups.map((g) => (
               <section key={g.name} className="set-group">
-                <h3>{g.name}</h3>
+                <h3>{trData(g.name)}</h3>
                 <ol>
                   {g.items.map((it, i) => {
                     const song = SONG_MAP[it.song]
-                    const encore = g.name.startsWith('앙코르')
+                    const encore = g.name.startsWith('앙코르') || g.name.startsWith('앵콜')
                     if (!encore) n += 1
                     return (
                       <li key={g.name + i}>
@@ -124,7 +124,7 @@ export default function SetlistPage({ go, hasCheer }) {
             ))
           })()}
           <p className="hint small">
-            출처: {current.source || 'setlist.fm·공연 후기 기사'} · 앙코르는 공연 날마다 달라요. 틀린 부분이 있으면 알려주세요.
+            {tr('출처: {src} · 앙코르는 공연 날마다 달라요. 틀린 부분이 있으면 알려주세요.', { src: tr(current.source || 'setlist.fm·공연 후기 기사') })}
           </p>
         </div>
       )}
@@ -138,7 +138,7 @@ export default function SetlistPage({ go, hasCheer }) {
                 className={'chip' + (filter === f.id ? ' on' : '')}
                 onClick={() => setFilter(f.id)}
               >
-                {f.label}
+                {tr(f.label)}
               </button>
             ))}
           </div>
@@ -178,7 +178,7 @@ function SongRow({ song, go, num, jpVer, by, hasCheer, full = false }) {
         <span className="song-title">
           {full ? song.title : song.short || song.title}
           {jpVer && <span className="ver"> (Japanese ver.)</span>}
-          {by && <span className="by"> ({by})</span>}
+          {by && <span className="by"> ({trData(by)})</span>}
         </span>
         <span className="row-meta">
           <AlbumChip album={song.album} small />
@@ -208,8 +208,8 @@ function TourBanner({ tour, onPoster }) {
         {!th?.logo && <p className="tour-banner-full">{tour.full}</p>}
       </div>
       {th?.poster && (
-        <button className="tour-banner-poster" onClick={() => onPoster(th.poster)} aria-label="포스터 크게 보기">
-          <img src={th.poster} alt={`${tour.name} 포스터`} loading="lazy" />
+        <button className="tour-banner-poster" onClick={() => onPoster(th.poster)} aria-label={tr('포스터 크게 보기')}>
+          <img src={th.poster} alt={tr('{name} 포스터', { name: tour.name })} loading="lazy" />
         </button>
       )}
     </section>

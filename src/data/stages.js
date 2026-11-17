@@ -1,3 +1,4 @@
+import { isEn, tr } from '../lib/i18n'
 // 실제 음악방송 무대 영상 (관객 응원 소리가 들리는 것)
 // 곡별로 여러 개 넣을 수 있다. offset: 응원법 시간(음원 기준)에 더할 값(초).
 //   offset을 모르면 비워두면 되고, 화면에서 "한 번에 맞추기"로 맞추면 된다.
@@ -58,4 +59,7 @@ export const findStage = (songId, vid) => stagesOf(songId).find((s) => s.id === 
 // '엠카운트다운' + '2023-01-26' → '엠카 23.01.26'
 const SHORT = { 엠카운트다운: '엠카', 뮤직뱅크: '뮤뱅', 음악중심: '음중', 인기가요: '인가', 쇼챔피언: '쇼챔', 더쇼: '더쇼', '뮤뱅 글로벌페스티벌': '뮤뱅 글페', 전국반짝투어: '반짝투어' }
 // 날짜(date)가 없는 영상(방송이 아닌 퍼포먼스 영상 등)은 이름만
-export const stageLabel = (s) => (s.date ? `${SHORT[s.show] || s.show} ${s.date.slice(2).replaceAll('-', '.')}` : s.show)
+export const stageLabel = (s) => {
+  const show = isEn() ? tr(s.show) : SHORT[s.show] || s.show
+  return s.date ? `${show} ${s.date.slice(2).replaceAll('-', '.')}` : show
+}

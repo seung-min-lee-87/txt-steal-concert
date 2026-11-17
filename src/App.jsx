@@ -6,6 +6,7 @@ import SyncStudio from './components/SyncStudio'
 import ChantPage from './components/ChantPage'
 import { PlayerProvider } from './lib/PlayerContext'
 import { FEATURES } from './config'
+import { initialLang, saveLang, setCurrentLang, tr } from './lib/i18n'
 import './App.css'
 
 // 주소 끝(#/tour, #/setlist, #/practice/곡id)으로 화면을 나눈다.
@@ -24,6 +25,14 @@ const NAV = [
 export default function App() {
   const [route, setRoute] = useState(readRoute)
   const [, setVersion] = useState(0)
+  // 한국어/영어: 바꾸면 App이 다시 그려지면서 모든 화면 글자가 바뀐다
+  const [lang, setLang] = useState(initialLang)
+  setCurrentLang(lang)
+  const toggleLang = () => {
+    const next = lang === 'ko' ? 'en' : 'ko'
+    saveLang(next)
+    setLang(next)
+  }
 
   useEffect(() => {
     const onHash = () => {
@@ -45,16 +54,19 @@ export default function App() {
     <PlayerProvider go={go}>
     <div className="app">
       <header className="topbar">
-        <a className="brand" href="#/tour" aria-label="STEAL THE WIND 홈">
+        <a className="brand" href="#/tour" aria-label={tr('STEAL THE WIND 홈')}>
           <img src="/images/logo-cream.webp" alt="STEAL THE WIND" width="770" height="306" />
         </a>
         <nav className="topnav">
           {NAV.map((n) => (
             <a key={n.page} href={`#/${n.page}`} className={route.page === n.page ? 'on' : ''}>
-              {n.icon} {n.label}
+              {n.icon} {tr(n.label)}
             </a>
           ))}
         </nav>
+        <button className="lang-toggle" onClick={toggleLang} aria-label={lang === 'ko' ? 'Switch to English' : '한국어로 보기'}>
+          {lang === 'ko' ? 'EN' : '한국어'}
+        </button>
       </header>
 
       <main>
@@ -69,14 +81,16 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        이 사이트는 투바투 늦덕이 콘서트 대비 응원 연습을 위해 임의로 만든 비영리 비공식 팬 페이지입니다. 이미지·영상·가사의 저작권은 BIGHIT MUSIC에 있으며, 응원법은 공식사이트, weverse, 나무위키 문서 등을 참고했습니다.
+        {tr(
+          '이 사이트는 투바투 늦덕이 콘서트 대비 응원 연습을 위해 임의로 만든 비영리 비공식 팬 페이지입니다. 이미지·영상·가사의 저작권은 BIGHIT MUSIC에 있으며, 응원법은 공식사이트, weverse, 나무위키 문서 등을 참고했습니다.',
+        )}
       </footer>
 
       <nav className="bottomnav">
         {NAV.map((n) => (
           <a key={n.page} href={`#/${n.page}`} className={route.page === n.page ? 'on' : ''}>
             <span className="bn-icon">{n.icon}</span>
-            <span>{n.label}</span>
+            <span>{tr(n.label)}</span>
           </a>
         ))}
       </nav>

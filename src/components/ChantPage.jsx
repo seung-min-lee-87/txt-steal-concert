@@ -17,6 +17,7 @@ import { loadSongState } from './PracticePage'
 import { stagesOf } from '../data/stages'
 import { videoOptions } from '../lib/videoOptions'
 import SyncCalibrator, { calibrate } from './SyncCalibrator'
+import { tr } from '../lib/i18n'
 
 const FILTERS = [
   { id: 'all', label: '전체' },
@@ -102,33 +103,33 @@ function ChantList({ go }) {
   return (
     <div className="page">
       <p className="kicker">Fanchant Guide</p>
-      <h1 className="page-title">응원법</h1>
+      <h1 className="page-title">{tr('응원법')}</h1>
       <p className="hint">
-        공식 응원법 {CHANT_ORDER.length}곡. 곡을 누르면 공식 영상과 함께 응원법을 보면서 따라 할 수 있습니다.
+        {tr('공식 응원법 {n}곡. 곡을 누르면 공식 영상과 함께 응원법을 보면서 따라 할 수 있습니다.', { n: CHANT_ORDER.length })}
       </p>
       <div className="chant-tools">
         <input
           className="search"
           type="search"
-          placeholder="곡 이름 검색"
+          placeholder={tr('곡 이름 검색')}
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          aria-label="곡 이름 검색"
+          aria-label={tr('곡 이름 검색')}
         />
         <div className="filters">
           {FILTERS.map((f) => (
             <button key={f.id} className={'chip' + (filter === f.id ? ' on' : '')} onClick={() => setFilter(f.id)}>
-              {f.label}
+              {tr(f.label)}
             </button>
           ))}
         </div>
       </div>
-      {groups.length === 0 && <p className="hint">조건에 맞는 곡이 없습니다.</p>}
+      {groups.length === 0 && <p className="hint">{tr('조건에 맞는 곡이 없습니다.')}</p>}
       {groups.map((g) => (
         <section key={g.album} className="set-group">
           <h3 className="album-head">
             <AlbumChip album={g.album === '기타' ? null : g.album} />
-            {g.album === '기타' && g.album}
+            {g.album === '기타' && tr('기타')}
           </h3>
           <ul className="song-list">
             {g.songs.map((song) => {
@@ -145,10 +146,10 @@ function ChantList({ go }) {
                       <span className="song-title">{song.title}</span>
                       <span className="chant-meta">
                         <Badges song={song} compact />
-                        <span>📣 {fanLines}곳</span>
-                        {VIDEOS[song.id] && (VIDEOS[song.id].order || ['main']).includes('main') && <span>▶ {VIDEOS[song.id].kind}</span>}
-                        {stagesOf(song.id).length > 0 && <span>📺 음방 응원</span>}
-                        {isSynced(song.id) && <span className="synced">⏱ 싱크 완료</span>}
+                        <span>{tr('📣 {n}곳', { n: fanLines })}</span>
+                        {VIDEOS[song.id] && (VIDEOS[song.id].order || ['main']).includes('main') && <span>▶ {tr(VIDEOS[song.id].kind)}</span>}
+                        {stagesOf(song.id).length > 0 && <span>{tr('📺 음방 응원')}</span>}
+                        {isSynced(song.id) && <span className="synced">{tr('⏱ 싱크 완료')}</span>}
                       </span>
                     </span>
                     <span className="go">›</span>
@@ -160,7 +161,7 @@ function ChantList({ go }) {
         </section>
       ))}
       <p className="hint small source">
-        응원법 출처: {CHANT_SOURCE} · 연준 솔로곡·「그날이 오면」·일본곡은 공식 응원법 공지
+        {tr('응원법 출처: {src} · 연준 솔로곡·「그날이 오면」·일본곡은 공식 응원법 공지', { src: tr(CHANT_SOURCE) })}
       </p>
     </div>
   )
@@ -238,7 +239,7 @@ function ChantDetail({ song, go }) {
     <div className="page chant-detail">
       <div className="chant-side">
         <button className="text-link" onClick={() => go('#/chant')}>
-          ← 응원법 전체
+          {tr('← 응원법 전체')}
         </button>
         <p className="kicker">Fanchant Guide</p>
         <h1 className="page-title">{song.title}</h1>
@@ -262,54 +263,54 @@ function ChantDetail({ song, go }) {
           )}
           {picked?.stage && picked.stage.note !== false && (
             <p className="stage-note">
-              {picked.stage.note || `📺 ${picked.stage.show} 실제 무대예요. 팬들 응원 소리를 들으며 따라 해보세요!`}
+              {picked.stage.note ? tr(picked.stage.note) : tr('📺 {show} 실제 무대예요. 팬들 응원 소리를 들으며 따라 해보세요!', { show: tr(picked.stage.show) })}
             </p>
           )}
           {picked?.key === 'main' && video?.noSync && (
-            <p className="stage-note">🎬 뮤직비디오는 중간 연출 때문에 응원법 싱크가 맞지 않아요. 영상 감상용이에요.</p>
+            <p className="stage-note">{tr('🎬 뮤직비디오는 중간 연출 때문에 응원법 싱크가 맞지 않아요. 영상 감상용이에요.')}</p>
           )}
           {source ? (
             <VideoSlot sp={sp} source={source} />
           ) : (
-            <div className="card empty">이 곡은 아직 영상이 없습니다.</div>
+            <div className="card empty">{tr('이 곡은 아직 영상이 없습니다.')}</div>
           )}
           <div className="chant-links">
             {vid && (
               <a className="btn small" href={`https://www.youtube.com/watch?v=${vid}`} target="_blank" rel="noreferrer">
-                ▶ 유튜브 ↗
+                {tr('▶ 유튜브 ↗')}
               </a>
             )}
             <a className="btn small" href={melonUrl(song)} target="_blank" rel="noreferrer">
-              🍈 멜론 ↗
+              {tr('🍈 멜론 ↗')}
             </a>
             {FEATURES.practice && (
               <button className="btn small primary" onClick={() => go(`#/practice/${song.id}`)}>
-                📣 연습 모드
+                {tr('📣 연습 모드')}
               </button>
             )}
           </div>
         </div>
 
         <div className="card legend-card">
-          <h3>보는 법</h3>
+          <h3>{tr('보는 법')}</h3>
           <ul>
             <li>
-              <span className="lg fan">파란 굵은 줄</span> 다 같이 외쳐요
+              <span className="lg fan">{tr('파란 굵은 줄')}</span> {tr('다 같이 외쳐요')}
             </li>
             <li>
               <span className="lg">
-                줄 안의 <mark className="fan-part">파란 글자</mark>
+                {tr('줄 안의')} <mark className="fan-part">{tr('파란 글자')}</mark>
               </span>{' '}
-              그 부분만 외쳐요
+              {tr('그 부분만 외쳐요')}
             </li>
             <li>
-              <span className="lg member">흰 글씨</span> 멤버 파트 (듣기)
+              <span className="lg member">{tr('흰 글씨')}</span> {tr('멤버 파트 (듣기)')}
             </li>
             <li>
               <span className="lg">
-                <s className="sung-over">취소선</s>
+                <s className="sung-over">{tr('취소선')}</s>
               </span>{' '}
-              멤버 가사 위로 팬이 대신 외쳐요
+              {tr('멤버 가사 위로 팬이 대신 외쳐요')}
             </li>
           </ul>
           {synced && vid && (
@@ -332,12 +333,12 @@ function ChantDetail({ song, go }) {
                 saveJSON('show-pron', !showPron)
               }}
             >
-              🇰🇷 한국어 발음 {showPron ? '켜짐' : '꺼짐'}
+              {tr('🇰🇷 한국어 발음 {v}', { v: tr(showPron ? '켜짐' : '꺼짐') })}
             </button>
           )}{' '}
           {synced && (
             <button className={'chip follow' + (follow ? ' on' : '')} onClick={toggleFollow}>
-              {follow ? '자동 따라가기 켜짐' : '자동 따라가기 꺼짐'}
+              {tr(follow ? '자동 따라가기 켜짐' : '자동 따라가기 꺼짐')}
             </button>
           )}
         </div>
@@ -386,25 +387,25 @@ function ChantDetail({ song, go }) {
           )}
         </nav>
         <p className="hint small source">
-          응원법 출처: {meta?.source || CHANT_SOURCE}
+          {tr('응원법 출처: {src}', { src: tr(meta?.source || CHANT_SOURCE) })}
           <br />
-          {TIMING_SOURCE}
+          {tr(TIMING_SOURCE)}
         </p>
       </div>
 
       {player.ready && (
         <div className="mini-player">
-          <button className="icon-btn" onClick={() => player.seek(player.getTime() - 5)} aria-label="5초 뒤로">
+          <button className="icon-btn" onClick={() => player.seek(player.getTime() - 5)} aria-label={tr('5초 뒤로')}>
             ↺5
           </button>
           <button
             className="icon-btn big"
             onClick={() => (player.playing ? player.pause() : player.play())}
-            aria-label={player.playing ? '일시정지' : '재생'}
+            aria-label={tr(player.playing ? '일시정지' : '재생')}
           >
             {player.playing ? '⏸' : '▶'}
           </button>
-          <button className="icon-btn" onClick={() => player.seek(player.getTime() + 5)} aria-label="5초 앞으로">
+          <button className="icon-btn" onClick={() => player.seek(player.getTime() + 5)} aria-label={tr('5초 앞으로')}>
             5↻
           </button>
           <span className="mini-time">{formatTime(player.time)}</span>
@@ -417,7 +418,7 @@ function ChantDetail({ song, go }) {
                 setCalibrating(false)
               }}
             >
-              지금!
+              {tr('지금!')}
             </button>
           )}
         </div>

@@ -5,6 +5,7 @@ import { SONG_MAP } from '../data/songs'
 import { CHANT_ORDER, videoOffset } from '../data/cheers'
 import { loadSongState } from '../components/PracticePage'
 import CueText from '../components/CueText'
+import { tr } from './i18n'
 
 // 사이트 전체에서 하나만 쓰는 재생기.
 // 페이지를 옮겨도 음악이 끊기지 않도록 재생기(유튜브 iframe·audio)는 App 바깥쪽에 계속 둔다.
@@ -145,21 +146,21 @@ function MiniBar({ track, player, stop, go, isVideo }) {
   return (
     <div className={'gp-mini' + (isVideo ? ' with-video' : '')}>
       {!isVideo && <span className="gp-icon" aria-hidden="true">🎧</span>}
-      <button className="gp-info" onClick={() => go(href)} aria-label={`${song?.title} 응원법 화면으로`}>
+      <button className="gp-info" onClick={() => go(href)} aria-label={tr('{title} 응원법 화면으로', { title: song?.title })}>
         <span className="gp-title">{song?.short || song?.title}</span>
         <span className={'gp-line' + (line?.fan ? ' fan' : '')}>
-          {line ? <CueText text={line.text} /> : player.playing ? '♪' : '일시정지됨'}
+          {line ? <CueText text={line.text} /> : player.playing ? '♪' : tr('일시정지됨')}
         </span>
       </button>
       <button
         className="icon-btn gp-play"
         onClick={() => (player.playing ? player.pause() : player.play())}
         disabled={!player.ready}
-        aria-label={player.playing ? '일시정지' : '재생'}
+        aria-label={tr(player.playing ? '일시정지' : '재생')}
       >
         {player.playing ? '⏸' : '▶'}
       </button>
-      <button className="gp-close" onClick={stop} aria-label="재생 끄기">
+      <button className="gp-close" onClick={stop} aria-label={tr('재생 끄기')}>
         ✕
       </button>
     </div>

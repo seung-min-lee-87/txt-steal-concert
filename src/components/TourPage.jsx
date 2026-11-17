@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ALBUM_NEWS, FLAGS, SHOWS, TOUR } from '../data/tour'
 import { loadJSON, saveJSON } from '../lib/storage'
 import { loadYouTubeAPI } from '../lib/usePlayer'
+import { tr, trData } from '../lib/i18n'
 
 const POSTERS = [
   { src: '/images/poster-seoul.webp', alt: '서울 공연 포스터' },
@@ -39,7 +40,7 @@ function shortRange(dates) {
 
 function prettyDate(date) {
   const d = new Date(date + 'T00:00:00')
-  return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} (${WEEK[d.getDay()]})`
+  return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()} (${tr(WEEK[d.getDay()])})`
 }
 
 export default function TourPage({ go }) {
@@ -87,39 +88,39 @@ export default function TourPage({ go }) {
               <span className="dday">{dDay(upcoming.date)}</span>
               <span className="countdown-text">
                 <b>
-                  {upcoming.show.city} · {prettyDate(upcoming.date)}
+                  {trData(upcoming.show.city)} · {prettyDate(upcoming.date)}
                 </b>
-                {mine.length ? '내가 가는 다음 공연' : '다음 공연'} · {upcoming.show.venue}
+                {tr(mine.length ? '내가 가는 다음 공연' : '다음 공연')} · {upcoming.show.venue}
               </span>
             </div>
           )}
           <div className="hero-actions">
             <button className="btn primary" onClick={() => go('#/chant')}>
-              📣 응원법 보러 가기
+              {tr('📣 응원법 보러 가기')}
             </button>
             <button className="btn ghost" onClick={() => go('#/setlist')}>
-              📝 지난 세트리스트
+              {tr('📝 지난 세트리스트')}
             </button>
           </div>
         </div>
       </section>
 
-      <h2 className="section-title">공연 일정 <span className="en">World Tour</span></h2>
-      <p className="hint">내가 가는 날을 눌러 표시해두면 위 카운트다운이 해당 날짜로 바뀝니다.</p>
+      <h2 className="section-title">{tr('공연 일정')} <span className="en">World Tour</span></h2>
+      <p className="hint">{tr('내가 가는 날을 눌러 표시해두면 위 카운트다운이 해당 날짜로 바뀝니다.')}</p>
       <div className="show-grid">
         {featured.map((show) => (
           <ShowCard key={show.id} show={show} going={going} toggle={toggle} today={today} />
         ))}
       </div>
 
-      <h3 className="sub-title">다른 도시 <span className="en">More Cities</span></h3>
+      <h3 className="sub-title">{tr('다른 도시')} <span className="en">More Cities</span></h3>
       <div className="city-areas">
         {AREAS.map((area) => {
           const list = others.filter((s) => s.area === area.id)
           if (!list.length) return null
           return (
             <div key={area.id} className="city-area">
-              <span className="city-area-label">{area.label}</span>
+              <span className="city-area-label">{tr(area.label)}</span>
               <div className="city-chips">
                 {list.map((show) => (
                   <button
@@ -133,7 +134,7 @@ export default function TourPage({ go }) {
                     onClick={() => setPicked(picked === show.id ? null : show.id)}
                     aria-expanded={picked === show.id}
                   >
-                    <span aria-hidden="true">{FLAGS[show.region]}</span> {show.city}
+                    <span aria-hidden="true">{FLAGS[show.region]}</span> {trData(show.city)}
                     <span className="city-chip-date">{shortRange(show.dates)}</span>
                   </button>
                 ))}
@@ -149,21 +150,21 @@ export default function TourPage({ go }) {
       )}
       <p className="hint">AND MORE</p>
 
-      <h2 className="section-title">공식 포스터 <span className="en">Key Visual</span></h2>
+      <h2 className="section-title">{tr('공식 포스터')} <span className="en">Key Visual</span></h2>
       <div className="posters">
         {POSTERS.map((p) => (
-          <button key={p.src} className="poster" onClick={() => setZoom(p)} aria-label={`${p.alt} 크게 보기`}>
-            <img src={p.src} alt={p.alt} loading="lazy" />
+          <button key={p.src} className="poster" onClick={() => setZoom(p)} aria-label={tr('{name} 크게 보기', { name: tr(p.alt) })}>
+            <img src={p.src} alt={tr(p.alt)} loading="lazy" />
           </button>
         ))}
       </div>
       {zoom && (
-        <button className="lightbox" onClick={() => setZoom(null)} aria-label="닫기">
+        <button className="lightbox" onClick={() => setZoom(null)} aria-label={tr('닫기')}>
           <img src={zoom.src} alt={zoom.alt} />
         </button>
       )}
 
-      <h2 className="section-title">새 앨범 체크 <span className="en">New Album</span></h2>
+      <h2 className="section-title">{tr('새 앨범 체크')} <span className="en">New Album</span></h2>
       <div className="news-list">
         {ALBUM_NEWS.map((a) => (
           <article key={a.title} className={'card news' + (a.logo ? ' has-logo' : '')}>
@@ -171,9 +172,9 @@ export default function TourPage({ go }) {
             {a.logo ? <img className="news-logo" src={a.logo} alt={a.title} /> : <h3>{a.title}</h3>}
             <div className="news-bottom">
               <div className="news-meta">
-                <p className="news-kind">{a.kind}</p>
+                <p className="news-kind">{tr(a.kind)}</p>
                 <p className="news-date">
-                  {a.upcoming ? '발매 예정 ' : ''}
+                  {a.upcoming ? tr('발매 예정 ') : ''}
                   {prettyDate(a.date)}
                   {a.upcoming && a.date >= today && <span className="news-dday">{dDay(a.date)}</span>}
                 </p>
@@ -203,8 +204,8 @@ function ShowCard({ show, going, toggle, today }) {
       <div className="show-head">
         <span className="flag">{FLAGS[show.region]}</span>
         <div>
-          <h3>{show.city}</h3>
-          <p className="venue">{show.venue || '공연장 발표 전'}</p>
+          <h3>{trData(show.city)}</h3>
+          <p className="venue">{show.venue || tr('공연장 발표 전')}</p>
         </div>
       </div>
       <div className="dates">
@@ -216,11 +217,11 @@ function ShowCard({ show, going, toggle, today }) {
             aria-pressed={!!going[d]}
           >
             <span>{prettyDate(d)}</span>
-            <span className="chip-d">{going[d] ? '✔ 가요' : dDay(d)}</span>
+            <span className="chip-d">{going[d] ? tr('✔ 가요') : dDay(d)}</span>
           </button>
         ))}
       </div>
-      {show.note && <p className="show-note">{show.note}</p>}
+      {show.note && <p className="show-note">{tr(show.note)}</p>}
     </article>
   )
 }
@@ -287,11 +288,11 @@ function HeroVideo({ id }) {
         <div ref={hostRef} />
       </div>
       <div className="hero-controls">
-        <button className="hero-play" onClick={togglePlay} aria-label={playing ? '일시정지' : '재생'}>
+        <button className="hero-play" onClick={togglePlay} aria-label={tr(playing ? '일시정지' : '재생')}>
           {playing ? '⏸' : '▶'}
         </button>
         <button className="hero-play" onClick={toggleSound} aria-pressed={sound}>
-          {sound ? '🔇 소리 끄기' : '🔊 소리 켜기'}
+          {tr(sound ? '🔇 소리 끄기' : '🔊 소리 켜기')}
         </button>
       </div>
     </div>
