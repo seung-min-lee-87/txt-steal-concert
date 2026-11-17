@@ -14,6 +14,7 @@ const FILTERS = [
   { id: 'all', label: '전체' },
   { id: 'title', label: '👑 타이틀' },
   { id: 'new', label: '✨ 신곡' },
+  { id: 'perfect-storm', label: '🌪️ PERFECT STORM' },
   { id: 'past', label: '🔁 지난 투어' },
   { id: 'jp', label: '🇯🇵 일본곡' },
   { id: 'solo', label: '🎤 솔로' },
@@ -145,6 +146,7 @@ export default function SetlistPage({ go, hasCheer }) {
             {SONGS.filter((s) => {
               if (filter === 'title') return s.title_
               if (filter === 'new') return s.isNew
+              if (filter === 'perfect-storm') return s.album === 'PERFECT STORM'
               if (filter === 'past') return APPEARANCES[s.id]
               if (filter === 'jp') return s.jp
               if (filter === 'solo') return s.solo
